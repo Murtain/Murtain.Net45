@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Login.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrap">
+            <div class="layout" id="layout">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @* footer layout *@
+    <div class="n-footer">
+        <div class="nf-link-area clearfix">
+            <ul class="lang-select-list">
+                <li><a href="/Localization/ChangeCulture?CultureName=zh-CN&ReturnUrl=@(Request.Url.ToString())" data-lang="zh-CN" class="lang-select-li @(Culture == "zh-CN" ? "current" : "")">简体</a>|</li>
+                <li><a href="/Localization/ChangeCulture?CultureName=zh-TW&ReturnUrl=@(Request.Url.ToString())" data-lang="zh-TW" class="lang-select-li @(Culture == "zh-TW" ? "current" : "")">繁体</a>|</li>
+                <li><a href="/Localization/ChangeCulture?CultureName=en&ReturnUrl=@(Request.Url.ToString())" data-lang="en" class="lang-select-li @(Culture == "en" ? "current" : "")">English</a>|</li>
+                <li><a href="#" target="_blank">@L("常见问题")</a></li>
+            </ul>
+        </div>
+        <p class="nf-intro"><span>@L("版权所有")-@L("京ICP备10046444")-<a class="beian-record-link" target="_blank" href="#"><span></span>@L("京公网安备11010802020134号")</a>-@L("京ICP证110507号")</span></p>
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

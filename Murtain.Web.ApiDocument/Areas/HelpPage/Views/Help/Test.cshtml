@@ -1,0 +1,245 @@
+﻿@using System.Web.Http
+@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using System.Collections.ObjectModel
+@using Murtain.Web.ApiDocument.Areas.HelpPage
+@using Murtain.Web.ApiDocument.Areas.HelpPage.Models
+@using Newtonsoft.Json
+@model HelpPageApiModel
+@{
+    var description = Model.ApiDescription.Documentation ?? "No Description.";
+    string applicationPath = Request.ApplicationPath.TrimEnd('/');
+
+    Dictionary<string, object> samples = Model.SampleRequests.GroupBy(pair => pair.Value).ToDictionary(
+    pair => String.Join(", ", pair.Select(m => m.Key.ToString()).ToArray()),
+    pair => pair.Key);
+    var mediaTypes = samples.Keys.ToList();
+
+    var sampleModel = samples.Keys.Count > 0 ? samples[mediaTypes[0]] as TextSample : new TextSample("");
+    var sampleModelObject = JsonConvert.DeserializeObject(sampleModel.Text, Model.SampleRequestModelType, new JsonSerializerSettings());
+    var sampleCommonModelObject = Model.SampleRequestCommonObject;
+}
+
+<script>
+    function SubmitTest() {
+        var url = $('input[name="request_url"]').val();
+        var app_key = $('input[name="APP_KEY"]').val();
+        var app_secret = $('input[name="APP_SECRET"]').val();
+
+        var data = {};
+        var flag = true;
+        $('#reqeust-parameters').find('input').each(function () {
+            var dom = $(this);
+            var name = $(this).attr('name');
+            if (dom.attr('required') == "required") {
+                if (dom.val() == "" || dom.val() == undefined) {
+                    flag = false;
+                }
+                if (!flag) {
+                    $(this).parent().addClass('has-error');
+                } else {
+                    $(this).parent().removeClass('has-error');
+                }
+            }
+            if (dom.val() != "" && dom.val() != undefined) {
+                var type = $('select[name=' + name + '_type]').val();
+
+                switch (type) {
+                    case "string":
+                        data[dom.attr('name')] = dom.val();
+                        break;
+                    case "array":
+                        data[dom.attr('name')] = dom.val().split(',');
+                        break;
+                    case "object":
+                        data[dom.attr('name')] = JSON.parse(dom.val());
+                        break;
+                    case "bool":
+                        data[dom.attr('name')] = dom.val();
+                        break;
+                    default:
+                        data[dom.attr('name')] = dom.val();
+                        break;
+                }
+            }
+        });
+        if (!flag) return false;
+
+        $.post('/help/TestRequestExcuteAsync', {
+            url: '@HttpContext.Current.Request.Url.Scheme://@HttpContext.Current.Request.Url.DnsSafeHost:@HttpContext.Current.Request.Url.Port/api'
+            , appkey: app_key
+            , appSecret: app_secret
+            , apiId: '@Model.ApiDescription.GetFriendlyId()'
+            , requestBody: JSON.stringify(data)
+        }, function (data) {
+            if (data && data.response && data.response.BASE64DATA) {
+                $('#response_string').html('<img src="data:image/jpg;base64,' + data.response.BASE64DATA + ' " style="height:250px;"/> ');
+                $('#post_data').text(JSON.stringify(data.post_data, null, "\t"));
+                return;
+            }
+            console.log(data);
+            $('#response_string').text(JSON.stringify(data.response, null, "\t"));
+            $('#post_data').text(JSON.stringify(data.post_data, null, "\t"));
+
+        }).complete(function () {
+        })
+    };
+</script>
+<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+<div id="body" class="help-page">
+    <header class="header">
+        <div class="header-wrap">
+            <div class="header-text">
+                <h2 class="header-title">文档&API</h2>
+                <h3 class="header-description">“文档中心包含所有平台接入、业务说明，以及API接口文档”</h3>
+            </div>
+            <div class="header-search">
+                <form action="#" name="search-form" id="search-form" target="_blank">
+                    <input placeholder="资料库/API搜索" value="" name="keyword" class="header-search-input" autocomplete="off" disableautocomplete>
+                    <i class="iconfont"></i>
+                </form>
+            </div>
+            <div class="header-tab">
+                <ul class="header-tab-panel ">
+                    <li class="active">测试工具</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="content-wrapper" style="margin-top:250px;">
+        <form name="test-form" class="form-horizontal m-t-lg">
+            <div id="reqeust-parameters">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">应用标识</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="APP_KEY" value="" required placeholder="APP_KEY" />
+                    </div>
+                    <label class="col-sm-1 control-label">应用密钥</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="APP_SECRET" value="" required placeholder="APP_SECRET" />
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">提交方式</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="method" name="method" data-placeholder="提交方式">
+                            <option value="1" selected="selected">POST</option>
+                            <option value="2">GET</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label" data-toggle="tooltip" data-placement="right" title="返回格式,默认json">返回格式</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="format" name="FORMAT" data-placeholder="返回格式">
+                            <option value="1" selected="selected">JSON</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">操作用户ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="U_ID" value="" placeholder="操作用户" />
+                    </div>
+                    <label class="col-sm-1 control-label">SDK版本</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="language" name="LANGUAGE" data-placeholder="SDK版本">
+                            <option value="1" selected="selected">.NET</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">设备版本</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="DEVICE_VERSION" value="" placeholder="设备版本" />
+                    </div>
+                    <label class="col-sm-1 control-label">接口版本</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="language" name="VERSION" data-placeholder="接口版本">
+                            <option value="1" selected="selected">1.0</option>
+                        </select>
+                    </div>
+                </div>
+                @{
+                    if (sampleModelObject != null)
+                    {
+                        foreach (var property in (sampleModelObject).GetType().GetProperties())
+                        {
+                            if (sampleCommonModelObject.GetType().GetProperties().Any(x => x.Name == property.Name))
+                            {
+                                continue;
+                            }
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                    @(property.Name)
+                                    @if (property.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.RequiredAttribute), false).Count() > 0)
+                                    {
+                                        <span style="color:red;"> * </span>
+                                    }
+                                </label>
+                                <div class="col-sm-4">
+                                    @if (property.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.RequiredAttribute), false).Count() > 0)
+                                    {
+                                        <input type="text" class="form-control" name="@property.Name" placeholder="@(property.Name)" required value="@property.GetValue(sampleModelObject)" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control" name="@property.Name" placeholder="@(property.Name)" value="@property.GetValue(sampleModelObject)" />
+                                    }
+                                </div>
+                                <label class="col-sm-1 control-label">数据类型</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="@(property.Name)_type" data-placeholder="数据类型" onchange="propertyTypeSelect('@(property.Name)')">
+                                        <option value="string">字符串</option>
+                                        <option value="array">数组（使用,分隔）</option>
+                                        <option value="object">对象（JSON）</option>
+                                        <option value="bool">布尔值</option>
+                                    </select>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-9">
+                    <button type="button" onclick="SubmitTest();" class="btn btn-primary">提交测试</button>
+                    <button type="reset" class="btn btn-white">重置</button>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">请求地址</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="request_string" name="request_url" readonly="readonly" value="@HttpContext.Current.Request.Url.Scheme://@HttpContext.Current.Request.Url.DnsSafeHost:@HttpContext.Current.Request.Url.Port/@Model.ApiDescription.RelativePath" placeholder="请求地址" />
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">请求内容类型</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="content_type" name="content_type" readonly="readonly" placeholder="Content-Type" value="application/json" />
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">请求参数</label>
+                <div class="col-sm-9">
+                    <pre style="min-height:39px;"><code class="language-js" data-lang="javascript" id="post_data"></code></pre>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">返回结果</label>
+                <div class="col-sm-9">
+                    <pre style="min-height:189px;"><code class="language-js" data-lang="javascript" id="response_string"></code></pre>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

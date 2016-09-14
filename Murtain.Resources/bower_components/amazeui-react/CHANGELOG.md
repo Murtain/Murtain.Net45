@@ -1,0 +1,191 @@
+## Change Log
+
+
+### v1.2.2 (2016/08/02 11:36 +08:00)
+
+- [5becef2](https://github.com/amazeui/amazeui-react/commit/5becef2e2425220613de3dc29292ef6f6ec3bf9b) 处理 Popover 未知属性警告
+- [9adef9d](https://github.com/amazeui/amazeui-react/commit/9adef9d2a4bfe6fbad99b1ede18fae7a8b8685be) 修复 Thumbnail 属性处理错误
+- [bdd059b](https://github.com/amazeui/amazeui-react/commit/bdd059ba9538ecdb64ccec65cb7373a036f92294) 修复 Panel 事件池警告
+- [0b0f0bd](https://github.com/amazeui/amazeui-react/commit/0b0f0bd5bf80a32ba13c26a18f02cc2c1b5e41e2) 修复 Pagination `active` 子项目渲染
+- [b694090](https://github.com/amazeui/amazeui-react/commit/b694090f269dfe5377cd2a46405dcbf5bfe0191a) 修复 Modal 未知属性警告
+- [795d6ed](https://github.com/amazeui/amazeui-react/commit/795d6ed312df5a117559316a2eb62a143b66b108) 修复 ScrollSpy 未知属性警告
+- [1f2633f](https://github.com/amazeui/amazeui-react/commit/1f2633ffa15f9c7e621ce1177d80283c836474d4) #124 修复 Nav & CollapsibleNav 未知属性警告
+- [b5ad82a](https://github.com/amazeui/amazeui-react/commit/b5ad82aa7a208d2ee59e4dece5b7aae7da78618b) #127 修复 UCheck 不可选中问题
+- [db63f34](https://github.com/amazeui/amazeui-react/commit/db63f343291ccef10532adbabf9f8b61ddfbf739) #125 修复文档 JS 引用路径
+
+### v1.2.1 (2016/07/19 11:17 +08:00)
+
+- [56195c2](https://github.com/amazeui/amazeui-react/commit/56195c2484fe39ad8695deb2315b8e7a4fea41a3) #123 修复误移删除的 DOM 属性
+- [b0a47f0](https://github.com/amazeui/amazeui-react/commit/b0a47f09b001b499a77855d13c34dd66deab44e2) 改进 Selected 接收属性时的渲染触发逻辑
+
+
+### v1.2.0 (2016/07/14 17:26 +08:00)
+
+- [c306c8f](https://github.com/amazeui/amazeui-react/commit/c306c8fdbf155862e0ca2eebb69ba68542bcd9c3) #121 改进 Selected 组件默认过滤函数 (@jdneo) 
+- [9f5d038](https://github.com/amazeui/amazeui-react/commit/9f5d038e9326bdc7d08aca346a363ffa77be823c) 处理 React 15.2.0 未知属性警告 (@zhang-z)
+
+
+### v1.1.2 (2016/07/04 17:24 +08:00)
+
+- [43bed8b](https://github.com/amazeui/amazeui-react/commit/43bed8b4e6e859510a4cfea53ba3a27102cb73d4) #119 修复 DateTimeInput 输入日期无法解析时报错问题
+- [de93224](https://github.com/amazeui/amazeui-react/commit/de9322488faf79a6a67761f24ac31a77920827ef) 修复 CSSTransitionGroup 全局变量引用错误
+- [3eb8392](https://github.com/amazeui/amazeui-react/commit/3eb83926cb806a2216760b63308d4ed92cef6197) #117 修复 Bower 依赖错误
+
+### v1.1.1 (2016/04/26 11:00 +08:00)
+- [728cc18](https://github.com/amazeui/amazeui-react/commit/728cc18a214cc81d4117058551844d5d6188cef2) #115 修复 TimePicker 小时小于 `10` 时，分钟截取错误问题 (@minwe)
+- [dd84d32](https://github.com/amazeui/amazeui-react/commit/dd84d328f7e89cf260c6f356bda578a933e75269) #112 解决 React 15.x 中读取 `key` 显示警告问题 (@minwe)
+- [0d9d3d1](https://github.com/amazeui/amazeui-react/commit/0d9d3d1e154ee00d7b6e2ca056c2fcce57ec175d) #113 修复 NProgress `trickle` 问题 (@choujimmy)
+- [d89f0c9](https://github.com/amazeui/amazeui-react/commit/d89f0c994ae774514958f5fb189d673f93246b60) 添加 issue 模板 (@minwe)
+- [19302eb](https://github.com/amazeui/amazeui-react/commit/19302eb159e90df2286fffbbcc0d1b299403e3e3) #110 修复 DateTimePicker `getLocale` 在 IE10 中报错问题 (@minwe)
+- [724a173](https://github.com/amazeui/amazeui-react/commit/724a1731b3b03e547981e5128cf8b9abb120a9e3) #111 将 `react` 和 `react-dom` 移到 `peerDependencies` (@minwe)
+
+### v1.1.0 (2016/04/05 07:43 +00:00)
+- [5896add](https://github.com/amazeui/amazeui-react/commit/5896add374715ddca78300b145f182b444c989ba) publish v1.1.0 (@minwe)
+- [0e60c18](https://github.com/amazeui/amazeui-react/commit/0e60c18641f3745625fcb69601e8ea80e9a3fd38) server rendering supports, resolved #68 (@minwe)
+- [77c1adb](https://github.com/amazeui/amazeui-react/commit/77c1adb6fb8fb1f10f8c76b53800471b822c4ae2) move Modal dimension style to inner dialog, resolves #56 (@minwe)
+- [610a147](https://github.com/amazeui/amazeui-react/commit/610a14798a6f52aef30f897ef94321412f53d532) adjust code style (@minwe)
+- [#108](https://github.com/amazeui/amazeui-react/pull/108) Merge pull request #108 from zhang-z/feature/issue83 (@zhang-z)
+- [dd4c61c](https://github.com/amazeui/amazeui-react/commit/dd4c61c523d60d8f52779d1b4a2d7762e1b12f23) rename onHide to onClose (@zhang-z)
+- [1794a87](https://github.com/amazeui/amazeui-react/commit/1794a87146c838a538e9a199f9db662012239033) toggle Modal using props (@zhang-z)
+- [166c918](https://github.com/amazeui/amazeui-react/commit/166c918ab076ad7db68a3f99aacc7d796445323d) resolves #106, thx to @J-F-Liu (@minwe)
+- [3378e27](https://github.com/amazeui/amazeui-react/commit/3378e27eab2c67a67847b45d9056eff4694166a2) close dropdown when route changing, resolves #96 (@minwe)
+- [eaf7b82](https://github.com/amazeui/amazeui-react/commit/eaf7b82d07a0aaf58bfa16eaa4b2d9f7b9b02807) fixes react-router update warnings in examples (@minwe)
+- [807ce2e](https://github.com/amazeui/amazeui-react/commit/807ce2e2d262cc50a2c4b06ce0efa7a572b295a4) replace `autoprefixer-loader` with `postcss-loader` (@minwe)
+- [#105](https://github.com/amazeui/amazeui-react/pull/105) Merge pull request #105 from minwe/master (@minwe)
+- [69d777f](https://github.com/amazeui/amazeui-react/commit/69d777f1d91b739c0b827f54d198bde5da6e92f0) detect environment for server-side rendering, resolves #99 (@minwe)
+- [#103](https://github.com/amazeui/amazeui-react/pull/103) Merge pull request #103 from minwe/master (@minwe)
+- [d7e59cb](https://github.com/amazeui/amazeui-react/commit/d7e59cb8cdab1355f9be850a36bad64ff1e2b392) [fixed] fixes `isMounted` usage (@minwe)
+- [#102](https://github.com/amazeui/amazeui-react/pull/102) Merge pull request #102 from minwe/master (@minwe)
+- [1aba0a4](https://github.com/amazeui/amazeui-react/commit/1aba0a4d7be1d47de4469853a7c686bb0dedc968) [fixed] remove scroll event listener when unmount (@minwe)
+- [#101](https://github.com/amazeui/amazeui-react/pull/101) Merge pull request #101 from minwe/master (@minwe)
+- [8291b25](https://github.com/amazeui/amazeui-react/commit/8291b251547d5f3f6b1e2bda3de9f53fbd4f3442) update react-router to v2.0.0 (@minwe)
+- [#100](https://github.com/amazeui/amazeui-react/pull/100) Merge pull request #100 from minwe/master (@minwe)
+- [a7c0b77](https://github.com/amazeui/amazeui-react/commit/a7c0b770f33f0d5774b8897b6ad8647fb78a1304) update dev deps (@minwe)
+
+### v1.0.1 (2016/01/25 06:47 +00:00)
+- [#95](https://github.com/amazeui/amazeui-react/pull/95) Merge pull request #95 from minwe/master (@minwe)
+- [44a3291](https://github.com/amazeui/amazeui-react/commit/44a3291e8a328549b1a36e03f146ec403b837c3b) update dev deps, bump version to 1.0.1 (@minwe)
+- [#94](https://github.com/amazeui/amazeui-react/pull/94) Merge pull request #94 from minwe/master (@minwe)
+- [df31b13](https://github.com/amazeui/amazeui-react/commit/df31b13fb0bcbff6ab481152b698151d9f6407cc) [fixed] Selected method reference error, resolved #93 (@minwe)
+- [#91](https://github.com/amazeui/amazeui-react/pull/91) Merge pull request #91 from minwe/master (@minwe)
+- [09e12a2](https://github.com/amazeui/amazeui-react/commit/09e12a2f54015de8b2a887e20b9202c1945254ac) update changelog (@minwe)
+
+### v1.0.0 (2016/01/12 06:18 +00:00)
+- [#90](https://github.com/amazeui/amazeui-react/pull/90) Merge pull request #90 from minwe/master (@minwe)
+- [98c5403](https://github.com/amazeui/amazeui-react/commit/98c5403c6beb9c09afe757cc19ecd7c7010b2731) bump version to v1.0.0 (@minwe)
+- [#87](https://github.com/amazeui/amazeui-react/pull/87) Merge pull request #87 from minwe/master (@minwe)
+- [0865218](https://github.com/amazeui/amazeui-react/commit/0865218b9c7c3a32f3d8c6b996491bbda817ef82) add `btnSize` props to Dropdown, resolves #84 (@minwe)
+- [#85](https://github.com/amazeui/amazeui-react/pull/85) Merge pull request #85 from minwe/master (@minwe)
+- [f6a9f9f](https://github.com/amazeui/amazeui-react/commit/f6a9f9f87738c5ecb5fae861f9d8e153b1ddf033) add admin dashboard example, resolves #9 (@minwe)
+- [b49a59b](https://github.com/amazeui/amazeui-react/commit/b49a59ba66761dc4c9dd47227569a44c655b4031) admin dashboard example [wip] (@minwe)
+- [100595f](https://github.com/amazeui/amazeui-react/commit/100595ff11d146ae543c6b3630c9a17ef87d17d2) admin dashboard example [wip] (@minwe)
+- [1310de1](https://github.com/amazeui/amazeui-react/commit/1310de13c56aa698b9a3fad4a42c471eeb29ed35) admin dashboard example [wip] (@minwe)
+- [019f8b2](https://github.com/amazeui/amazeui-react/commit/019f8b27b1b0898b88d5bd2d86c350c17b8c76b8) admin dashboard example (@minwe)
+- [#82](https://github.com/amazeui/amazeui-react/pull/82) Merge pull request #82 from zheng27/fix-terminology (@zheng27)
+- [6b8df73](https://github.com/amazeui/amazeui-react/commit/6b8df736572d834e6c3946389772d2be7aa92a7b) Fix terminology
+- [7ec9494](https://github.com/amazeui/amazeui-react/commit/7ec949478addc366592c9ef0e6217e0c20ce86c1) remove download link (@minwe)
+- [f95a159](https://github.com/amazeui/amazeui-react/commit/f95a159c6d3ddaec04b087936ca87e781e55db57) remove useless code (@minwe)
+- [1512a58](https://github.com/amazeui/amazeui-react/commit/1512a58b4ebc0c8aff92f64fad7573bc536ab6d3) update development info (@minwe)
+- [#81](https://github.com/amazeui/amazeui-react/pull/81) Merge pull request #81 from minwe/master (@minwe)
+- [d258e86](https://github.com/amazeui/amazeui-react/commit/d258e869cd45af8ededffaca1c0731dcf2397f11) remove debug info (@minwe)
+- [00c86ed](https://github.com/amazeui/amazeui-react/commit/00c86edc6a6fe38d7e55b30f3b36eb17c8a17f43) replace Browserify with webpack (@minwe)
+- [d8dfc4d](https://github.com/amazeui/amazeui-react/commit/d8dfc4d192757e48dddbfc3f5033fa58d0ffbd3a) [changed] replace Browserify with webpack [wip] (@minwe)
+- [d335ab5](https://github.com/amazeui/amazeui-react/commit/d335ab5d1ef3434520934a19c11c21bd63d6b75d) [changed] replace Browserify with webpack [wip] (@minwe)
+- [1da97a9](https://github.com/amazeui/amazeui-react/commit/1da97a9fb170406c9f5187185ada242f28ebfb52) [changed] replace Browserify with webpack [wip] (@minwe)
+- [6cddea0](https://github.com/amazeui/amazeui-react/commit/6cddea05e168c6c7522bb7c98dd91e77e0c9642f) try to remove event listener when child unmount, #39 (@minwe)
+- [e859bbb](https://github.com/amazeui/amazeui-react/commit/e859bbb054b58bbeb1eb8793879b5df82cd8d16c) try to remove event listener when child unmount, #39 (@minwe)
+- [#79](https://github.com/amazeui/amazeui-react/pull/79) Merge pull request #79 from minwe/master (@minwe)
+- [c596c86](https://github.com/amazeui/amazeui-react/commit/c596c866d9b323075cc0cbd1c396dc3c6e2d1599) [fixed] DateTimeInput position in table, resolves #57 (@minwe)
+- [#78](https://github.com/amazeui/amazeui-react/pull/78) Merge pull request #78 from minwe/master (@minwe)
+- [895a829](https://github.com/amazeui/amazeui-react/commit/895a829b06c0f2462c7aedf31edf978f3948228c) adjust Modal related code style (@minwe)
+- [#77](https://github.com/amazeui/amazeui-react/pull/77) Merge pull request #77 from minwe/master (@minwe)
+- [64406ae](https://github.com/amazeui/amazeui-react/commit/64406aeb7bfbed6cddc6d8f87f9792374c35a862) add escape method and highlight prop to Code (@minwe)
+- [#76](https://github.com/amazeui/amazeui-react/pull/76) Merge pull request #76 from minwe/master (@minwe)
+- [f0b02b9](https://github.com/amazeui/amazeui-react/commit/f0b02b9e129ac433e89286003a04bd237ed48d4a) rename Dropdown props and adjust code style (@minwe)
+- [#75](https://github.com/amazeui/amazeui-react/pull/75) Merge pull request #75 from minwe/master (@minwe)
+- [6838ed5](https://github.com/amazeui/amazeui-react/commit/6838ed5eb5127e514c362b61e9a302e572d787ee) add link component props to navs, resolves #63 (@minwe)
+- [#43](https://github.com/amazeui/amazeui-react/pull/43) Merge pull request #43 from Pliman/master (@Pliman)
+- [#73](https://github.com/amazeui/amazeui-react/pull/73) Merge pull request #73 from minwe/master (@minwe)
+- [2e924f8](https://github.com/amazeui/amazeui-react/commit/2e924f89cbd1ba8095def9a6375fcff316ecd01a) rename `componentTag` prop to `component`, resolves #44 (@minwe)
+- [#72](https://github.com/amazeui/amazeui-react/pull/72) Merge pull request #72 from minwe/master (@minwe)
+- [64b8dc9](https://github.com/amazeui/amazeui-react/commit/64b8dc9ee4091585a2bd944e3336063af2248a83) rename Dropdown `setDropdownState` to `setDropdown` (@minwe)
+- [#71](https://github.com/amazeui/amazeui-react/pull/71) Merge pull request #71 from minwe/master (@minwe)
+- [6e1a511](https://github.com/amazeui/amazeui-react/commit/6e1a511fd7719dccb27a32d1a3a5ceedb3049165) add List `bordered` prop, resolves #54 (@minwe)
+- [#70](https://github.com/amazeui/amazeui-react/pull/70) Merge pull request #70 from minwe/master (@minwe)
+- [1843ca4](https://github.com/amazeui/amazeui-react/commit/1843ca4590cd877adc61112a538b706077f949d5) resolves #51 (@minwe)
+- [#69](https://github.com/amazeui/amazeui-react/pull/69) Merge pull request #69 from minwe/master (@minwe)
+- [931c6c7](https://github.com/amazeui/amazeui-react/commit/931c6c71ca56ca6481caf9f6505c69c5752caddd) add `onSelect` prop to DateTimeInput, resolves #36 (@minwe)
+- [#67](https://github.com/amazeui/amazeui-react/pull/67) Merge pull request #67 from minwe/master (@minwe)
+- [85e9de4](https://github.com/amazeui/amazeui-react/commit/85e9de4537e1fb174a10bd2a32f3317e784642cf) fixes DatetimePicker error (@minwe)
+- [#65](https://github.com/amazeui/amazeui-react/pull/65) Merge pull request #65 from minwe/master (@minwe)
+- [45e24c2](https://github.com/amazeui/amazeui-react/commit/45e24c2918fe2e23033628a9095a0ef8fe8ac6c9) add Selected data type detail, via #64 (@minwe)
+- [#61](https://github.com/amazeui/amazeui-react/pull/61) Merge pull request #61 from minwe/issue-45 (@minwe)
+- [2fffdf5](https://github.com/amazeui/amazeui-react/commit/2fffdf529498fd0cb6b204892b7a354f4002fbea) update React to v0.14.x, resolved #45 (@minwe)
+- [#60](https://github.com/amazeui/amazeui-react/pull/60) Merge pull request #60 from minwe/master (@minwe)
+- [eedc6dc](https://github.com/amazeui/amazeui-react/commit/eedc6dcb346926325f291e04cbac9c93f8a71138) remove getDOMNode, resolves #58 (@minwe)
+
+### v1.0.0-beta2 (2015/10/29 09:34 +00:00)
+- [#53](https://github.com/amazeui/amazeui-react/pull/53) Merge pull request #53 from minwe/master (@minwe)
+- [5950f13](https://github.com/amazeui/amazeui-react/commit/5950f1338acb286b6ed86c69d4c427871c9a61d0) v1.0.0-beta2: update to React 0.14.x (@minwe)
+- [#52](https://github.com/amazeui/amazeui-react/pull/52) Merge pull request #52 from minwe/master (@minwe)
+- [5131770](https://github.com/amazeui/amazeui-react/commit/5131770cc49d0a1c3ab47dc464e012a8193b3045) Merge remote-tracking branch 'upstream/master' (@minwe)
+- [f7b6c61](https://github.com/amazeui/amazeui-react/commit/f7b6c614ab0008c9859489b5a717500c138adac3) adjust code style (@minwe)
+- [#50](https://github.com/amazeui/amazeui-react/pull/50) Merge pull request #50 from sunnylqm/master (@sunnylqm)
+- [18c54f4](https://github.com/amazeui/amazeui-react/commit/18c54f4c862f6d5c885606489d59a45c9fa75562) Merge remote-tracking branch 'origin/master' (@sunnylqm)
+- [0917431](https://github.com/amazeui/amazeui-react/commit/09174311a5666fa0d1d99a276fa603a56f2044c1) update package.json (@sunnylqm)
+- [a39418e](https://github.com/amazeui/amazeui-react/commit/a39418e95828fd587dca2c5b410618afdf69822a) Update package.json (@sunnylqm)
+- [1afe395](https://github.com/amazeui/amazeui-react/commit/1afe3954d7b948515c28b157a38912c4b59f2b62) replace React with ReactDOM(for react 0.14) (@sunnylqm)
+- [1b753b0](https://github.com/amazeui/amazeui-react/commit/1b753b07c02fb53bba0f3e2d73478ba1d4c4deaa) replace React with ReactDOM(for react 0.14) (@sunnylqm)
+- [7259787](https://github.com/amazeui/amazeui-react/commit/72597877bbc776c16a45c5f629dd7473441c890c) remove initializeTouchEvents(for react 0.14) (@sunnylqm)
+- [0482e01](https://github.com/amazeui/amazeui-react/commit/0482e0115a5ea69334c1ec457e43eb9114ce1c36) remove peerDependencies (@sunnylqm)
+- [ed09bf3](https://github.com/amazeui/amazeui-react/commit/ed09bf3ce270a347ee18b23a1bbafde68e962ee6) change main path (@sunnylqm)
+- [62b3a31](https://github.com/amazeui/amazeui-react/commit/62b3a318c894d1e01c9cec3751aacec5c65dfc4c) upgrade react to 0.14 (@sunnylqm)
+- [#46](https://github.com/amazeui/amazeui-react/pull/46) Merge pull request #46 from Pyiner/master (@Pyiner)
+- [604e484](https://github.com/amazeui/amazeui-react/commit/604e484ab47e5f02e2e09916134501d0f568cfd4) fix Table name
+- [673182f](https://github.com/amazeui/amazeui-react/commit/673182f6f982555646e4890f2f7867f6ee434b25) if one return false, two doesn't execute. (@Pliman)
+- [cfb7aed](https://github.com/amazeui/amazeui-react/commit/cfb7aedf519b645495cd334ef9e474d21fe666ee) first onConfirm&onCancel (@Pliman)
+- [7f0bcdd](https://github.com/amazeui/amazeui-react/commit/7f0bcddb167a20c4b9e4eae62e1b30b15ea4aa8d) [fix] Dropdown in navItem use 'a' and not 'btn' in className
+- [#38](https://github.com/amazeui/amazeui-react/pull/38) Merge pull request #38 from minwe/master (@minwe)
+- [da233f8](https://github.com/amazeui/amazeui-react/commit/da233f85d16a01dc0b06750e8fed9f428aabdba7) resolves amazeui/amazeui-react#37 (@minwe)
+- [#33](https://github.com/amazeui/amazeui-react/pull/33) Merge pull request #33 from Minwe/master (@Minwe)
+- [4871d27](https://github.com/amazeui/amazeui-react/commit/4871d276bb6d2207009d63acff6a50910ef82c93) [new] Header add `onSelect` prop, resolves amazeui/amazeui-react#32 (@minwe)
+- [#31](https://github.com/amazeui/amazeui-react/pull/31) Merge pull request #31 from Minwe/master (@Minwe)
+- [3a4a3cf](https://github.com/amazeui/amazeui-react/commit/3a4a3cfea2e31ed10d88fe382dfd1a8d33cdeb9d) [new] Selected add `delimiter` prop (@minwe)
+- [#27](https://github.com/amazeui/amazeui-react/pull/27) Merge pull request #27 from withinthefog/master (@withinthefog)
+- [a299e4b](https://github.com/amazeui/amazeui-react/commit/a299e4b0fbdd9a86ac2a9d69706f5eb6064bdbd5) unbind Dropdown's event handler when component is unmounting (@withinthefog)
+- [#24](https://github.com/amazeui/amazeui-react/pull/24) Merge pull request #24 from Minwe/master (@Minwe)
+- [7c2963e](https://github.com/amazeui/amazeui-react/commit/7c2963e37db99b9500becfcb09ae94b0e65c5ec8) [changed] let `react-tools` go... (@minwe)
+- [#20](https://github.com/amazeui/amazeui-react/pull/20) Merge pull request #20 from Minwe/master (@Minwe)
+- [2d2a314](https://github.com/amazeui/amazeui-react/commit/2d2a314dded76b6e0c37347b62c5a8a3bcb56c69) replace demo image URLs (@minwe)
+- [#18](https://github.com/amazeui/amazeui-react/pull/18) Merge pull request #18 from Minwe/master (@Minwe)
+- [97cc875](https://github.com/amazeui/amazeui-react/commit/97cc8757dfbc442f9b669fae587ebd2f5a68c703) add style guide and live templates links (@minwe)
+- [cba0d9f](https://github.com/amazeui/amazeui-react/commit/cba0d9fe4e4bcae497f5db44f7bc9604a71eee14) [change] update React cdn URLs (@minwe)
+- [0755d1c](https://github.com/amazeui/amazeui-react/commit/0755d1c84bfc6834defd4cf04e03b3e3574a29ba) [change] update React cdn URLs (@minwe)
+- [#17](https://github.com/amazeui/amazeui-react/pull/17) Merge pull request #17 from duteng/master (@duteng)
+- [c96375f](https://github.com/amazeui/amazeui-react/commit/c96375f7888fc3f464a92ec132faa9d48e7b54bf) fix mistake of var keyword
+- [0a80832](https://github.com/amazeui/amazeui-react/commit/0a808322463cfe96d4fd4ee30bb189eccd68b4d8) fix mistack of var keyword
+- [#15](https://github.com/amazeui/amazeui-react/pull/15) Merge pull request #15 from Minwe/master (@Minwe)
+- [d3e81e9](https://github.com/amazeui/amazeui-react/commit/d3e81e9166e45b51fc9653e08ad20c4be5a25956) [fixed] fixes amazeui/amazeui-react#14 (@minwe)
+- [#13](https://github.com/amazeui/amazeui-react/pull/13) Merge pull request #13 from Minwe/master (@Minwe)
+- [c789427](https://github.com/amazeui/amazeui-react/commit/c78942725f66bfbf4895d13c890ed3f8453ee8cb) [new] add examples boilerplate (@minwe)
+- [#10](https://github.com/amazeui/amazeui-react/pull/10) Merge pull request #10 from Minwe/master (@Minwe)
+- [02febc7](https://github.com/amazeui/amazeui-react/commit/02febc72d18397ac485d518d258d5955c7dafae3) [new] add get owner window util (@minwe)
+- [#8](https://github.com/amazeui/amazeui-react/pull/8) Merge pull request #8 from immkoala/master (@immkoala)
+- [a240e31](https://github.com/amazeui/amazeui-react/commit/a240e319da89d56e62daec4f1c807dcbc86fe347) add getCurFrameInfo (@zxmyunshipei)
+- [#7](https://github.com/amazeui/amazeui-react/pull/7) Merge pull request #7 from Minwe/master (@Minwe)
+- [947cfa1](https://github.com/amazeui/amazeui-react/commit/947cfa16a36312f40f896a4a2dfc43589463badd) add Button test (@minwe)
+- [#5](https://github.com/amazeui/amazeui-react/pull/5) Merge pull request #5 from huangzhipeng/master (@huangzhipeng)
+- [28a983c](https://github.com/amazeui/amazeui-react/commit/28a983c0d910bd1cb0f58d2bcab8d6c073560fd4) update docs menu (@huangzhipeng)
+- [8ed756b](https://github.com/amazeui/amazeui-react/commit/8ed756b1fa6adbabaef2541a4e04f330691c761b) update git ignore dist/docs (@huangzhipeng)
+- [#4](https://github.com/amazeui/amazeui-react/pull/4) Merge pull request #4 from Minwe/master (@Minwe)
+- [45b6a4c](https://github.com/amazeui/amazeui-react/commit/45b6a4c499c4938abc761b1efc7b9f2934a1b7eb) fixes Icon italic style on IE9-10 (@minwe)
+- [5b9656a](https://github.com/amazeui/amazeui-react/commit/5b9656a9e210d50398af1b34e6f9a2cfe2f34829) fixes IE `flex: 1` (@minwe)
+- [#3](https://github.com/amazeui/amazeui-react/pull/3) Merge pull request #3 from Minwe/master (@Minwe)
+- [aaf8e9d](https://github.com/amazeui/amazeui-react/commit/aaf8e9dafc1daf7f9268c3fe95f403a3700e4dd3) fixes demo image URLs (@minwe)
+- [#2](https://github.com/amazeui/amazeui-react/pull/2) Merge pull request #2 from Minwe/master (@Minwe)
+- [5f4fa07](https://github.com/amazeui/amazeui-react/commit/5f4fa07d053aef204ec83cdbdd040b23b79c92b0) fixes demo image URLs (@minwe)
+- [0e50c2b](https://github.com/amazeui/amazeui-react/commit/0e50c2b58d06a6d0b41f5626113a047176486c36) update building config (@minwe)
+- [d136fe0](https://github.com/amazeui/amazeui-react/commit/d136fe0556e224d313bb87b2c6e890b92934d8f1) fixes bower badge link (@minwe)
+
+### v1.0.0-beta1 (2015/06/01 03:00 +00:00)
+- [63e556f](https://github.com/amazeui/amazeui-react/commit/63e556f87a91b749f41628d493fca79a3b8690d5) initial commit (@minwe)

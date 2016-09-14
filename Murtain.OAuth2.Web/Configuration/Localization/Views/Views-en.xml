@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="en">
+  <texts>
+    <text name="账号登录" value="Sign in to your Account"/>
+    <text name="其他方式登录" value="More options" />
+    <text name="邮箱/手机号码/帐号" value ="Enter your Email or Telphone"/>
+    <text name="密码" value ="Enter your Password"/>
+    <text name="关闭" value="Close" />
+    <text name="立即注册" value="Create Account" />
+    <text name="忘记密码？" value="Forgot password" />
+    <text name="立即登录" value="Sign in" />
+    <text name="请输入账号" value="Enter your email address or phone number" />
+    <text name="请输入密码" value="Enter your password" />
+    <text name="帐号扫码登录" value="Scan QR code to sign in"/>
+    <text name="请使用微信进行扫码登录" value="Scan using the wechat from the latest version"/>
+    <text name="常见问题" value="FAQ"/>
+    <text name="版权所有" value="All rights reserved "/>
+    <text name="京ICP备10046444" value="Beijing ICP - 10046444 "/>
+    <text name="京公网安备11010802020134号" value="Beijing Public Security ICP-11010802020134 "/>
+    <text name="京ICP证110507号" value="Beijing ICP licence No. - 110507"/>
+  </texts>
+</localizationDictionary>

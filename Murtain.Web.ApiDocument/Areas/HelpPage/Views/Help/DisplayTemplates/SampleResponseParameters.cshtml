@@ -1,0 +1,37 @@
+@using System.Collections.Generic
+@using System.Collections.ObjectModel
+@using System.Web.Http.Description
+@using System.Threading
+@using Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions
+@using Murtain.Web.ApiDocument.Areas.HelpPage.Models
+@model IList<ParameterDescription>
+@{
+    HelpPageApiModel apiModel = ViewBag.apiModel;
+}
+@if (Model.Count > 0)
+{
+    <table class="help-page-table">
+        <thead>
+            <tr><th>名称</th><th>数据类型</th><th>描述</th></tr>
+        </thead>
+        <tbody>
+            @foreach (ParameterDescription parameter in Model)
+            {
+                if (apiModel != null && apiModel.SampleResponseCommonObject != null && apiModel.SampleResponseCommonObject.GetType().GetProperties().Any(x => x.Name == parameter.Name))
+                {
+                    continue;
+                }
+                ModelDescription modelDescription = parameter.TypeDescription;
+                <tr>
+                    <td class="parameter-name">@parameter.Name</td>
+                    <td class="parameter-type">
+                        @Html.DisplayFor(m => modelDescription.ModelType, "ModelDescriptionLink", new { modelDescription = modelDescription })
+                    </td>
+                    <td class="parameter-documentation">
+                        <p>@parameter.Documentation</p>
+                    </td>
+                </tr>;
+            }
+        </tbody>
+    </table>
+}

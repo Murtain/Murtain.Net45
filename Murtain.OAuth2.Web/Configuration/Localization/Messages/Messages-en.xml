@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="en">
+  <texts>
+    <text name="UsernameRequired" value="Email or telphone is required" />
+    <text name="PasswordRequired" value="Password is required" />
+  </texts>
+</localizationDictionary>

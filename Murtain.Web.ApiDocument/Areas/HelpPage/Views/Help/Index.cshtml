@@ -1,0 +1,98 @@
+@using System.Web.Http
+@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using System.Collections.ObjectModel
+@using Murtain.Web.ApiDocument.Areas.HelpPage.Models
+@model Collection<ApiDescription>
+
+@{
+    ViewBag.Title = "ASP.NET Web API Help Page";
+
+    // Group APIs by controller
+    ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
+}
+
+<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+
+<div id="body" class="help-page">
+    <header class="header">
+        <div class="header-wrap">
+            <div class="header-text">
+                <h2 class="header-title">文档&API</h2>
+                <h3 class="header-description">“文档中心包含所有平台接入、业务说明，以及API接口文档”</h3>
+            </div>
+            <div class="header-search">
+                <form action="#" name="search-form" id="search-form" target="_blank">
+                    <input placeholder="资料库/API搜索" value="" name="keyword" class="header-search-input" autocomplete="off" disableautocomplete>
+                    <i class="iconfont"></i>
+                </form>
+            </div>
+            <div class="header-tab">
+                <ul class="header-tab-panel ">
+                    <li class="active" data-target="tab-document">常用文档</li>
+                    <li class="" data-target="tab-category">API目录</li>
+                    <li class="" data-target="tab-tools">常用工具</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <section class="content-wrapper main-content clear-fix">
+        <div class="tab tab-document" style="display:block;">
+            <div class="mod mod-doc">
+                <h3 class="mod-doc-title">基础文档</h3>
+                <ul>
+                    <li><a href="#" target="_blank">用户授权</a></li>
+                    <li><a href="#" target="_blank">SDK使用</a></li>
+                    <li><a href="/doc/howtocallapi" target="_blank">API调用</a></li>
+                    <li><a href="#" target="_blank">更多&gt;&gt;</a></li>
+                </ul>
+            </div>
+            <div class="mod mod-doc">
+                <h3 class="mod-doc-title">接入指南</h3>
+                <ul>
+                    <li><a href="" target="_blank">权限体系</a></li>
+                    <li><a href="" target="_blank">环境说明</a></li>
+                    <li><a href="" target="_blank">开发异常排查</a></li>
+                    <li><a href="" target="_blank">更多&gt;&gt;</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab tab-category" style="display:none;">
+            <div class="tab-category-api-directory">
+                @foreach (var group in apiGroups)
+                {
+                    @Html.DisplayFor(m => group, "ApiGroup")
+                }
+            </div>
+        </div>
+        <div class="tab tab-tools" style="display:none;">
+            <div class="mod mod-tool">
+                <h3 class="mod-tool-title">常用工具</h3>
+                <ul class="mod-tool-icons">
+                    <li>
+                        <a href="#" target="_blank"><i class="iconfont iconfont1" data-iconf="&amp;#" data-iconb="xe603;"></i><br>API测试工具</a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank"><i class="iconfont iconfont1" data-iconf="&amp;#" data-iconb="xe609;"></i><br>用户授权工具</a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank"><i class="iconfont iconfont1" data-iconf="&amp;#" data-iconb="xe606;"></i><br>错误码工具</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(function () {
+        $('.header-tab-panel li').click(function () {
+            $('.header-tab-panel li').removeClass('active');
+            $(this).addClass('active');
+
+            $('.tab').hide();
+            $('.' + $(this).attr('data-target')).show();
+        });
+    })
+</script>

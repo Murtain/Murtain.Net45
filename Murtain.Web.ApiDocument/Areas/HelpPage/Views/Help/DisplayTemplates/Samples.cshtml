@@ -1,0 +1,30 @@
+@using System.Net.Http.Headers
+@model Dictionary<MediaTypeHeaderValue, object>
+
+@{
+    // Group the samples into a single tab if they are the same.
+    Dictionary<string, object> samples = Model.GroupBy(pair => pair.Value).ToDictionary(
+        pair => String.Join(", ", pair.Select(m => m.Key.ToString()).ToArray()),
+        pair => pair.Key);
+    var mediaTypes = samples.Keys.ToList();
+}
+<div>
+    <ul class="nav nav-tabs">
+        @for (var i = 0; i < mediaTypes.Count; i++)
+        {
+            <li class="@(i == 0 ? "active" : "")"><a data-toggle="tab" href="#tab-@(i)" aria-expanded="@(i==0 ? "true":"false")">@mediaTypes[i]</a></li>
+        }
+    </ul>
+    <div class="tab-content">
+        @for (var i = 0; i < mediaTypes.Count; i++)
+        {
+            <div class="tab-pane @(i == 0 ? "active" : "")" id="tab-@(i)">
+                @{
+                    var sample = samples[mediaTypes[i]];
+                    @Html.DisplayFor(s => sample);
+                }
+            </div>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,65 @@
+@using System.Text;
+@using System.Web.Http
+@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using Murtain.Web.ApiDocument.Areas.HelpPage
+@using Murtain.Web.ApiDocument.Areas.HelpPage.Models
+@model HelpPageApiModel
+
+@{
+    var description = Model.ApiDescription;
+    ViewBag.Title = description.HttpMethod.Method + " " + description.RelativePath;
+
+    IGrouping<HttpControllerDescriptor, ApiDescription> group = ViewBag.ApiGroup;
+
+    var controllerDescription = ViewBag.DocumentationProvider != null
+            ? ViewBag.DocumentationProvider.GetDocumentation(group.Key) + "|"
+            : "|";
+
+    var title = controllerDescription.Split('|')[0];
+    var titleDescription = controllerDescription.Split('|')[1];
+}
+<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+
+<div id="body" class="help-page">
+    <header class="header">
+        <div class="header-wrap-nav">
+            <div class="header-crumbs">
+                <a href="~/Help">文档中心</a> &gt; <a href="~/Help/Category?controllerName=@Model.ApiDescription.ActionDescriptor.ControllerDescriptor.ControllerName.ToLower()">@title</a> &gt; @Model.ApiDescription.Documentation
+            </div>
+            <div class="header-search">
+                <form action="#" name="search-form" id="search-form" target="_blank">
+                    <input placeholder="资料库/API搜索" value="" name="keyword" class="header-search-input" autocomplete="off" disableautocomplete>
+                    <i class="iconfont"></i>
+                </form>
+            </div>
+        </div>
+    </header>
+    <div class="content-wrapper" style="margin-top:80px;">
+        <div class="docs-left">
+            <h3 class="docs-title">@title</h3>
+            <ul class="docs-blue">
+                @foreach (var api in group.OrderBy(x => x.HttpMethod.Method))
+                {
+                    <li>
+                        <a href="@Url.Action("Api", "Help", new { apiId = api.GetFriendlyId() })">
+                            @string.Join(".", api.RelativePath.ToLower().Split('?')[0].Split('/')).Replace(".{", "/{")
+                            <p>@api.Documentation</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="docs-right">
+            <div class="docs-right-header">
+                <h2 class="docs-right-title">
+                    <span class="label label-success" style="font-size:12px; font-weight:normal;">@Model.ApiDescription.HttpMethod.Method</span> @string.Join(".", Model.ApiDescription.RelativePath.ToLower().Split('?')[0].Split('/')).Replace(".{", "/{") <span style="color:gray;font-size:20px;">( @Model.ApiDescription.Documentation )</span> 
+                </h2>
+                
+            </div>
+            <div class="clear-fix">
+                @Html.DisplayForModel()
+            </div>
+        </div>
+    </div>
+</div>

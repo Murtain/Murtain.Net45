@@ -1,0 +1,24 @@
+﻿@model IdentityServer3.Core.ViewModels.ErrorViewModel
+
+
+@* This is essentially a copy of the embedded HTML that comes from IdSvr, adapted to access the Model server-side *@
+
+<div class="page-header">
+    <h1>@Model.ErrorMessage</h1>
+</div>
+<div class="row">
+    <div class="alert alert-danger">
+        @if (Model != null)
+            {
+            <p>LogoutUrl：@Model.LogoutUrl</p>
+            <p>RequestId：@Model.RequestId</p>
+            <p>SiteName：@Model.SiteName</p>
+            <p>SiteUrl：@Model.SiteUrl</p>
+            <p>CurrentUser：@Model.CurrentUser</p>
+            <p>Custom：@Model.Custom</p>
+        }
+    </div>
+</div>
+@section scripts{
+    @Html.Partial("_RenderAngularModel")
+}

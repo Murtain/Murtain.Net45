@@ -1,0 +1,126 @@
+{
+  "name": "amazeui-react",
+  "title": "Amaze UI React",
+  "version": "1.2.2",
+  "description": "Amaze UI components build with React.",
+  "main": "lib/AMUIReact.js",
+  "scripts": {
+    "test": "jest",
+    "start": "gulp",
+    "build": "cross-env NODE_ENV=production gulp build",
+    "docs": "rm -rf www && cross-env NODE_ENV=production gulp build:docs && browser-sync start -s www",
+    "docs:preview": "browser-sync start -s www",
+    "examples": "node ./examples/server.js",
+    "changelog": "github-changes -o amazeui -r amazeui-react -a"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amazeui/amazeui-react"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "amazeui",
+    "react.js",
+    "amazeui",
+    "amazeui-react",
+    "react-amazeui",
+    "web-components"
+  ],
+  "author": "AllMobilize, Inc.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amazeui/amazeui-react/issues"
+  },
+  "homepage": "https://github.com/amazeui/amazeui-react",
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "fecha": "^2.2.0",
+    "object-assign": "^4.1.0",
+    "object.omit": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1"
+  },
+  "devDependencies": {
+    "amazeui": "^2.7.1",
+    "autoprefixer": "^6.3.7",
+    "babel-core": "^6.11.4",
+    "babel-jest": "^14.1.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-standalone": "^6.10.3",
+    "brfs": "^1.4.3",
+    "browser-sync": "^2.14.0",
+    "codemirror": "^5.17.0",
+    "cross-env": "^2.0.0",
+    "css-loader": "^0.23.1",
+    "del": "^2.2.1",
+    "eslint": "^3.2.2",
+    "eslint-plugin-react": "^6.0.0",
+    "file-loader": "^0.9.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-git": "^1.11.0",
+    "gulp-header": "^1.8.7",
+    "gulp-if": "^2.0.1",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-qndn": "0.0.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-size": "^2.0.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "highlight.js": "^9.5.0",
+    "history": "^2.0.0",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.22.0",
+    "jest-cli": "^14.1.0",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "markdown-loader": "^0.1.7",
+    "marked": "^0.3.6",
+    "postcss-loader": "^0.9.1",
+    "react": "^15.3.0",
+    "react-addons-test-utils": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-hot-loader": "^1.3.0",
+    "react-router": "^2.6.1",
+    "run-sequence": "^1.2.2",
+    "style-loader": "^0.13.0",
+    "transform-loader": "^0.2.3",
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.12.2",
+    "webpack-stream": "^3.2.0"
+  },
+  "jest": {
+    "rootDir": "./src",
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "testFileExtensions": [
+      "js"
+    ],
+    "unmockedModulePathPatterns": [
+      "react",
+      "react-dom",
+      "react-addons-test-utils"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0",
+      "react"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
+  }
+}

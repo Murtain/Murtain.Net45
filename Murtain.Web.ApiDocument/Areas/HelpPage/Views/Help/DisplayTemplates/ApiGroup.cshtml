@@ -1,0 +1,23 @@
+@using System.Text;
+@using System.Web.Http
+@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using Murtain.Web.ApiDocument.Areas.HelpPage
+@using Murtain.Web.ApiDocument.Areas.HelpPage.Models
+@model IGrouping<HttpControllerDescriptor, ApiDescription>
+
+@{
+    var controllerDescription = ViewBag.DocumentationProvider != null
+            ? ViewBag.DocumentationProvider.GetDocumentation(Model.Key) + "|"
+            : "|";
+
+    var title = controllerDescription.Split('|')[0];
+    var titleDescription = controllerDescription.Split('|')[1];
+}
+
+<div class="mod tab-category-item">
+    <h3>
+        <a href="Help/Category?controllerName=@(Model.Key.ControllerName.ToLower())">@title</a>
+    </h3>
+    <p style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 20em;">@titleDescription</p>
+</div>

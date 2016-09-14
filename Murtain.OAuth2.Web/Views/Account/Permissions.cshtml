@@ -1,0 +1,100 @@
+﻿@model IdentityServer3.Core.ViewModels.ClientPermissionsViewModel
+
+@{
+    Layout = null;
+}
+
+@* This is essentially a copy of the embedded HTML that comes from IdSvr, adapted to access the Model server-side *@
+
+<div class="title-item">
+    <h4 class="title-big dis-inb">授权</h4>
+    <span class="title_item_txt">您已经授权以下应用访问您的部分帐号信息</span>
+</div>
+<div class="third_bindbox c_b">
+    <dl class="third_area c_b" data-type="SINA_WEIBO">
+        <dt><div class="icon_bind icon_SINA_WEIBO"></div></dt>
+        <dd>
+            <h3>新浪微博</h3>
+            <div class="status_bind"><i class="icon_status"></i><span>未绑定</span></div>
+            <a class="th_action_btn bind-del" href="javascript:void(0);" title="">添加绑定</a>
+        </dd>
+        <dd class="arrow_r"></dd>
+    </dl>
+    <dl class="third_area c_b" data-type="TAOBAO">
+        <dt><div class="icon_bind icon_TAOBAO"></div></dt>
+        <dd>
+            <h3>支付宝</h3>
+            <div class="status_bind"><i class="icon_status"></i><span>未绑定</span></div>
+            <a class="th_action_btn bind-del" href="javascript:void(0);" title="">添加绑定</a>
+        </dd>
+        <dd class="arrow_r"></dd>
+    </dl>
+    <dl class="third_area c_b third_area_binded" data-type="OPEN_QQ">
+        <dt><div class="icon_bind icon_OPEN_QQ"></div></dt>
+        <dd>
+            <h3>QQ</h3>
+            <div class="status_bind"><i class="icon_status"></i><span>已绑定</span></div>
+            <a class="th_action_btn bind-del" href="javascript:void(0);" title="">解除绑定</a>
+        </dd>
+        <dd class="arrow_r"></dd>
+    </dl>
+    <dl class="third_area c_b" data-type="WEIXIN">
+        <dt><div class="icon_bind icon_WEIXIN"></div></dt>
+        <dd>
+            <h3>微信</h3>
+            <div class="status_bind"><i class="icon_status"></i><span>未绑定</span></div>
+            <a class="th_action_btn bind-del" href="javascript:void(0);" title="">添加绑定</a>
+        </dd>
+        <dd class="arrow_r"></dd>
+    </dl>
+</div>
+<div class="title-item">
+    <h4 class="title-big dis-inb">绑定</h4>
+    <span class="title_item_txt">帐号绑定的第三方帐号，可用于直接登录网站</span>
+</div>
+<div id="auth-box" class="third_bindbox c_b">
+    @foreach (var client in Model.Clients)
+        {
+        <dl id="auth-item-0" class="third_area c_b">
+            <dt>
+                <img src="@client.ClientLogoUrl" title="@client.ClientName" />
+            </dt>
+            <dd>
+                <h3>@client.ClientName</h3>
+                <div class="status_bind"><span>未绑定</span></div>
+                <form name="form" method="post" action="@Model.RevokePermissionUrl" class="consent-form">
+                    <input type="hidden" name="@Model.AntiForgery.Name" value="@Model.AntiForgery.Value" />
+                    <input type="hidden" name="clientId" value="@client.ClientId">
+                    <button class="th_action_btn auth-cancel" href="javascript:void(0);" title="" data-index="0">取消授权</button>
+                </form>
+            </dd>
+            <dd class="arrow_r"></dd>
+        </dl>
+
+        <div class="row permission">
+            <div class="col-sm-8">
+                @if (client.IdentityPermissions.Any())
+                {
+                    <div>
+                        <div class="permission-type">Identity Permissions</div>
+                        <ul>
+                            @foreach (var permission in client.IdentityPermissions)
+                                {
+                                <li>@permission.DisplayName</li>
+                                }
+                        </ul>
+                    </div>
+                    }
+            </div>
+            <div class="col-sm-2">
+
+            </div>
+        </div>
+        }
+
+    @if (!Model.Clients.Any())
+        {
+        <div class="authmsg">You have not given permission to any applications</div>
+        }
+
+</div>

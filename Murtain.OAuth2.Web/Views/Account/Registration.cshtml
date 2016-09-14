@@ -1,0 +1,254 @@
+﻿@model Murtain.OAuth2.Web.Models.LocalRegisterViewModel
+@{
+    ViewBag.Title = L("注册帐号");
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+<div class="n-frame device-frame reg_frame" id="main_container">
+    <div class="title-item t_c">
+        <h4 class="title_big30">@L("注册帐号")</h4>
+    </div>
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="regbox">
+                <div class="step1 phone_step1">
+                    <div class="listwrap" id="select-cycode" _region="CN" _def_method="PH">
+                        <div class="listtit" id="reg-phone-select-cty">
+                            <span class="tits dis_box c_b">
+                                <tt id="select-cycode-result" data-record-code="+86">
+                                    @L("中国(+86)")
+                                </tt>
+                                <i class="icon_cirarr"></i>
+                            </span>
+                        </div>
+                        <div class="country-container" style="display: none;">
+                            <div class="country-code">
+                                <div class="container">
+                                    <div class="header">@L("常用")</div>
+                                    <ul class="list">
+                                        <li class="record clearfix">
+                                            <span class="record-country" data-code="+86" data-brief="CN">@L("中国")</span>
+                                            <span class="record-code">+86</span>
+                                        </li>
+                                        <li class="record clearfix">
+                                            <span class="record-country" data-code="+886" data-brief="TW">@L("台湾")</span>
+                                            <span class="record-code">+886</span>
+                                        </li>
+                                        <li class="record clearfix"><span class="record-country" data-code="+852" data-brief="HK">@L("中国香港")</span><span class="record-code">+852</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inputbg">
+                        <label class="labelbox" for="">
+                            <input type="tel" name="Telphone" id="telphone" placeholder="@L("请输入手机号码")">
+                        </label>
+                    </div>
+                    <div class="inputbg inputcode dis_box">
+                        <label class="labelbox" for="">
+                            <input class="code" type="text" name="icode" id="captcha" autocomplete="off" placeholder="@L("图片验证码")">
+                        </label>
+                        <img alt="@L("图片验证码")" title="@L("看不清换一张")" class="icode_image code-image chkcode_img" src="@(GlobalSettingManager.GetSettingValueAsync(Constants.Settings.Authorization.CaptchaAddress).Result)">
+                    </div>
+                    @if (Model != null && Model.ErrorMessage != null)
+                    {
+                        <div class="err_tip" style="display:block;">
+                            <div class="dis_box"><em class="icon_error"></em><span class="err-message">@Model.ErrorMessage</span></div>
+                        </div>
+                    }
+                    <div class="err_tip">
+                        <div class="dis_box"><em class="icon_error"></em><span class="err-message"></span></div>
+                    </div>
+                    <div class="err_tip send-left-times">
+                    </div>
+                    <div class="fixed_bot mar_phone_dis1">
+                        <button class="btn332 btn_reg_1 submit-step btn-sms" data-to="phone-step2" type="button">@L("立即注册")</button>
+                        <p class="msg">
+                            @L("点击“立即注册”，即表示您同意并愿意遵守小米")
+                            <a href="http://www.miui.com/res/doc/eula/cn.html" target="_blank" title="@L("用户协议")">@L("用户协议")</a>
+                            @L("和")
+                            <a href="http://www.miui.com/res/doc/privacy/cn.html" target="_blank" title="@L("隐私政策")">@L("隐私政策")</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="step2 phone_step2" style="display:none;">
+                    <div class="step2_txt">
+                        <p>@L("我们已经发送一条验证短信至") <span class="address-place" id="telphone-place">+86 15618275259</span></p>
+                        <p>@L("请输入短信中的验证码")</p>
+                    </div>
+                    <div class="inputbg inputcode dis_box">
+                        <label class="labelbox wap_resend_label">
+                            <input class="resendcode" id="message-captcha" type="text" placeholder="@L("请输入验证码")" name="ticket">
+                        </label>
+                        <span class="remain">
+                            <a class="color333 send-status disabled btn-resms" href="javascript:void(0)">
+                                @L("重新发送")
+                                <span id="wait-timer">(60)</span>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="err_tip">
+                        <div class="dis_box"><em class="icon_error"></em><span class="err-message"></span></div>
+                    </div>
+                    <div class="err_tip send-left-times" style="display: none;">
+                    </div>
+                    <div class="txt_link">
+                        <span style="display:none;" class="verify-unavailable"><em class="acctip_icon acctip_icon_3"></em>@("一直收不到验证短信？")<a target="_blank" href="http://static.account.xiaomi.com/html/faq/faqSMSerror.html">@L("查看可能原因")</a></span>
+                    </div>
+                    <div class="fixed_bot mar_phone_dis2">
+                        <input class="btn332 btn_reg_1  submit-step btn-validate-sms" type="button" value="@L("下一步")">
+                        <input class="btn332 btn_reg_2  change-view btn-return false-step1" type="button" value="@L("返回")">
+                    </div>
+                    <a class="qst_txt dis_none unavailable-link" href="@(GlobalSettingManager.GetSettingValueAsync(Constants.Settings.Authorization.CaptchaAddress).Result + "?type=SIGNUP")" target="blank" title="@L("我为何收不到验证码？")">@L("我为何收不到验证码？")</a>
+                </div>
+                <div class="step3 phone_step3" style="display:none;">
+                    <dl>
+                        <dt>
+                            <span>@L("请设置您的密码")：</span>
+                        </dt>
+                        <dd>
+                            <div class="inputbg">
+                                <label class="labelbox" for="">
+                                    <input class="set-password" type="password" data-error=".error-password" name="Password" id="password" placeholder="@L("请输入密码")">
+                                </label>
+                            </div>
+                        </dd>
+                        <dd>
+                            <div class="inputbg">
+                                <label class="labelbox" for="">
+                                    <input name="repassword" type="password" data-repeat=".set-password" data-error=".error-password" id="confirm-password" placeholder="@L("请输入确认密码")">
+                                </label>
+                            </div>
+                        </dd>
+                    </dl>
+                    <div class="err_tip pwd_tip error-password" style="display:block;">
+                        <div class="dis_box"><em class="icon_error"></em><span data-origin="@L("密码长度8~16位，数字、字母、字符至少包含两种")" class="err-message">@L("密码长度8~16位，数字、字母、字符至少包含两种")</span></div>
+                    </div>
+                    <div class="fixed_bot mar_phone_dis3"><input class="btn332 btn_reg_1 submit-step btn_submit" type="submit" value="@L("提交")"></div>
+                </div>
+            </div>
+        }
+        <div class="other_register_area" style="display:none;">
+            <div class="regbox">
+                <input class="btn332 btn_reg_2 change-view" data-to="EMAIL" type="button" value="@L("用邮箱注册")">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(function () {
+
+            $("input").keydown(function (e) {
+                var curKey = e.which;
+                if (curKey == 13) {
+                    return false;
+                }
+            });
+
+            $('#reg-phone-select-cty,.country-container ul li').click(function () {
+                $('.country-container').toggle();
+            });
+            $('.country-container ul li').click(function () {
+                $('#select-cycode-result').text($(this).find('.record-country').text() + '(' + $(this).find('.record-code').text() + ')')
+                $('#select-cycode-result').attr('data-record-code', $(this).find('.record-code').text());
+            });
+
+            //刷新图片验证码
+            $('.icode_image').click(function () {
+                $(this).attr('src', '@(GlobalSettingManager.GetSettingValueAsync(Constants.Settings.Authorization.CaptchaAddress).Result)?timespan=' + new Date().getTime());
+            });
+            //上一步
+            $('.btn-return false-step1').click(function () {
+                $('.icode_image').click();
+                $('#captcha').val('');
+                $('.phone_step1,.phone_step2').toggle();
+            });
+
+            //重新发送短信验证码
+            $('.btn-resms').click(function () {
+                if ($(this).hasClass('disabled')) {
+                    return false;
+                }
+                _validateCaptchaAndSendMessageCode();
+            });
+
+            //验证图片验证码并发送短信验证码
+            $('.btn-sms').click(function () {
+                $('.step1 .err_tip').hide().find('.err-message').text('');
+                if ($('#telphone').val() == "" || !/^0?1[3|4|5|7|8][0-9]\d{8}$/.test($('#telphone').val())) {
+                    $('.step1 .err_tip').show().find('.err-message').text('@L("无效的手机号码")');
+                    return false;
+                }
+                if ($('#captcha').val() == "") {
+                    $('.step1 .err_tip').show().find('.err-message').text('@L("请输入图片验证码中的字符")');
+                    return false;
+                }
+                _validateCaptchaAndSendMessageCode();
+            });
+            //验证短信验证码
+            $('.btn-validate-sms').click(function () {
+                $.post('/Account/ValidateMessageCaptcha', { telphone: $('#telphone').val(), captcha: $('#message-captcha').val() }, function (data) {
+                    if (data.Result) {
+                        $('.phone_step2,.phone_step3').toggle();
+                        return false;
+                    }
+                    $('.step2 .err_tip').show().find('.err-message').text(data.Message);
+
+                });
+            });
+            //提交注册
+            $('.btn_submit').click(function () {
+                if ($('#password').val() == "" || !/^[\@@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,22}$/.test($('#password').val())) {
+                    $('.step3 .err_tip').show().find('.err-message').text("@L("密码长度8~16位，数字、字母、字符至少包含两种")");
+                    return false;
+                }
+                if ($('#confirm-password').val() == "") {
+                    $('.step3 .err_tip').show().find('.err-message').text("@L("请输入确认密码")");
+                    return false;
+                }
+                if ($('#password').val() != $('#confirm-password').val()) {
+                    $('.step3 .err_tip').show().find('.err-message').text("@L("两次输入的密码不一致")");
+                    return false;
+                }
+                $('.step3 .err_tip').hide().find('.err-message').text('');
+
+            });
+            //重新发送短信验证码定时器
+            function _captchaTimerStart() {
+                if (!$('.btn-resms').hasClass('disabled')) {
+                    $('.btn-resms').addClass('disabled');
+                }
+                var second = 60;
+                var timer = setInterval(function () {
+
+                    $('#wait-timer').text('(' + second-- + ')');
+
+                    if (second <= 0) {
+                        $('#wait-timer').text('');
+                        $('.btn-resms').removeClass('disabled');
+                        clearInterval(timer);
+                    }
+                }, 1 * 1000)
+            }
+            //验证并发送短信
+            function _validateCaptchaAndSendMessageCode() {
+                $.post('/Account/ValidateCaptchaAndSendMessageCode', { telphone: $('#telphone').val(), captcha: $('#captcha').val() }, function (data) {
+                    if (data.Result) {
+                        $('#telphone-place').text($('#select-cycode-result').attr('data-record-code') + ' ' + $('#telphone').val());
+                        $('#message-captcha').val('');
+                        $('.phone_step2').show();
+                        $('.phone_step1').hide();
+                        _captchaTimerStart();
+                        return false;
+                    }
+                    $('.step1 .err_tip').show().find('.err-message').text(data.Message);
+                });
+            }
+        });
+    </script>
+}

@@ -1,0 +1,25 @@
+@using System.Text;
+@using System.Web.Http
+@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using Murtain.Web.ApiDocument.Areas.HelpPage
+@using Murtain.Web.ApiDocument.Areas.HelpPage.Models
+@using Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions
+@model ModelDescription
+
+<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+
+<div id="body" class="help-page">
+    <div class="content-wrapper">
+        <div class="docs-right">
+            <div class="docs-right-header">
+                <h2 class="docs-right-title">
+                    @Model.Name (@Model.Documentation)
+                </h2>
+            </div>
+            <div class="clear-fix">
+                @Html.DisplayFor(m => Model)
+            </div>
+        </div>
+    </div>
+</div>

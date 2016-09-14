@@ -1,0 +1,57 @@
+@using System.Collections.Generic
+@using System.Collections.ObjectModel
+@using System.Web.Http.Description
+@using System.Threading
+@using Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions
+@using Murtain.Web.ApiDocument.Areas.HelpPage.Models
+@model IList<ParameterDescription>
+@{
+    HelpPageApiModel apiModel = ViewBag.apiModel;
+    var sampleRequestProperties = Model.Select(x => x.Name).ToList();
+    var sampleCommonRequestProperties = apiModel.SampleRequestCommonObject == null 
+        ? null 
+        : apiModel.SampleRequestCommonObject.GetType().GetProperties().Select(x=>x.Name);
+
+}
+@if (Model.Count > 0)
+{
+    <table class="help-page-table">
+        <thead>
+            <tr><th>名称</th><th>数据类型</th><th>约束</th><th>描述</th></tr>
+        </thead>
+        <tbody>
+            @if (!(sampleRequestProperties.Except(sampleCommonRequestProperties).Count() > 0))
+            {
+                <tr>
+                    <td class="parameter-name" colspan="4">无请求参数</td>
+                </tr>
+            }
+            @foreach (ParameterDescription parameter in Model)
+            {
+                if (apiModel != null && apiModel.SampleRequestCommonObject != null && apiModel.SampleRequestCommonObject.GetType().GetProperties().Any(x => x.Name == parameter.Name))
+                {
+                    continue;
+                }
+                ModelDescription modelDescription = parameter.TypeDescription;
+                <tr>
+                    <td class="parameter-name">@parameter.Name</td>
+                    <td class="parameter-type">
+                        @Html.DisplayFor(m => modelDescription.ModelType, "ModelDescriptionLink", new { modelDescription = modelDescription })
+                    </td>
+                    <td class="parameter-annotations">
+                        @if (parameter.Annotations.Count > 0)
+                        {
+                            foreach (var annotation in parameter.Annotations)
+                            {
+                                <p>@annotation.Documentation</p>
+                            }
+                        }
+                    </td>
+                    <td class="parameter-documentation">
+                        <p>@parameter.Documentation</p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

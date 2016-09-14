@@ -1,0 +1,120 @@
+@using System.Text;
+@using System.Web.Http
+@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using Murtain.Web.ApiDocument.Areas.HelpPage
+@using Murtain.Web.ApiDocument.Areas.HelpPage.Models
+@model HelpPageApiModel
+<div>
+    <h1>
+        <i class="triangle"></i>
+        <a class="btn btn-link" role="button" data-toggle="collapse" href="#requestAddress" aria-expanded="false">
+            请求地址
+        </a>
+    </h1>
+    <div class="collapse in" id="requestAddress">
+        <table class="help-page-table">
+            <thead>
+                <tr><th>环境</th><th>请求地址</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="parameter-name">当前环境</td>
+                    <td class="parameter-documentation">@HttpContext.Current.Request.Url.Scheme://@HttpContext.Current.Request.Url.DnsSafeHost:@HttpContext.Current.Request.Url.Port/@Model.ApiDescription.RelativePath</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h1>
+        <i class="triangle"></i>
+        <a class="btn btn-link" role="button" data-toggle="collapse" href="#sampleCommonRequestParameters" aria-expanded="true">
+            公共请求参数
+        </a>
+    </h1>
+    <div class="collapse in" id="sampleCommonRequestParameters">
+        @Html.DisplayFor(m => m.UriParameters, "SampleCommonRequestParameters")
+
+        @if (Model.RequestModelDescription != null)
+        {
+            if (Model.RequestBodyParameters != null)
+            {
+                @Html.DisplayFor(m => m.RequestBodyParameters, "SampleCommonRequestParameters")
+            }
+        }
+    </div>
+    <h1>
+        <i class="triangle"></i>
+        <a class="btn btn-link" role="button" data-toggle="collapse" href="#requestParameters" aria-expanded="true">
+            请求参数
+        </a>
+    </h1>
+    <div class="collapse in" id="requestParameters">
+        @Html.DisplayFor(m => m.UriParameters, "SampleRequestParameters")
+
+        @if (Model.RequestModelDescription != null)
+        {
+            if (Model.RequestBodyParameters != null)
+            {
+                @Html.DisplayFor(m => m.RequestBodyParameters, "SampleRequestParameters")
+            }
+        }
+    </div>
+    <h1>
+        <i class="triangle"></i>
+        <a class="btn btn-link collapsed" role="button" data-toggle="collapse" href="#requestSamples" aria-expanded="true">
+            请求示例
+        </a>
+    </h1>
+    <div class="collapse in" id="requestSamples">
+        @Html.DisplayFor(m => m.SampleRequests, "Samples")
+    </div>
+
+    <h1>
+        <i class="triangle"></i>
+        <a class="btn btn-link collapsed" role="button" data-toggle="collapse" href="#sampleCommonResponseParameters" aria-expanded="true">
+            公共响应信息
+        </a>
+    </h1>
+    <div class="collapse in" id="sampleCommonResponseParameters">
+        @if (Model.ResourceDescription != null)
+            {
+                if (Model.ResourceProperties != null)
+                {
+                @Html.DisplayFor(m => m.ResourceProperties, "SampleCommonResponseParameters")
+            }
+        }
+    </div>
+    <h1>
+        <i class="triangle"></i>
+        <a class="btn btn-link collapsed" role="button" data-toggle="collapse" href="#sampleResponseParameters" aria-expanded="true">
+            响应信息
+        </a>
+    </h1>
+    <div class="collapse in" id="sampleResponseParameters">
+        @if (Model.ResourceDescription != null)
+            {
+                if (Model.ResponseBodyProperties != null)
+                {
+                @Html.DisplayFor(m => m.ResponseBodyProperties, "SampleResponseParameters")
+            }
+        }
+    </div>
+    <h1>
+        <i class="triangle"></i>
+        <a class="btn btn-link collapsed" role="button" data-toggle="collapse" href="#SampleResponses" aria-expanded="true">
+            响应示例
+        </a>
+    </h1>
+    <div class="collapse in" id="SampleResponses">
+        @Html.DisplayFor(m => m.SampleResponses, "Samples")
+    </div>
+    <h1>
+        <i class="triangle"></i>
+        <a class="btn btn-link collapsed" role="button" data-toggle="collapse" href="#ApiTools" aria-expanded="true">
+            API工具
+        </a>
+    </h1>
+    <div class="collapse in" id="ApiTools">
+        <a class="btn btn-link collapsed" href="/Help/test?controllerName=@Model.ApiDescription.ActionDescriptor.ControllerDescriptor.ControllerName&apiId=@Model.ApiDescription.GetFriendlyId()">API 测试工具</a>
+    </div>
+</div>

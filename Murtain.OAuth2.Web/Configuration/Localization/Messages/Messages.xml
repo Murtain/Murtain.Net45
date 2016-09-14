@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="zh-CN">
+  <texts>
+    <text name="UsernameRequired" value="邮箱或手机号不能为空" />
+    <text name="PasswordRequired" value="密码不能为空" />
+    <text name="UserAlreadyExists" value="账户已存在" />
+    <text name="UserAddComplete" value="注册成功" />
+  </texts>
+</localizationDictionary>
