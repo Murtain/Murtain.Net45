@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Murtain.Runtime.Validation;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Murtain.Domain.Services
 {
-    public abstract class RequestBase
+    public abstract class RequestBase : IValidate
     {
         /// <summary>
         /// 系统分配的应用程序标识

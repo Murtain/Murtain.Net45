@@ -12,12 +12,17 @@ using Murtain.Dependency;
 using Murtain.AutoMapper;
 
 using AutoMapper;
+using System.IO;
+using System.Web;
 
 namespace Murtain.Configuration.Startup
 {
     public static class StartupConfigurationExtensions
     {
         private const string AssemblySkipLoadingPattern = "^System|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^NSubstitute|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Telerik|^Iesi|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease";
+
+        private static bool _createdMappingsBefore;
+        private static readonly object _syncObj = new object();
 
         public static StartupConfiguration UseAutoMapper(this StartupConfiguration bootstrap, Action<IAutoMapperConfiguration> invoke = null)
         {
@@ -30,16 +35,23 @@ namespace Murtain.Configuration.Startup
 
             var autoMapperConfigration = IocManager.Instance.Resolve<IAutoMapperConfiguration>();
 
-
-            Mapper.Initialize(configuration =>
+            lock (_syncObj)
             {
-                MapAutoAttributes(configuration);
-                MapOtherMappings(configuration);
-                foreach (var configurator in autoMapperConfigration.Configurators)
+                //We should prevent duplicate mapping in an application, since AutoMapper is static.
+                if (!_createdMappingsBefore)
                 {
-                    configurator(configuration);
+                    Mapper.Initialize(configuration =>
+                    {
+                        MapAutoAttributes(configuration);
+                        MapOtherMappings(configuration);
+                        foreach (var configurator in autoMapperConfigration.Configurators)
+                        {
+                            configurator(configuration);
+                        }
+                    });
+                    _createdMappingsBefore = true;
                 }
-            });
+            }
 
             return bootstrap;
         }
@@ -62,11 +74,58 @@ namespace Murtain.Configuration.Startup
             });
         }
 
+
+        private static Assembly[] GetAssemblies()
+        {
+            var path = GetPhysicalPath(AppDomain.CurrentDomain.BaseDirectory);
+            return FilterSystemAssembly(GetAssemblies(path)).ToArray();
+        }
+        private static List<string> GetAllFiles(string directoryPath)
+        {
+            return Directory.GetFiles(directoryPath, "*.*", SearchOption.AllDirectories).ToList();
+        }
+        private static List<Assembly> GetAssemblies(string directoryPath)
+        {
+            var filePaths = GetAllFiles(directoryPath).Where(t => t.EndsWith(".exe") || t.EndsWith(".dll"));
+            return filePaths.Select(Assembly.LoadFrom).ToList();
+        }
+        private static string GetPhysicalPath(string relativePath)
+        {
+            if (HttpContext.Current == null)
+            {
+                if (relativePath.StartsWith("~"))
+                {
+                    relativePath = relativePath.Remove(0, 2);
+                }
+                return Path.GetFullPath(relativePath);
+            }
+            if (relativePath.StartsWith("~"))
+            {
+                return HttpContext.Current.Server.MapPath(relativePath);
+            }
+
+            if (relativePath.StartsWith("/") || relativePath.StartsWith("\\"))
+            {
+                return HttpContext.Current.Server.MapPath("~" + relativePath);
+            }
+            if (HttpContext.Current != null)
+            {
+                return relativePath + "bin";
+            }
+            return HttpContext.Current.Server.MapPath("~/" + relativePath);
+        }
+        private static Assembly[] FilterSystemAssembly(IEnumerable<Assembly> assemblies)
+        {
+            return assemblies
+                .Where(assembly => !Regex.IsMatch(assembly.FullName, AssemblySkipLoadingPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled))
+                .ToArray();
+        }
+
         private static Type[] GetAllTypes(Func<Type, bool> predicate)
         {
             var allTypes = new List<Type>();
 
-            foreach (var assembly in FilterSystemAssembly(AppDomain.CurrentDomain.GetAssemblies()))
+            foreach (var assembly in GetAssemblies())
             {
                 allTypes.AddRange(assembly.GetTypes().Where(type => type != null));
             }
@@ -74,11 +133,5 @@ namespace Murtain.Configuration.Startup
             return allTypes.Where(predicate).ToArray();
         }
 
-        private static Assembly[] FilterSystemAssembly(IEnumerable<Assembly> assemblies)
-        {
-            return assemblies
-                .Where(assembly => !Regex.IsMatch(assembly.FullName, AssemblySkipLoadingPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled))
-                .ToArray();
-        }
     }
 }
