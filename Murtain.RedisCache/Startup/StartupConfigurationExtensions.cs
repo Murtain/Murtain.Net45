@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Murtain.RedisCache.Startup
+namespace Murtain.Configuration.Startup
 {
     public static class StartupConfigurationExtensions
     {

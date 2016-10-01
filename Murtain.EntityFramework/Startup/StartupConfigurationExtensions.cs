@@ -9,7 +9,7 @@ using Murtain.Domain.UnitOfWork.ConventionalRegistras;
 using Murtain.EntityFramework.ConventionalRegistras;
 using Murtain.EntityFramework.Configuration;
 
-namespace Murtain.EntityFramework.Startup
+namespace Murtain.Configuration.Startup
 {
     public static class StartupConfigurationExtensions
     {

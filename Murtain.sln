@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murtain.Web.ApiDocument", "Murtain.Web.ApiDocument\Murtain.Web.ApiDocument.csproj", "{86BC86E6-FC8F-4E0F-A5C5-81B22DD83589}"
 EndProject
@@ -18,6 +18,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murtain.Redis4net", "Murtain.Redis4net\Murtain.Redis4net.csproj", "{74083B86-F5CF-48E7-87EC-429B5469FA27}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murtain.Resources", "Murtain.Resources\Murtain.Resources.csproj", "{C80B18C0-4C33-4E14-87FD-9F3A8D304B81}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NuGet", ".NuGet", "{633AE59D-093C-4704-87C7-BD9EE5ED5DE2}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\nuget.exe = NuGet\nuget.exe
+		NuGet\pack.bat = NuGet\pack.bat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

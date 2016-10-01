@@ -12,7 +12,7 @@ using Murtain.Web.SignalR.Notifications;
 using Autofac;
 using Autofac.Integration.SignalR;
 
-namespace Murtain.Web.SignalR.Startup
+namespace Murtain.Configuration.Startup
 {
     public static class StartupConfigurationExtensions
     {

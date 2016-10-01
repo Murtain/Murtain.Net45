@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Murtain.Redis4net.Startup
+namespace Murtain.Configuration.Startup
 {
     public static class StartupConfigurationExtensions
     {
