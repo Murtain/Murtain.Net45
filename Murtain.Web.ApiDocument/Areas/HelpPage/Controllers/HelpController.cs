@@ -109,16 +109,16 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers
         }
 
 
-        public JsonResult TestRequestExcuteAsync(string url, string appkey, string appSecret, string apiId, string requestBody)
+        public async System.Threading.Tasks.Task<JsonResult> TestRequestExcuteAsync(string rootpath,  string apiId, string postData)
         {
             //try
             //{
-            //    JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
+            //    var settings = new JsonSerializerSettings();
             //    IsoDateTimeConverter timeConverter = new IsoDateTimeConverter();
             //    timeConverter.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-            //    jsonSerializerSettings.Converters.Add(timeConverter);
+            //    settings.Converters.Add(timeConverter);
 
-            //    RequestBase request;
+            //    RequestModelBase request;
             //    HelpPageApiModel apiModel = Configuration.GetHelpPageApiModel(apiId);
             //    Type requestModelType = apiModel.SampleRequestModelType;
 
@@ -126,26 +126,27 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers
             //                        ? null
             //                        : apiModel.SampleRequestModelType.Assembly.GetType(apiModel.SampleRequestModelType.FullName.Substring(0, apiModel.SampleRequestModelType.FullName.LastIndexOf(HelpPageConstants.ApiModelRequestSuffix)) + HelpPageConstants.ApiModelResponseSuffix);
 
-            //    request = JsonConvert.DeserializeObject(requestBody, requestModelType) as RequestBase;
-            //    request.Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            //    request.Sign = SignHelper.SignRequest(request.GetParametersDictionary(), appSecret);
+            //    request = JsonConvert.DeserializeObject(postData, requestModelType) as RequestModelBase;
+            //    var client = new DefaultClient(rootpath);
 
-            //    DefaultClient client = new DefaultClient(request.AppKey, appSecret, url);
+            //    var responseData = await client.RequestReadAsStringAsync(request);
 
-            //    var responseData = client.Request(request);
+            //    var result = JsonConvert.DeserializeObject<ResponseWrapper>(responseData);
 
-            //    var wrapper = JsonConvert.DeserializeObject<ApiResponseWrapper<object>>(responseData);
-
-            //    if (!string.IsNullOrEmpty(wrapper.ErrorCode))
+            //    if (result.code != SystemReturnCode.Completed)
             //    {
-            //        return Json(new { response = "[" + wrapper.ErrorCode + "]" + wrapper.ErrorMessage, post_data = request });
+            //        return Json(new { response = "[" + result.code + "]" + result.message, post_data = request });
             //    }
 
-            //    return Json(new { response = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(wrapper.Body), responseType, jsonSerializerSettings), post_data = request });
+            //    return Json(new
+            //    {
+            //        response = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(result.body), responseType, settings),
+            //        post_data = request
+            //    });
             //}
             //catch (Exception e)
             //{
-            //    return Json(new { response = "发送请求时出现异常，请核对必须的参数的值与数据类型。" + System.Environment.NewLine + e.Message + System.Environment.NewLine + e.StackTrace });
+            //    return Json(new { response = e.Message + System.Environment.NewLine + e.StackTrace });
             //}
             return Json(new { });
         }

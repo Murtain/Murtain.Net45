@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Murtain.Domain.Entities.Audited
 {
-    public class SoftDeleteEntity : AuditedEntity, ISoftDelete
+    public class SoftDeleteEntity : SoftDeleteEntity<long>
     {
-        /// <summary>
-        /// Used to mark an Entity as 'Deleted'. 
-        /// </summary>
-        public virtual bool IsDeleted { get; set; }
     }
 
     public class SoftDeleteEntity<TPrimaryKey> : AuditedEntity<TPrimaryKey>, ISoftDelete
@@ -20,6 +17,7 @@ namespace Murtain.Domain.Entities.Audited
         /// <summary>
         /// Used to mark an Entity as 'Deleted'. 
         /// </summary>
+        [Column("IS_DELETED")]
         public virtual bool IsDeleted { get; set; }
     }
 }

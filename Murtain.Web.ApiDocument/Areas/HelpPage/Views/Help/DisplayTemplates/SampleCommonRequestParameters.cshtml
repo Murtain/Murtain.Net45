@@ -17,7 +17,7 @@
         <tbody>
             @foreach (ParameterDescription parameter in Model)
             {
-                if (apiModel != null && apiModel.SampleRequestCommonObject != null && apiModel.SampleRequestCommonObject.GetType().GetProperties().Any(x => x.Name == parameter.Name))
+                if (apiModel != null && apiModel.RequestModelBase != null && apiModel.RequestModelBase.GetType().GetProperties().Any(x => x.Name == parameter.Name))
                 {
                     ModelDescription modelDescription = parameter.TypeDescription;
                     <tr>

@@ -26,11 +26,11 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Models
         /// <summary>
         ///  Get or Set the sample request common Object.
         /// </summary>
-        public object SampleRequestCommonObject { get; set; }
+        public object RequestModelBase { get; set; }
         /// <summary>
         ///  Get or Set the sample response common Object.
         /// </summary>
-        public object SampleResponseCommonObject { get; set; }
+        public object ResponseModelBase { get; set; }
         /// <summary>
         /// Get or Set the sampleRequestModel type.
         /// </summary>

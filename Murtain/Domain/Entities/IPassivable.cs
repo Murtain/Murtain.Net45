@@ -11,6 +11,6 @@ namespace Murtain.Domain.Entities
     /// </summary>
     public interface IPassivable
     {
-        bool IsActive { get; set; }
+        bool IsActived { get; set; }
     }
 }

@@ -10,8 +10,8 @@
             ? ViewBag.DocumentationProvider.GetDocumentation(Model.Key) + "|"
             : "|";
 
-    var title = controllerDescription.Split('|')[0];
-    var titleDescription = controllerDescription.Split('|')[1];
+    var title = controllerDescription?.Split('|')[0];
+    var titleDescription = controllerDescription?.Split('|')[1];
 
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = ViewBag.ApiGroups;
 }
@@ -39,7 +39,7 @@
                     <li>
                         <a href="/Help/Category?controllerName=@(group.Key.ControllerName.ToLower())">
                             @(ViewBag.DocumentationProvider != null
-                                    ? ViewBag.DocumentationProvider.GetDocumentation(group.Key).Split('|')[0]
+                                    ? ViewBag.DocumentationProvider.GetDocumentation(group.Key)?.Split('|')[0]
                                     : string.Empty
                             )
                         </a>

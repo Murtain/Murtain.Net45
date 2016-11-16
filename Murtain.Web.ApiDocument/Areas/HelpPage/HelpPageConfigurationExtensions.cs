@@ -41,19 +41,19 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         /// Set the sample common Object.
         /// </summary>
         /// <param name="config"></param>
-        /// <param name="sampleCommonObject"></param>
-        public static void SetRequestCommonObject(this HttpConfiguration config, object sampleRequestCommonObject)
+        /// <param name="requestModelBase"></param>
+        public static void SetRequestModelBase(this HttpConfiguration config, object requestModelBase)
         {
-            config.GetHelpPageSampleGenerator().SampleRequestCommonObject = sampleRequestCommonObject;
+            config.GetHelpPageSampleGenerator().RequestModelBase = requestModelBase;
         }
         /// <summary>
         /// Set the sample common Object.
         /// </summary>
         /// <param name="config"></param>
-        /// <param name="sampleCommonObject"></param>
-        public static void SetResponseCommonObject(this HttpConfiguration config, object sampleResponseCommonObject)
+        /// <param name="responseModelBase"></param>
+        public static void SetResponseModelBase(this HttpConfiguration config, object responseModelBase)
         {
-            config.GetHelpPageSampleGenerator().SampleResponseCommonObject = sampleResponseCommonObject;
+            config.GetHelpPageSampleGenerator().ResponseModelBase = responseModelBase;
         }
         /// <summary>
         /// Sets the sample request directly for the specified media type and action.
@@ -258,8 +258,8 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
             HelpPageApiModel apiModel = new HelpPageApiModel()
             {
                 ApiDescription = apiDescription,
-                SampleRequestCommonObject = sampleGenerator.SampleRequestCommonObject,
-                SampleResponseCommonObject = sampleGenerator.SampleResponseCommonObject,
+                RequestModelBase = sampleGenerator.RequestModelBase,
+                ResponseModelBase = sampleGenerator.ResponseModelBase,
                 SampleRequestModelType = sampleGenerator.ResolveHttpRequestMessageType(apiDescription)
             };
 
@@ -400,8 +400,11 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
             ResponseDescription response = apiModel.ApiDescription.ResponseDescription;
             Type responseType = response.ResponseType ?? response.DeclaredType;
 
-            Type responseType2 = apiModel.SampleRequestModelType == null
-                    ? null : apiModel.SampleRequestModelType.Assembly.GetType(apiModel.SampleRequestModelType.FullName.Substring(0, apiModel.SampleRequestModelType.FullName.LastIndexOf(HelpPageConstants.ApiModelRequestSuffix)) + HelpPageConstants.ApiModelResponseSuffix);
+            var index = apiModel.SampleRequestModelType?.FullName.LastIndexOf(HelpPageConstants.ApiModelRequestSuffix);
+
+            Type responseType2 = (apiModel.SampleRequestModelType == null || index == null || index.Value < 0)
+                    ? null
+                    : apiModel.SampleRequestModelType.Assembly.GetType(apiModel.SampleRequestModelType.FullName.Substring(0, index.Value) + HelpPageConstants.ApiModelResponseSuffix);
             if (responseType != null && responseType != typeof(void))
             {
                 apiModel.ResourceDescription = modelGenerator.GetOrCreateModelDescription(responseType);

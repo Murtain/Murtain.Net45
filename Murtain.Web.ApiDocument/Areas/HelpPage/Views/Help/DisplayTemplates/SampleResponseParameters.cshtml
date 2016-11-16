@@ -17,7 +17,7 @@
         <tbody>
             @foreach (ParameterDescription parameter in Model)
             {
-                if (apiModel != null && apiModel.SampleResponseCommonObject != null && apiModel.SampleResponseCommonObject.GetType().GetProperties().Any(x => x.Name == parameter.Name))
+                if (apiModel != null && apiModel.ResponseModelBase != null && apiModel.ResponseModelBase.GetType().GetProperties().Any(x => x.Name == parameter.Name))
                 {
                     continue;
                 }

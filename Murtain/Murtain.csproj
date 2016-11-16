@@ -400,10 +400,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Localization\Sources\XmlSource\Default-zh-CN.xml" />
-    <Content Include="Localization\Sources\XmlSource\Default.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Web\Mvc\Attributes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

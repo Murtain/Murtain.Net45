@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Murtain.Domain.Entities.Audited
 {
-    public class PassivableEntity : AuditedEntity, IPassivable
+    public class PassivableEntity : PassivableEntity<long>
     {
-        /// <summary>
-        /// True: This entity is active.
-        /// False: This entity is not active.
-        /// </summary>
-        public virtual bool IsActive { get; set; }
     }
 
     public class PassivableEntity<TPrimaryKey> : AuditedEntity<TPrimaryKey>, IPassivable
@@ -22,6 +18,7 @@ namespace Murtain.Domain.Entities.Audited
         /// True: This entity is active.
         /// False: This entity is not active.
         /// </summary>
-        public virtual bool IsActive { get; set; }
+        [Column("IS_ACTIVED")]
+        public virtual bool IsActived { get; set; }
     }
 }

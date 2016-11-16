@@ -51,11 +51,11 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         /// <summary>
         /// Get the Sample common Object .
         /// </summary>
-        public object SampleRequestCommonObject { get; internal set; }
+        public object RequestModelBase { get; internal set; }
         /// <summary>
         /// Get the Sample common Object .
         /// </summary>
-        public object SampleResponseCommonObject { get; internal set; }
+        public object ResponseModelBase { get; internal set; }
         
         /// <summary>
         /// Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,

@@ -96,8 +96,6 @@ namespace Murtain.Configuration.Startup
             GlobalSettingsConfiguration = IocManager.Instance.Resolve<IGlobalSettingsConfiguration>();
             LocalizationConfiguration = IocManager.Instance.Resolve<ILocalizationConfiguration>();
 
-            GlobalSettingsConfiguration.Providers.Add<EmailSettingProvider>();
-
             IocManager.Instance.RegisterModule(new LocalizationManagerModule());
             IocManager.Instance.RegisterModule(new EventBusModule());
             IocManager.Instance.RegisterModule(new GlobalSettingsManagerModule());
@@ -121,6 +119,7 @@ namespace Murtain.Configuration.Startup
         public static StartupConfiguration RegisterWebMvcApplication(this StartupConfiguration bootstrap, params IModule[] modules)
         {
             var assemblies = FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
+            IocManager.Instance.RegisterAssemblyByConvention(assemblies);
 
             IocManager.Instance.AddConventionalRegistrar(new ControllerConventionalRegistrar());
             IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
@@ -132,6 +131,8 @@ namespace Murtain.Configuration.Startup
         public static StartupConfiguration RegisterWebApiApplication(this StartupConfiguration bootstrap, params Autofac.Module[] modules)
         {
             var assemblies = FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
+            IocManager.Instance.RegisterAssemblyByConvention(assemblies);
+
             HttpConfiguration configuration = GlobalConfiguration.Configuration;
 
             IocManager.Instance.AddConventionalRegistrar(new ApiControllerConventionalRegistrar());
