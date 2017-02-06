@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Murtain.Runtime.Cookie
 {
-    public class Captcha
+    public class GraphicCaptchaManager
     {
         public static byte[] GetBytes(string cookieName)
         {

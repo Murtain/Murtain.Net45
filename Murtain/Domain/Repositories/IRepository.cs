@@ -37,6 +37,7 @@ namespace Murtain.Domain.Repositories
         IQueryable<TEntity> Get(IQuery<TEntity> query, Expression<Func<TEntity, object>> includes = null);
 
         TEntity Add(TEntity model);
+        Task<TEntity> InsertAsync(TEntity model);
         IEnumerable<TEntity> AddRange(IEnumerable<TEntity> models);
 
         TEntity Update(TEntity model);

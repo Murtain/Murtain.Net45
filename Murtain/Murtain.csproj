@@ -229,6 +229,7 @@
     <Compile Include="Domain\UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Domain\UnitOfWork\IUnitOfWorkCompleteHandle.cs" />
     <Compile Include="Domain\UnitOfWork\IUnitOfWorkManager.cs" />
+    <Compile Include="Domain\UnitOfWork\IUnitOfWorkService.cs" />
     <Compile Include="Domain\UnitOfWork\NullUnitOfWork.cs" />
     <Compile Include="Domain\UnitOfWork\UnitOfWorkAttribute.cs" />
     <Compile Include="Domain\UnitOfWork\UnitOfWorkBase.cs" />
@@ -384,24 +385,30 @@
     <Compile Include="Threading\InternalAsyncHelper.cs" />
     <Compile Include="Utils\StringHelper.cs" />
     <Compile Include="Utils\TypeHelper.cs" />
-    <Compile Include="Web\Models\AjaxResponse.cs" />
+    <Compile Include="Web\Attributes\ResponseCodesAttribute.cs" />
+    <Compile Include="Web\Attributes\WebApiExceptionFilterAttribute.cs" />
+    <Compile Include="Web\Attributes\HttpStatusAttribute.cs" />
+    <Compile Include="Web\HttpControllerSelectors\NamespaceHttpControllerSelector.cs" />
+    <Compile Include="Web\Models\ResponseContentModel.cs" />
+    <Compile Include="Web\Models\ModelStateResponseContentModel.cs" />
+    <Compile Include="Web\Models\UserFriendlyErrorModel.cs" />
+    <Compile Include="Web\Models\PaginationResponseModel.cs" />
+    <Compile Include="Web\Models\ValidateModelResponseContentModel.cs" />
+    <Compile Include="Web\SystemReturnCode.cs" />
+    <Compile Include="Web\ContractResolver\SnakeCaseContractResolver.cs" />
+    <Compile Include="Web\MessageHandlers\DefaultHandler.cs" />
     <Compile Include="Web\Models\DataTablesParam.cs" />
-    <Compile Include="Web\Models\ErrorInfo.cs" />
-    <Compile Include="Web\Models\ErrorViewModel.cs" />
-    <Compile Include="Web\Models\MvcAjaxResponse.cs" />
     <Compile Include="Web\Models\NewtonJsonResult.cs" />
-    <Compile Include="Web\Models\ValidationErrorInfo.cs" />
     <Compile Include="Web\Mvc\AbstractWebViewPage.cs" />
-    <Compile Include="Web\Mvc\GlobalSettingWebViewPage.cs" />
     <Compile Include="Web\Mvc\LocalizationWebViewPage.cs" />
+    <Compile Include="Web\PropertyNameConvert.cs" />
+    <Compile Include="Web\Attributes\ValidateModelAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Web\Mvc\Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

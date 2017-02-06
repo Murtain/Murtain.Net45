@@ -1,107 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Murtain.Extensions;
 
 namespace Murtain.Exceptions
 {
-    /// <summary>
-    /// This exception type is directly shown to the user.
-    /// </summary>
-    [Serializable]
-    public class UserFriendlyException : BaseException
+
+    public class UserFriendlyExceprion : Exception
     {
-        /// <summary>
-        /// Additional information about the exception.
-        /// </summary>
-        public string Details { get; private set; }
+        public HttpStatusCode HttpStatusCode { get; set; }
+        public Enum Code { get; set; }
 
-        /// <summary>
-        /// An arbitrary error code.
-        /// </summary>
-        public int Code { get; set; }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public UserFriendlyException()
+        public UserFriendlyExceprion(Enum code) :
+            base(code.TryDescription())
         {
+            this.HttpStatusCode = code.TryHttpStatusCode();
+            this.Code = code;
         }
-
-        /// <summary>
-        /// Constructor for serializing.
-        /// </summary>
-        public UserFriendlyException(SerializationInfo serializationInfo, StreamingContext context)
-            : base(serializationInfo, context)
-        {
-
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="message">Exception message</param>
-        public UserFriendlyException(string message)
+        public UserFriendlyExceprion(Enum code, string message)
             : base(message)
         {
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="code">Error code</param>
-        /// <param name="message">Exception message</param>
-        public UserFriendlyException(int code, string message)
-            : this(message)
-        {
-            Code = code;
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="message">Exception message</param>
-        /// <param name="details">Additional information about the exception</param>
-        public UserFriendlyException(string message, string details)
-            : this(message)
-        {
-            Details = details;
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="code">Error code</param>
-        /// <param name="message">Exception message</param>
-        /// <param name="details">Additional information about the exception</param>
-        public UserFriendlyException(int code, string message, string details)
-            : this(message, details)
-        {
-            Code = code;
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="message">Exception message</param>
-        /// <param name="innerException">Inner exception</param>
-        public UserFriendlyException(string message, System.Exception innerException)
-            : base(message, innerException)
-        {
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="message">Exception message</param>
-        /// <param name="details">Additional information about the exception</param>
-        /// <param name="innerException">Inner exception</param>
-        public UserFriendlyException(string message, string details, System.Exception innerException)
-            : this(message, innerException)
-        {
-            Details = details;
+            this.HttpStatusCode = code.TryHttpStatusCode();
+            this.Code = code;
         }
     }
 }

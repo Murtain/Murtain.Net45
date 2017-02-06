@@ -17,14 +17,12 @@ namespace Murtain.Domain.Entities.Audited
         /// True: This entity is active.
         /// False: This entity is not active.
         /// </summary>
-        [Column("IS_ACTIVED")]
         public virtual bool IsActived { get; set; }
 
         /// <summary>
         /// True: This entity is active.
         /// False: This entity is not active.
         /// </summary>
-        [Column("IS_DELETED")]
         public virtual bool IsDeleted { get; set; }
     }
 

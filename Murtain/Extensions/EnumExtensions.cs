@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
+using Murtain.Web.Attributes;
 
 namespace Murtain.Extensions
 {
@@ -26,6 +31,27 @@ namespace Murtain.Extensions
                 return string.Empty;
             }
             return System.Enum.GetName(type, value);
+        }
+
+        public static string TryDescription(this Enum enumValue)
+        {
+            string str = enumValue.ToString();
+            FieldInfo field = enumValue.GetType().GetField(str);
+            object[] objs = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            if (objs == null || objs.Length == 0) return str;
+            DescriptionAttribute da = (DescriptionAttribute)objs[0];
+            return da.Description;
+        }
+
+        public static HttpStatusCode TryHttpStatusCode(this Enum enumValue)
+        {
+            string str = enumValue.ToString();
+            FieldInfo field = enumValue.GetType().GetField(str);
+            object[] objs = field.GetCustomAttributes(typeof(HttpStatusAttribute), false);
+            if (objs == null || objs.Length == 0)
+                return HttpStatusCode.InternalServerError;
+            HttpStatusAttribute httpStatus = (HttpStatusAttribute)objs[0];
+            return httpStatus.HttpStatusCode;
         }
     }
 }

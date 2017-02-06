@@ -2,6 +2,7 @@
 using Murtain.Caching;
 using Murtain.Configuration.Startup;
 using Murtain.Dependency;
+using Murtain.RedisCache;
 using Murtain.RedisCache.Configuration;
 using Murtain.RedisCache.ConventionalRegistas;
 using Murtain.RedisCache.Lock;

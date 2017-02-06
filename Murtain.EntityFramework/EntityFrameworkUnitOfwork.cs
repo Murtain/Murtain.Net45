@@ -172,7 +172,7 @@ namespace Murtain.EntityFramework
 
         protected virtual async Task SaveChangesInDbContextAsync(DbContext dbContext)
         {
-            await dbContext.SaveChangesAsync();
+             await Task.FromResult(dbContext.SaveChanges());
         }
 
         protected virtual void Release(DbContext dbContext)

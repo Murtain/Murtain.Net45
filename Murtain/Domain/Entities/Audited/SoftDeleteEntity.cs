@@ -17,7 +17,6 @@ namespace Murtain.Domain.Entities.Audited
         /// <summary>
         /// Used to mark an Entity as 'Deleted'. 
         /// </summary>
-        [Column("IS_DELETED")]
         public virtual bool IsDeleted { get; set; }
     }
 }

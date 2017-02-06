@@ -18,12 +18,10 @@ namespace Murtain.Domain.Entities.Audited
         /// The  modify user for this entity.
         /// </summary>
         [MaxLength(50)]
-        [Column("CHANGED_USER")]
         public virtual string ChangeUser { get; set; }
         /// <summary>
         /// The last modified time for this entity.
         /// </summary>
-        [Column("CHANGED_TIME")]
         public virtual DateTime? ChangeTime { get; set; }
     }
 }

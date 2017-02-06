@@ -78,17 +78,17 @@ namespace Murtain.Domain.UnitOfWork.ConventionalRegistras
                 invocation.ReturnValue = InternalAsyncHelper.AwaitTaskWithPostActionAndFinally(
                     (Task)invocation.ReturnValue,
                     async () => await uow.CompleteAsync(),
-                    exception => uow.Dispose()
+                    (exception) => uow.Dispose()
                     );
             }
             else
             {
                 invocation.ReturnValue = InternalAsyncHelper.CallAwaitTaskWithPostActionAndFinallyAndGetResult(
-                    invocation.Method.ReturnType.GenericTypeArguments[0],
-                    invocation.ReturnValue,
-                    async () => await uow.CompleteAsync(),
-                    (exception) => uow.Dispose()
-                    );
+                   invocation.Method.ReturnType.GenericTypeArguments[0],
+                   invocation.ReturnValue,
+                   async () => await uow.CompleteAsync(),
+                   (exception) => uow.Dispose()
+                   );
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Murtain.Utils
         /// 生成6位随机数
         /// </summary>
         /// <returns></returns>
-        public static string GenerateRandomNo6()
+        public static string GenerateCaptcha()
         {
             return new Random().Next(100000, 999999).ToString();
         }

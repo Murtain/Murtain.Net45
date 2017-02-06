@@ -113,6 +113,10 @@ namespace Murtain.EntityFramework
             return dbContext.Set<TEntity>().AddRange(models);
         }
 
+        public Task<TEntity> InsertAsync(TEntity model)
+        {
+            return Task.FromResult(dbContext.Set<TEntity>().Add(model));
+        }
         public virtual TEntity Update(TEntity model)
         {
             //AttachIfNot(model);
@@ -200,8 +204,6 @@ namespace Murtain.EntityFramework
                 dbContext.Set<TEntity>().Attach(model);
             }
         }
-
-
     }
 
 }

@@ -11,6 +11,7 @@ using Murtain.Web.SignalR.Hubs;
 using Murtain.Web.SignalR.Notifications;
 using Autofac;
 using Autofac.Integration.SignalR;
+using Murtain.Web.SignalR;
 
 namespace Murtain.Configuration.Startup
 {
