@@ -1,0 +1,50 @@
+﻿
+* { padding: 0px; margin: 0px; }
+
+html, body { height: 100%; background-color: #efefef; font-family: "微软雅黑"; width: 1265px; margin: 0px auto; }
+
+h2 { font-size: 16px; font-weight: 300; }
+table th { font-weight: 300; }
+pre { min-height: 100px; }
+
+
+.aside .navbar-default { width: 240px; }
+.aside .navbar-default .nav > li > a:hover, .navbar-default .nav > li > a:focus { background-color: #ffffff; color: #656565; }
+.aside .navbar-default { background-color: #ffffff; border-color: #ffffff; min-height: 785px; }
+
+.aside .nav > li.active { background: #ffffff; }
+.aside .nav > li.active > a { color: #656565; }
+
+.aside { height: 100%; width: 240px; z-index: 2; float: left; background-color: #ffffff; border-right: 1px solid #e9e9e9; }
+.aside .logo { height: 128px; line-height: 128px; width: 100%; padding-left: 30px; cursor: pointer; }
+.aside .logo span { vertical-align: text-bottom; font-size: 16px; text-transform: uppercase; display: inline-block; color: #767676; }
+.aside .logo span img { width: 40px; margin-right: 8px; }
+.aside .logo span i { font-style: normal; }
+
+.main { width: 100%; width: 1024px; background-color: white; float: right; padding: 40px; padding-top: 20px; }
+.main .map { height: 48px; line-height: 48px; background-color: white; border-bottom: 1px solid #e9e9e9; }
+.main .main-container { margin-top: 0px; background-color: #fff; height: 100%; margin: 0px auto; }
+
+.main .pre-code { position: relative; }
+.main .pre-code span { position: absolute; border: 1px solid #cacaca; padding: 5px 10px; border-radius: 3px; right: 0px; font-size: 12px; background-color: white; cursor: pointer; }
+
+.header { height: 64px; width: 100%; background-color: white; border-bottom: 1px solid #e9e9e9; margin-bottom: 20px; }
+
+.footer { position: absolute; display: none; }
+
+@media(max-width: 1024px) {
+    body { width: 1024px; margin: 0px 20px; }
+    .aside { display: none; }
+}
+
+::-webkit-scrollbar-corner { background-color: transparent; }
+
+::-webkit-scrollbar-button { width: 0; height: 0; display: none; }
+
+::-webkit-scrollbar-thumb { width: 0px; background-color: rgba(0,0,0,.1); border-radius: 6px; }
+
+::-webkit-scrollbar { width: 0px; height: 3px; }
+
+::-webkit-scrollbar-track { width: 0px; }
+
+::-webkit-scrollbar:hover { background-color: transparent; }

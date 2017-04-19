@@ -1,0 +1,91 @@
+﻿@{  Layout = null; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>API文档</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qone-resources.quarkfinance.com/resources/plugins/bootstrap-3.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://qone-resources.quarkfinance.com/resources/plugins/bootstrap-3.3.0/css/bootstrap.extend.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://qone-resources.quarkfinance.com/resources/css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="https://qone-resources.quarkfinance.com/resources/css/inspinia.css" />
+    <link rel="stylesheet" type="text/css" href="https://qone-resources.quarkfinance.com/resources/css/override.css" />
+
+    <link href="~/Areas/HelpPage/Content/css/style.css" rel="stylesheet" />
+
+    <script src="https://cdn.bootcss.com/require.js/2.3.2/require.min.js" defer async="true" data-main="/Areas/HelpPage/content/js/main.js"></script>
+    <style>
+    </style>
+</head>
+<body ng-controller="index as app">
+    @*<div class="header">
+        </div>*@
+    <div class="aside">
+        <div class="logo">
+            <span>
+                @*<img ng-src="{{app.icon}}" />*@
+                <i>{{app.brand}}</i>
+            </span>
+        </div>
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <ul class="nav" id="menu">
+                <li>
+                    <a class="menu-item" href="#/readme"><i class="fa fa-tv"></i> <span class="nav-label">API简介</span></a>
+                </li>
+                <li>
+                    <a class="menu-item" href=""><i class="fa fa-send-o"></i><span class="fa arrow"></span> <span class="nav-label">用户授权</span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a class="menu-item" href="/api-description">授权流程</a>
+                            <a class="menu-item" href="/api-description">相关说明</a>
+                            <a class="menu-item" href="/api-description">常见问题</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="menu-item" href=""><i class="fa fa-keyboard-o"></i> <span class="nav-label">权限说明</span></a>
+                </li>
+                <li>
+                    <a class="menu-item" href=""><span class="nav-label"></span></a>
+                </li>
+                <li ng-repeat="document in app.documents">
+                    <a class="menu-item" href="#/document/{{document.controller_name}}">
+                        <i class="fa fa-caret-right"></i>
+                        <span class="pull-right">{{document.namespace}}</span>
+                        <span class="fa arrow"></span>
+                        <span class="nav-label">{{document.description}}</span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a class="menu-item" ng-repeat="api in document.api_descriptions" href="#/document-description/{{document.controller_name}}/{{api.id}}">{{api.description}}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="menu-item" href="#/"><span class="nav-label"></span></a>
+                </li>
+                <li>
+                    <a class="menu-item" href="#/"><span class="nav-label"></span></a>
+                </li>
+                <li>
+                    <a class="menu-item" href="#/"><span class="nav-label"></span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="main">
+        <div ui-view class="content animated fadeIn">
+        </div>
+    </div>
+    <div class="backtop"></div>
+    <div class="footer"></div>
+</body>
+</html>

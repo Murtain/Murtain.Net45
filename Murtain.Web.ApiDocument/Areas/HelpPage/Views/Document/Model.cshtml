@@ -1,0 +1,42 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="map"> 数据结构 > {{model.description.documentation}} </div>
+
+<div>
+    <h2></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>类型</th>
+                <th>约束</th>
+                <th>描述</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="parameter in model.description.properties">
+            <td>{{parameter.name}}</td>
+            <td>
+                <a ng-if="parameter.type_description.values != undefined || parameter.type_description.properties != undefined || parameter.type_description.element_description != undefined" href="#/model/{{parameter.type_description.properties != undefined || parameter.type_description.values != undefined ? parameter.type_description.name : parameter.type_description.element_description != undefined ? parameter.type_description.element_description.name:'' }}">
+                    {{parameter.type_description.name.split('Of').length > 1 ? parameter.type_description.name.split('Of')[0]+'<' + parameter.type_description.name.split('Of')[1] + '>' :parameter.type_description.name }}
+                </a>
+                <span ng-if="parameter.type_description.values == undefined && parameter.type_description.properties == undefined && parameter.type_description.element_description == undefined">{{parameter.type_description.name}}</span>
+            </td>
+            <td>
+                <p ng-repeat="annotation in parameter.annotations">{{annotation.documentation}}</p>
+            </td>
+            <td>{{parameter.documentation}}</td>
+        </tr>
+        <tr ng-repeat="parameter in model.description.values">
+            <td>{{parameter.name}}</td>
+            <td></td>
+            <td>
+                <p ng-repeat="annotation in parameter.annotations">{{annotation.documentation}}</p>
+            </td>
+            <td>{{parameter.documentation}}</td>
+        </tr>
+    </table>
+</div>
+

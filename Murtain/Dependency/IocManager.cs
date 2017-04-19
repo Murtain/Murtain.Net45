@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 
 using Autofac;
 using Autofac.Core;
-using Autofac.Integration.Mvc;
-using Autofac.Integration.WebApi;
-using System.Web.Compilation;
-using System.Web.Mvc;
-using System.Text.RegularExpressions;
-using System.Web.Http;
 using Murtain.Runtime.Session.Modules;
 
 namespace Murtain.Dependency

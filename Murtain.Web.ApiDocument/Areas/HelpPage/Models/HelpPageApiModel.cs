@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
 using Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions;
+using System;
 
 namespace Murtain.Web.ApiDocument.Areas.HelpPage.Models
 {
@@ -18,23 +18,37 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Models
         public HelpPageApiModel()
         {
             UriParameters = new Collection<ParameterDescription>();
-            SampleRequestModelType = typeof(object);
             SampleRequests = new Dictionary<MediaTypeHeaderValue, object>();
             SampleResponses = new Dictionary<MediaTypeHeaderValue, object>();
             ErrorMessages = new Collection<string>();
         }
+
+        //public bool RequiresAuthorization { get; set; }
         /// <summary>
-        ///  Get or Set the sample request common Object.
+        /// Gets or sets the Id.
         /// </summary>
-        public object RequestModelBase { get; set; }
+        public string Id { get; set; }
         /// <summary>
-        ///  Get or Set the sample response common Object.
+        /// Gets or sets the HttpMethod.
         /// </summary>
-        public object ResponseModelBase { get; set; }
+        public string HttpMethod { get; set; }
         /// <summary>
-        /// Get or Set the sampleRequestModel type.
+        /// Gets or sets the RelativePath.
         /// </summary>
-        public Type SampleRequestModelType { get; set; }
+        public string RelativePath { get; set; }
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        public string Description { get; set; }
+        /// <summary>
+        /// Gets or sets the controller name.
+        /// </summary>
+        public string ControllerName { get; set; }
+        /// <summary>
+        /// Gets or sets the action name.
+        /// </summary>
+        public string ActionName { get; set; }
+
         /// <summary>
         /// Gets or sets the <see cref="ApiDescription"/> that describes the API.
         /// </summary>
@@ -65,15 +79,14 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Models
                 return GetParameterDescriptions(RequestModelDescription);
             }
         }
-
         /// <summary>
         /// Gets or sets the <see cref="ModelDescription"/> that describes the resource.
         /// </summary>
         public ModelDescription ResourceDescription { get; set; }
         /// <summary>
-        /// Gets or sets the <see cref="ModelDescription"/> that describes the resource.
+        /// Gets or sets the <see cref="ModelDescription"/> that describes the ResponseCode.
         /// </summary>
-        public ModelDescription ResponseBodyDescription { get; set; }
+        public ModelDescription ReturnCodeModelDescription { get; set; }
         /// <summary>
         /// Gets the resource property descriptions.
         /// </summary>
@@ -84,16 +97,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Models
                 return GetParameterDescriptions(ResourceDescription);
             }
         }
-        /// <summary>
-        /// Gets the resource property descriptions.
-        /// </summary>
-        public IList<ParameterDescription> ResponseBodyProperties
-        {
-            get
-            {
-                return GetParameterDescriptions(ResponseBodyDescription);
-            }
-        }
+
         /// <summary>
         /// Gets the sample requests associated with the API.
         /// </summary>

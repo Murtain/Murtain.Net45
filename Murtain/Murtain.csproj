@@ -38,14 +38,6 @@
       <HintPath>..\packages\Autofac.Extras.DynamicProxy2.3.0.3\lib\net40\Autofac.Extras.DynamicProxy2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Mvc5.3.3.1\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Autofac.Integration.WebApi, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.WebApi2.3.3.3\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
@@ -64,14 +56,6 @@
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -104,45 +88,9 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -171,14 +119,13 @@
     <Compile Include="Auditing\Store\LoggingAuditingStore.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\NetCacheManager.cs" />
+    <Compile Include="Collections\AssemblyLoader.cs" />
     <Compile Include="Collections\ITypeList.cs" />
     <Compile Include="Collections\TypeList.cs" />
     <Compile Include="Configuration\StartupConfiguration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Dependency\ConventionalRegistrarModule.cs" />
-    <Compile Include="Dependency\ConventionalRegistrars\ApiControllerConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrars\BasicConventionalRegistrar.cs" />
-    <Compile Include="Dependency\ConventionalRegistrars\ControllerConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrationContext.cs" />
     <Compile Include="Dependency\DependencyLifeStyle.cs" />
     <Compile Include="Dependency\IConventionalDependencyRegistrar.cs" />
@@ -385,24 +332,6 @@
     <Compile Include="Threading\InternalAsyncHelper.cs" />
     <Compile Include="Utils\StringHelper.cs" />
     <Compile Include="Utils\TypeHelper.cs" />
-    <Compile Include="Web\Attributes\ResponseCodesAttribute.cs" />
-    <Compile Include="Web\Attributes\WebApiExceptionFilterAttribute.cs" />
-    <Compile Include="Web\Attributes\HttpStatusAttribute.cs" />
-    <Compile Include="Web\HttpControllerSelectors\NamespaceHttpControllerSelector.cs" />
-    <Compile Include="Web\Models\ResponseContentModel.cs" />
-    <Compile Include="Web\Models\ModelStateResponseContentModel.cs" />
-    <Compile Include="Web\Models\UserFriendlyErrorModel.cs" />
-    <Compile Include="Web\Models\PaginationResponseModel.cs" />
-    <Compile Include="Web\Models\ValidateModelResponseContentModel.cs" />
-    <Compile Include="Web\SystemReturnCode.cs" />
-    <Compile Include="Web\ContractResolver\SnakeCaseContractResolver.cs" />
-    <Compile Include="Web\MessageHandlers\DefaultHandler.cs" />
-    <Compile Include="Web\Models\DataTablesParam.cs" />
-    <Compile Include="Web\Models\NewtonJsonResult.cs" />
-    <Compile Include="Web\Mvc\AbstractWebViewPage.cs" />
-    <Compile Include="Web\Mvc\LocalizationWebViewPage.cs" />
-    <Compile Include="Web\PropertyNameConvert.cs" />
-    <Compile Include="Web\Attributes\ValidateModelAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

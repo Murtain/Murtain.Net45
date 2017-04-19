@@ -17,10 +17,13 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         {
             context.MapRoute(
                 "HelpPage_Default",
-                "help/{action}/{apiId}",
-                new { controller = "help", action = "index", apiId = UrlParameter.Optional });
+                "document/{action}/{id}",
+                new { controller = "Document", action = "Index", id = UrlParameter.Optional });
+            
 
             HelpPageConfig.Register(GlobalConfiguration.Configuration);
+
+
         }
     }
 }

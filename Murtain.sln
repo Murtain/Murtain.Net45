@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murtain.RedisCache", "Murta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murtain.Redis4net", "Murtain.Redis4net\Murtain.Redis4net.csproj", "{74083B86-F5CF-48E7-87EC-429B5469FA27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murtain.Resources", "Murtain.Resources\Murtain.Resources.csproj", "{C80B18C0-4C33-4E14-87FD-9F3A8D304B81}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NuGet", ".NuGet", "{633AE59D-093C-4704-87C7-BD9EE5ED5DE2}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet\nuget.exe = NuGet\nuget.exe
@@ -26,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NuGet", ".NuGet", "{633AE5
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murtain.Web", "Murtain.Web\Murtain.Web.csproj", "{60B9D99C-2829-4FB9-982A-F8D26639EDCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Murtain.SDK", "Murtain.SDK\Murtain.SDK.csproj", "{08D9807E-C4A2-42AC-9BA0-C408F07C6016}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,14 +61,14 @@ Global
 		{74083B86-F5CF-48E7-87EC-429B5469FA27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74083B86-F5CF-48E7-87EC-429B5469FA27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74083B86-F5CF-48E7-87EC-429B5469FA27}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C80B18C0-4C33-4E14-87FD-9F3A8D304B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C80B18C0-4C33-4E14-87FD-9F3A8D304B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C80B18C0-4C33-4E14-87FD-9F3A8D304B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C80B18C0-4C33-4E14-87FD-9F3A8D304B81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60B9D99C-2829-4FB9-982A-F8D26639EDCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60B9D99C-2829-4FB9-982A-F8D26639EDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60B9D99C-2829-4FB9-982A-F8D26639EDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60B9D99C-2829-4FB9-982A-F8D26639EDCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08D9807E-C4A2-42AC-9BA0-C408F07C6016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08D9807E-C4A2-42AC-9BA0-C408F07C6016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08D9807E-C4A2-42AC-9BA0-C408F07C6016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08D9807E-C4A2-42AC-9BA0-C408F07C6016}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

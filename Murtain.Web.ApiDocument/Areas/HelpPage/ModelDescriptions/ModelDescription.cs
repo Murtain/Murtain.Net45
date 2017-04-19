@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions
 {

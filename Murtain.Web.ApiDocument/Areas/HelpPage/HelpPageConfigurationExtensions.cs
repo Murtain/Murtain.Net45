@@ -13,11 +13,14 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions;
 using Murtain.Web.ApiDocument.Areas.HelpPage.Models;
+using System.Web.Http.Filters;
 
 namespace Murtain.Web.ApiDocument.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {
+        private const string ApiModelPrefix = "MS_HelpPageApiModel_";
+
         /// <summary>
         /// Sets the documentation provider for help page.
         /// </summary>
@@ -37,24 +40,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         {
             config.GetHelpPageSampleGenerator().SampleObjects = sampleObjects;
         }
-        /// <summary>
-        /// Set the sample common Object.
-        /// </summary>
-        /// <param name="config"></param>
-        /// <param name="requestModelBase"></param>
-        public static void SetRequestModelBase(this HttpConfiguration config, object requestModelBase)
-        {
-            config.GetHelpPageSampleGenerator().RequestModelBase = requestModelBase;
-        }
-        /// <summary>
-        /// Set the sample common Object.
-        /// </summary>
-        /// <param name="config"></param>
-        /// <param name="responseModelBase"></param>
-        public static void SetResponseModelBase(this HttpConfiguration config, object responseModelBase)
-        {
-            config.GetHelpPageSampleGenerator().ResponseModelBase = responseModelBase;
-        }
+
         /// <summary>
         /// Sets the sample request directly for the specified media type and action.
         /// </summary>
@@ -234,7 +220,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         public static HelpPageApiModel GetHelpPageApiModel(this HttpConfiguration config, string apiDescriptionId)
         {
             object model;
-            string modelId = HelpPageConstants.ApiModelPrefix + apiDescriptionId;
+            string modelId = ApiModelPrefix + apiDescriptionId;
             if (!config.Properties.TryGetValue(modelId, out model))
             {
                 Collection<ApiDescription> apiDescriptions = config.Services.GetApiExplorer().ApiDescriptions;
@@ -251,18 +237,26 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
 
         private static HelpPageApiModel GenerateApiModel(ApiDescription apiDescription, HttpConfiguration config)
         {
-
-            ModelDescriptionGenerator modelGenerator = config.GetModelDescriptionGenerator();
-            HelpPageSampleGenerator sampleGenerator = config.GetHelpPageSampleGenerator();
-
             HelpPageApiModel apiModel = new HelpPageApiModel()
             {
                 ApiDescription = apiDescription,
-                RequestModelBase = sampleGenerator.RequestModelBase,
-                ResponseModelBase = sampleGenerator.ResponseModelBase,
-                SampleRequestModelType = sampleGenerator.ResolveHttpRequestMessageType(apiDescription)
             };
+            //var isAnonymous = apiDescription.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any() || apiDescription.ActionDescriptor.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any();
 
+            //if (!isAnonymous && apiDescription.ActionDescriptor.GetFilterPipeline().Where(f => f.Instance is IAuthorizationFilter).Any())
+            //    apiModel.RequiresAuthorization = true;
+
+
+
+            ModelDescriptionGenerator modelGenerator = config.GetModelDescriptionGenerator();
+
+            //var responseCodeAttribute = apiDescription.ActionDescriptor.GetCustomAttributes<ResponseCodeAttribute>().FirstOrDefault();
+            //if (responseCodeAttribute != null)
+            //{
+            //    apiModel.ResponseCodesDescription = modelGenerator.GetOrCreateModelDescription(responseCodeAttribute.ResponseCode);
+            //}
+
+            HelpPageSampleGenerator sampleGenerator = config.GetHelpPageSampleGenerator();
             GenerateUriParameters(apiModel, modelGenerator);
             GenerateRequestModelDescription(apiModel, modelGenerator, sampleGenerator);
             GenerateResourceDescription(apiModel, modelGenerator);
@@ -399,16 +393,9 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         {
             ResponseDescription response = apiModel.ApiDescription.ResponseDescription;
             Type responseType = response.ResponseType ?? response.DeclaredType;
-
-            var index = apiModel.SampleRequestModelType?.FullName.LastIndexOf(HelpPageConstants.ApiModelRequestSuffix);
-
-            Type responseType2 = (apiModel.SampleRequestModelType == null || index == null || index.Value < 0)
-                    ? null
-                    : apiModel.SampleRequestModelType.Assembly.GetType(apiModel.SampleRequestModelType.FullName.Substring(0, index.Value) + HelpPageConstants.ApiModelResponseSuffix);
             if (responseType != null && responseType != typeof(void))
             {
                 apiModel.ResourceDescription = modelGenerator.GetOrCreateModelDescription(responseType);
-                apiModel.ResponseBodyDescription = responseType2 == null ? null : modelGenerator.GetOrCreateModelDescription(responseType2);
             }
         }
 

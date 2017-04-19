@@ -1,5 +1,4 @@
 ﻿using Murtain.Domain.Entities;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +14,6 @@ namespace Murtain.Localization.Models
         /// <summary>
         /// Primary key.
         /// </summary>
-        [JsonIgnore]
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public override Guid Id { get; set; }
         /// <summary>

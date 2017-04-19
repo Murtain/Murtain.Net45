@@ -9,7 +9,7 @@
 {
     <table class="help-page-table">
         <thead>
-            <tr><th>名称</th><th>数据类型</th><th>描述</th></tr>
+            <tr><th>Name</th><th>Description</th><th>Type</th><th>Additional information</th></tr>
         </thead>
         <tbody>
             @foreach (ParameterDescription parameter in Model)
@@ -17,14 +17,32 @@
                 ModelDescription modelDescription = parameter.TypeDescription;
                 <tr>
                     <td class="parameter-name">@parameter.Name</td>
+                    <td class="parameter-documentation">
+                        <p>@parameter.Documentation</p>
+                    </td>
                     <td class="parameter-type">
                         @Html.DisplayFor(m => modelDescription.ModelType, "ModelDescriptionLink", new { modelDescription = modelDescription })
                     </td>
-                    <td class="parameter-documentation">
-                        <p>@parameter.Documentation</p>
+                    <td class="parameter-annotations">
+                        @if (parameter.Annotations.Count > 0)
+                        {
+                            foreach (var annotation in parameter.Annotations)
+                            {
+                                <p>@annotation.Documentation</p>
+                            }
+                        }
+                        else
+                        {
+                            <p>None.</p>
+                        }
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
+else
+{
+    <p>None.</p>
+}
+

@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using Murtain.Web;
 
 namespace Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions
 {
@@ -219,7 +220,8 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions
                 }
             }
 
-            return member.Name;
+            return PropertyNameConvert.SnakeCasePropertyName(member.Name);
+
         }
 
         private static bool ShouldDisplayMember(MemberInfo member, bool hasDataContractAttribute)
@@ -331,6 +333,16 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions
                 Documentation = CreateDefaultDocumentation(modelType)
             };
 
+            IEnumerable<Attribute> attributes = modelType.GetCustomAttributes();
+            foreach (Attribute attribute in attributes)
+            {
+                complexModelDescription.Aniotations.Add(
+                    new ParameterAnnotation
+                    {
+                        AnnotationAttribute = attribute
+                    });
+            }
+
             GeneratedModels.Add(complexModelDescription.Name, complexModelDescription);
             bool hasDataContractAttribute = modelType.GetCustomAttribute<DataContractAttribute>() != null;
             PropertyInfo[] properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -409,6 +421,17 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions
                         Name = field.Name,
                         Value = field.GetRawConstantValue().ToString()
                     };
+
+                    IEnumerable<Attribute> attributes = field.GetCustomAttributes();
+                    foreach (Attribute attribute in attributes)
+                    {
+                        enumValue.Aniotations.Add(
+                            new ParameterAnnotation
+                            {
+                                AnnotationAttribute = attribute
+                            });
+                    }
+
                     if (DocumentationProvider != null)
                     {
                         enumValue.Documentation = DocumentationProvider.GetDocumentation(field);

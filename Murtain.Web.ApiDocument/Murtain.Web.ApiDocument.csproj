@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -90,13 +91,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Content Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Content Include="Areas\HelpPage\Controllers\DocumentController.cs" />
     <Content Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Content Include="Areas\HelpPage\Controllers\WebApi\DocumentController.cs" />
     <Content Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
     <Content Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
-    <Content Include="Areas\HelpPage\HelpPageConstants.cs" />
-    <Content Include="Areas\HelpPage\HttpHelper.cs" />
     <Content Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
     <Content Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
     <Content Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
@@ -111,6 +118,8 @@
     <Content Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
     <Content Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
     <Content Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
+    <Content Include="Areas\HelpPage\Models\ApiDescriptionModel.cs" />
+    <Content Include="Areas\HelpPage\Models\DocumentModel.cs" />
     <Content Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
     <Content Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
     <Content Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
@@ -120,9 +129,11 @@
     <Content Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Content Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Content Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Areas\HelpPage\Views\Document\Api.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Document\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Document\Model.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Document\Readme.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Category.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
@@ -134,25 +145,46 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SampleCommonRequestParameters.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SampleCommonResponseParameters.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SampleRequestParameters.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SampleResponseParameters.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Test.cshtml" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\HelpPage\Content\bootstrap.css" />
+    <Content Include="Areas\HelpPage\Content\bootstrap.min.css" />
+    <Content Include="Areas\HelpPage\Content\css\style.css" />
+    <Content Include="Areas\HelpPage\Content\js\app.constants.js" />
+    <Content Include="Areas\HelpPage\Content\js\app.js" />
+    <Content Include="Areas\HelpPage\Content\js\app.module.js" />
+    <Content Include="Areas\HelpPage\Content\js\app.router.js" />
+    <Content Include="Areas\HelpPage\Content\js\controllers\document-api-description.js" />
+    <Content Include="Areas\HelpPage\Content\js\controllers\document-model-description.js" />
+    <Content Include="Areas\HelpPage\Content\js\controllers\document-readme.js" />
+    <Content Include="Areas\HelpPage\Content\js\controllers\document.js" />
+    <Content Include="Areas\HelpPage\Content\js\main.js" />
+    <Content Include="Areas\HelpPage\Content\js\services\document-service.js" />
+    <Content Include="Areas\HelpPage\HelpPage.css" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <Folder Include="Areas\HelpPage\Content\fonts\" />
+    <Folder Include="Areas\HelpPage\Content\images\" />
+    <Folder Include="Areas\HelpPage\Content\js\directives\" />
+    <Folder Include="Areas\HelpPage\Content\js\factories\" />
+    <Folder Include="Areas\HelpPage\Views\Home\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Murtain.Web\Murtain.Web.csproj">
+      <Project>{60B9D99C-2829-4FB9-982A-F8D26639EDCC}</Project>
+      <Name>Murtain.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Murtain\Murtain.csproj">
+      <Project>{1f77d738-26f1-4838-a44b-d88702d72319}</Project>
+      <Name>Murtain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

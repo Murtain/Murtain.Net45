@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Murtain.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json;
 using Murtain.Localization.Language;
 
 namespace Murtain.Localization.Models
@@ -17,7 +16,6 @@ namespace Murtain.Localization.Models
         /// <summary>
         /// Primary key.
         /// </summary>
-        [JsonIgnore]
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public override Guid Id { get; set; }
         /// <summary>

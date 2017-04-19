@@ -48,15 +48,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         /// Gets the objects that are serialized as samples by the supported formatters.
         /// </summary>
         public IDictionary<Type, object> SampleObjects { get; internal set; }
-        /// <summary>
-        /// Get the Sample common Object .
-        /// </summary>
-        public object RequestModelBase { get; internal set; }
-        /// <summary>
-        /// Get the Sample common Object .
-        /// </summary>
-        public object ResponseModelBase { get; internal set; }
-        
+
         /// <summary>
         /// Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
         /// stopping when the factory successfully returns a non-<see langref="null"/> object.

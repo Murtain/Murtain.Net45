@@ -14,13 +14,12 @@ using Murtain.AutoMapper;
 using AutoMapper;
 using System.IO;
 using System.Web;
+using Murtain.Collections;
 
 namespace Murtain.Configuration.Startup
 {
     public static class StartupConfigurationExtensions
     {
-        private const string AssemblySkipLoadingPattern = "^System|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^NSubstitute|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Telerik|^Iesi|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease|^IdentityServer3";
-
         private static bool _createdMappingsBefore;
         private static readonly object _syncObj = new object();
 
@@ -58,7 +57,7 @@ namespace Murtain.Configuration.Startup
 
         private static void MapAutoAttributes(IMapperConfigurationExpression configuration)
         {
-            var types = GetAllTypes(type => type.IsDefined(typeof(AutoMapAttribute)) || type.IsDefined(typeof(AutoMapFromAttribute)) || type.IsDefined(typeof(AutoMapToAttribute)));
+            var types = AssemblyLoader.GetAllTypes(type => type.IsDefined(typeof(AutoMapAttribute)) || type.IsDefined(typeof(AutoMapFromAttribute)) || type.IsDefined(typeof(AutoMapToAttribute)));
             foreach (var type in types)
             {
                 configuration.CreateAttributeMaps(type);
@@ -67,70 +66,11 @@ namespace Murtain.Configuration.Startup
 
         private static void MapOtherMappings(IMapperConfigurationExpression configuration)
         {
-            var types = GetAllTypes(type => typeof(IAutoMaping).IsAssignableFrom(type) && type != typeof(IAutoMaping) && !type.IsAbstract).ToList();
+            var types = AssemblyLoader.GetAllTypes(type => typeof(IAutoMaping).IsAssignableFrom(type) && type != typeof(IAutoMaping) && !type.IsAbstract).ToList();
             types.ForEach(x =>
             {
                 x.GetMethod("CreateMappings").Invoke(Activator.CreateInstance(x), new object[] { configuration });
             });
-        }
-
-
-        private static Assembly[] GetAssemblies()
-        {
-            var path = GetPhysicalPath(AppDomain.CurrentDomain.BaseDirectory);
-            return FilterSystemAssembly(GetAssemblies(path)).ToArray();
-        }
-        private static List<string> GetAllFiles(string directoryPath)
-        {
-            return Directory.GetFiles(directoryPath, "*.*", SearchOption.AllDirectories).ToList();
-        }
-        private static List<Assembly> GetAssemblies(string directoryPath)
-        {
-            var filePaths = GetAllFiles(directoryPath).Where(t => t.EndsWith(".exe") || t.EndsWith(".dll"));
-            return filePaths.Select(Assembly.LoadFrom).ToList();
-        }
-        private static string GetPhysicalPath(string relativePath)
-        {
-            if (HttpContext.Current == null)
-            {
-                if (relativePath.StartsWith("~"))
-                {
-                    relativePath = relativePath.Remove(0, 2);
-                }
-                return Path.GetFullPath(relativePath);
-            }
-            if (relativePath.StartsWith("~"))
-            {
-                return HttpContext.Current.Server.MapPath(relativePath);
-            }
-
-            if (relativePath.StartsWith("/") || relativePath.StartsWith("\\"))
-            {
-                return HttpContext.Current.Server.MapPath("~" + relativePath);
-            }
-            if (HttpContext.Current != null)
-            {
-                return relativePath + "bin";
-            }
-            return HttpContext.Current.Server.MapPath("~/" + relativePath);
-        }
-        private static Assembly[] FilterSystemAssembly(IEnumerable<Assembly> assemblies)
-        {
-            return assemblies
-                .Where(assembly => !Regex.IsMatch(assembly.FullName, AssemblySkipLoadingPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled))
-                .ToArray();
-        }
-
-        private static Type[] GetAllTypes(Func<Type, bool> predicate)
-        {
-            var allTypes = new List<Type>();
-
-            foreach (var assembly in GetAssemblies())
-            {
-                allTypes.AddRange(assembly.GetTypes().Where(type => type != null));
-            }
-
-            return allTypes.Where(predicate).ToArray();
         }
 
     }

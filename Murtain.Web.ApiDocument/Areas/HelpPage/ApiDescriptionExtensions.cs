@@ -16,7 +16,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         {
             string path = description.RelativePath;
             string[] urlParts = path.Split('?');
-            string localPath = urlParts[0];
+            string localPath = urlParts[0].ToLower();
             string queryKeyString = null;
             if (urlParts.Length > 1)
             {

@@ -1,4 +1,3 @@
-@using System.Text;
 @using System.Web.Http
 @using System.Web.Http.Controllers
 @using System.Web.Http.Description
@@ -7,17 +6,36 @@
 @model IGrouping<HttpControllerDescriptor, ApiDescription>
 
 @{
-    var controllerDescription = ViewBag.DocumentationProvider != null
-            ? ViewBag.DocumentationProvider.GetDocumentation(Model.Key) + "|"
-            : "|";
-
-    var title = controllerDescription.Split('|')[0];
-    var titleDescription = controllerDescription.Split('|')[1];
+    var controllerDocumentation = ViewBag.DocumentationProvider != null ? 
+        ViewBag.DocumentationProvider.GetDocumentation(Model.Key) : 
+        null;
 }
 
-<div class="mod tab-category-item">
-    <h3>
-        <a href="Help/Category?controllerName=@(Model.Key.ControllerName.ToLower())">@title</a>
-    </h3>
-    <p style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 20em;">@titleDescription</p>
-</div>
+<h2 id="@Model.Key.ControllerName">@Model.Key.ControllerName</h2>
+@if (!String.IsNullOrEmpty(controllerDocumentation))
+{
+    <p>@controllerDocumentation</p>
+}
+<table class="help-page-table">
+    <thead>
+        <tr><th>API</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+    @foreach (var api in Model)
+    {
+        <tr>
+            <td class="api-name"><a href="@Url.Action("Api", "Help", new { apiId = api.GetFriendlyId() })">@api.HttpMethod.Method @api.RelativePath</a></td>
+            <td class="api-documentation">
+            @if (api.Documentation != null)
+            {
+                <p>@api.Documentation</p>
+            }
+            else
+            {
+                <p>No documentation available.</p>
+            }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

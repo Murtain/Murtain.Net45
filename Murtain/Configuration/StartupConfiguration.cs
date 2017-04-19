@@ -5,14 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
 using System.Web.Compilation;
 
 using Autofac;
 using Autofac.Core;
-using Autofac.Integration.WebApi;
-using Autofac.Integration.Mvc;
 
 using Castle.Core.Logging;
 using Castle.Services.Logging.Log4netIntegration;
@@ -39,6 +35,8 @@ using Murtain.Localization;
 using Murtain.Localization.Language;
 using Murtain.Events;
 using Murtain.Domain.UnitOfWork.ConventionalRegistras;
+using Murtain.Collections;
+
 namespace Murtain.Configuration.Startup
 {
 
@@ -108,7 +106,6 @@ namespace Murtain.Configuration.Startup
 
     public static class StartupConfigurationExtensions
     {
-        private const string AssemblySkipLoadingPattern = "^System|^vshost32|^Nito.AsyncEx|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^NSubstitute|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Telerik|^Iesi|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease|^IdentityServer3";
 
         public static StartupConfiguration UseLoggingLog4net(this StartupConfiguration bootstrap, string configFile = "log4net.config")
         {
@@ -116,84 +113,15 @@ namespace Murtain.Configuration.Startup
             IocManager.Instance.RegisterModule(new LoggingModule());
             return bootstrap;
         }
-        public static StartupConfiguration RegisterWebMvcApplication(this StartupConfiguration bootstrap, params IModule[] modules)
-        {
-            var assemblies = FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
-            IocManager.Instance.RegisterAssemblyByConvention(assemblies);
 
-            IocManager.Instance.AddConventionalRegistrar(new ControllerConventionalRegistrar());
-            IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
-
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(IocManager.Instance.IocContainer));
-
-            return bootstrap;
-        }
-        public static StartupConfiguration RegisterWebApiApplication(this StartupConfiguration bootstrap, params Autofac.Module[] modules)
-        {
-            var assemblies = FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
-            IocManager.Instance.RegisterAssemblyByConvention(assemblies);
-
-            HttpConfiguration configuration = GlobalConfiguration.Configuration;
-
-            IocManager.Instance.AddConventionalRegistrar(new ApiControllerConventionalRegistrar());
-
-            IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
-            configuration.DependencyResolver = new AutofacWebApiDependencyResolver(IocManager.Instance.IocContainer);
-
-            return bootstrap;
-        }
         public static StartupConfiguration RegisterConsoleApplication(this StartupConfiguration bootstrap, params IModule[] modules)
         {
-            IocManager.Instance.RegisterAssemblyByConvention(GetAssemblies(), modules);
+            IocManager.Instance.RegisterAssemblyByConvention(AssemblyLoader.GetAssemblies(), modules);
 
             return bootstrap;
         }
 
-        private static Assembly[] GetAssemblies()
-        {
-            var path = GetPhysicalPath(AppDomain.CurrentDomain.BaseDirectory);
-            return FilterSystemAssembly(GetAssemblies(path)).ToArray();
-        }
-        private static List<string> GetAllFiles(string directoryPath)
-        {
-            return Directory.GetFiles(directoryPath, "*.*", SearchOption.AllDirectories).ToList();
-        }
-        private static List<Assembly> GetAssemblies(string directoryPath)
-        {
-            var filePaths = GetAllFiles(directoryPath).Where(t => t.EndsWith(".exe") || t.EndsWith(".dll"));
-            return filePaths.Select(Assembly.LoadFile).ToList();
-        }
-        private static string GetPhysicalPath(string relativePath)
-        {
-            if (HttpContext.Current == null)
-            {
-                if (relativePath.StartsWith("~"))
-                {
-                    relativePath = relativePath.Remove(0, 2);
-                }
-                return Path.GetFullPath(relativePath);
-            }
-            if (relativePath.StartsWith("~"))
-            {
-                return HttpContext.Current.Server.MapPath(relativePath);
-            }
-
-            if (relativePath.StartsWith("/") || relativePath.StartsWith("\\"))
-            {
-                return HttpContext.Current.Server.MapPath("~" + relativePath);
-            }
-            if (HttpContext.Current != null)
-            {
-                return relativePath + "bin";
-            }
-            return HttpContext.Current.Server.MapPath("~/" + relativePath);
-        }
-        private static Assembly[] FilterSystemAssembly(IEnumerable<Assembly> assemblies)
-        {
-            return assemblies
-                .Where(assembly => !Regex.IsMatch(assembly.FullName, AssemblySkipLoadingPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled))
-                .ToArray();
-        }
+    
 
     }
 }

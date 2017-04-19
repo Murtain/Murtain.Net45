@@ -1,25 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
+﻿using System.Linq;
 
 using Autofac;
-using Autofac.Integration.Mvc;
-using Murtain.Localization.Modules;
-using Murtain.Events.Modules;
-using Murtain.GlobalSettings.Modules;
-using Murtain.Runtime.Session.Modules;
-using Murtain.Localization;
-using Murtain.Events;
-using Murtain.GlobalSettings;
-using Murtain.Runtime.Session;
-using Murtain.Caching;
-using Murtain.Domain.UnitOfWork;
-using Murtain.GlobalSettings.Store;
-using Murtain.Localization.Language;
-using Autofac.Extras.DynamicProxy2;
 
 namespace Murtain.Dependency.ConventionalRegistrars
 {
