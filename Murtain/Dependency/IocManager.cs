@@ -52,8 +52,6 @@ namespace Murtain.Dependency
             }
 
             builder.Update(IocContainer);
-
-            IocManager.Instance.RegisterModule(new AppSessionModule());
             _conventionalRegistrars = new List<IConventionalDependencyRegistrar>();
         }
         public void Register(Type type, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)

@@ -23,8 +23,7 @@ namespace Murtain.Configuration.Startup
     {
         public static StartupConfiguration RegisterWebMvcApplication(this StartupConfiguration bootstrap, params IModule[] modules)
         {
-            var assemblies = AssemblyLoader.GetAssemblies();
-            IocManager.Instance.RegisterAssemblyByConvention(assemblies);
+            var assemblies = AssemblyLoader.FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
 
             IocManager.Instance.AddConventionalRegistrar(new ControllerConventionalRegistrar());
             IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
@@ -35,20 +34,12 @@ namespace Murtain.Configuration.Startup
         }
         public static StartupConfiguration RegisterWebApiApplication(this StartupConfiguration bootstrap, params Autofac.Module[] modules)
         {
-            var assemblies = AssemblyLoader.GetAssemblies();
-
-            IocManager.Instance.AddConventionalRegistrar(new ControllerConventionalRegistrar());
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(IocManager.Instance.IocContainer));
-            IocManager.Instance.RegisterAssemblyByConvention(assemblies);
+            var assemblies = AssemblyLoader.FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
 
             HttpConfiguration configuration = GlobalConfiguration.Configuration;
-
-            IocManager.Instance.AddConventionalRegistrar(new ControllerConventionalRegistrar());
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(IocManager.Instance.IocContainer));
-
             IocManager.Instance.AddConventionalRegistrar(new ApiControllerConventionalRegistrar());
-
             IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
+
             configuration.DependencyResolver = new AutofacWebApiDependencyResolver(IocManager.Instance.IocContainer);
 
             return bootstrap;

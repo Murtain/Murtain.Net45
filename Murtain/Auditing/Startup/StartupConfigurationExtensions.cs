@@ -22,10 +22,7 @@ namespace Murtain.Auditing.Startup
 
             IocManager.Instance.AddConventionalRegistrar(new AuditingRegistrar());
 
-            if (invoke != null)
-            {
-                invoke(IocManager.Instance.Resolve<IAuditingConfiguration>());
-            }
+            invoke?.Invoke(IocManager.Instance.Resolve<IAuditingConfiguration>());
 
             return bootstrap;
         }
