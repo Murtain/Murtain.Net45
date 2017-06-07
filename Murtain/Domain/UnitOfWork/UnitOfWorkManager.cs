@@ -23,7 +23,7 @@ namespace Murtain.Domain.UnitOfWork
             ICurrentUnitOfWorkProvider currentUnitOfWorkProvider,
             IUnitOfWorkDefaultOptionsConfiguration defaultOptions)
         {
-            _iocManager = IocManager.Instance;
+            _iocManager = IocManager.Container;
             _currentUnitOfWorkProvider = currentUnitOfWorkProvider;
             _defaultOptions = defaultOptions;
         }

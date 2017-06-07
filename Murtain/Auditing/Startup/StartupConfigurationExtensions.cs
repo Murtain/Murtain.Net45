@@ -16,13 +16,13 @@ namespace Murtain.Auditing.Startup
     {
         public static StartupConfiguration UseAuditing(this StartupConfiguration bootstrap, Action<IAuditingConfiguration> invoke = null)
         {
-            IocManager.Instance.RegisterIfNot<IAuditingConfiguration, AuditingConfiguration>();
-            IocManager.Instance.RegisterIfNot<IAuditingModelProvider, NullAuditingModelProvider>();
-            IocManager.Instance.RegisterIfNot<IAuditingStore, LoggingAuditingStore>();
+            IocManager.Container.RegisterIfNot<IAuditingConfiguration, AuditingConfiguration>();
+            IocManager.Container.RegisterIfNot<IAuditingModelProvider, NullAuditingModelProvider>();
+            IocManager.Container.RegisterIfNot<IAuditingStore, LoggingAuditingStore>();
 
-            IocManager.Instance.AddConventionalRegistrar(new AuditingRegistrar());
+            IocManager.Container.AddConventionalRegistrar(new AuditingRegistrar());
 
-            invoke?.Invoke(IocManager.Instance.Resolve<IAuditingConfiguration>());
+            invoke?.Invoke(IocManager.Container.Resolve<IAuditingConfiguration>());
 
             return bootstrap;
         }

@@ -30,7 +30,7 @@ namespace Murtain.Events.Modules
             // Set the properties located.
             foreach (var propToSet in properties)
             {
-                propToSet.SetValue(instance, IocManager.Instance.Resolve<IEventBus>(), null);
+                propToSet.SetValue(instance, IocManager.Container.Resolve<IEventBus>(), null);
             }
         }
 

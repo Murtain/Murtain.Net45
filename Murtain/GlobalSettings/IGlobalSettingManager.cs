@@ -34,13 +34,13 @@ namespace Murtain.GlobalSettings
         /// </summary>
         /// <param name="data">save data</param>
         /// <returns></returns>
-        Task<GlobalSetting> AddOrUpdateSettingAsync(GlobalSetting data);
+        Task AddOrUpdateSettingAsync(GlobalSetting data);
         /// <summary>
         /// Delete setting by name.
         /// </summary>
         /// <param name="name">Unique name of the setting</param>
         /// <returns>Value of the setting</returns>
-        Task<GlobalSetting> DeleteSettingAsync(string name);
+        Task DeleteSettingAsync(string name);
         /// <summary>
         /// Clear cache.
         /// </summary>

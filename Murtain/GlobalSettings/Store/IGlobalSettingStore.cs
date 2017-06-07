@@ -22,13 +22,13 @@ namespace Murtain.GlobalSettings.Store
         /// Adds a setting.
         /// </summary>
         /// <param name="setting">Setting to add</param>
-        Task<GlobalSetting> AddOrUpdateSettingAsync(GlobalSetting setting);
+        Task AddOrUpdateSettingAsync(GlobalSetting setting);
 
         /// <summary>
         /// Deletes a setting.
         /// </summary>
         /// <param name="name">Name of the setting</param>
-        Task<GlobalSetting> DeleteSettingAsync(string name);
+        Task DeleteSettingAsync(string name);
 
         /// <summary>
         /// Gets a list of setting.

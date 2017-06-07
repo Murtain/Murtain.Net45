@@ -34,28 +34,44 @@ namespace Murtain.Domain.Repositories
         IQueryable<TEntity> Models { get; }
 
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> lambda, Expression<Func<TEntity, object>> includes = null);
+        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> lambda, Expression<Func<TEntity, object>> includes = null);
         IQueryable<TEntity> Get(IQuery<TEntity> query, Expression<Func<TEntity, object>> includes = null);
+        Task<IQueryable<TEntity>> GetAsync(IQuery<TEntity> query, Expression<Func<TEntity, object>> includes = null);
 
         TEntity Add(TEntity model);
-        Task<TEntity> InsertAsync(TEntity model);
+        Task<TEntity> AddAsync(TEntity model);
         IEnumerable<TEntity> AddRange(IEnumerable<TEntity> models);
+        Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> models);
 
-        TEntity Update(TEntity model);
-        TEntity UpdateProperty(TEntity model, Expression<Func<TEntity, object>> lambda);
-        TEntity UpdateCompare(TEntity model, TEntity source);
+        void Update(TEntity model);
+        Task UpdateAsync(TEntity model);
+        void UpdateProperty(TEntity model, Expression<Func<TEntity, object>> lambda);
+        Task UpdatePropertyAsync(TEntity model, Expression<Func<TEntity, object>> lambda);
+        void UpdateCompare(TEntity model, TEntity source);
+        Task UpdateCompareAsync(TEntity model, TEntity source);
 
         TEntity Remove(TEntity model);
+        Task<TEntity> RemoveAsync(TEntity model);
         IEnumerable<TEntity> RemoveRange(IEnumerable<TEntity> models);
+        Task<IEnumerable<TEntity>> RemoveRangeAsync(IEnumerable<TEntity> models);
         TEntity Remove(TPrimaryKey key);
+        Task<TEntity> RemoveAsync(TPrimaryKey key);
         IEnumerable<TEntity> RemoveRange(IEnumerable<TPrimaryKey> keys);
+        Task<IEnumerable<TEntity>> RemoveRangeAsync(IEnumerable<TPrimaryKey> keys);
 
         bool Any(Expression<Func<TEntity, bool>> lambda);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> lambda);
 
         int Count();
+        Task<int> CountAsync();
         int Count(Expression<Func<TEntity, bool>> lambda);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> lambda);
 
         TEntity Find(TPrimaryKey key);
+        Task<TEntity> FindAsync(TPrimaryKey key);
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> lambda);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> lambda);
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> lambda, Expression<Func<TEntity, object>> includes);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> lambda, Expression<Func<TEntity, object>> includes);
     }
 }

@@ -22,13 +22,13 @@ namespace Murtain.GlobalSettings.Store
         {
             return Task.FromResult(new Models.GlobalSetting { Name = name, Value = ConfigurationManager.AppSettings[name] });
         }
-        public Task<GlobalSetting> DeleteSettingAsync(string name)
+        public Task DeleteSettingAsync(string name)
         {
             LogHelper.Logger.Warn("ISettingStore is not implemented, SimpleSettingStore does not support DeleteSettingAsync.");
             throw new NotImplementedException();
         }
 
-        public Task<GlobalSetting> AddOrUpdateSettingAsync(GlobalSetting setting)
+        public Task AddOrUpdateSettingAsync(GlobalSetting setting)
         {
             LogHelper.Logger.Warn("ISettingStore is not implemented, SimpleSettingStore does not support AddOrUpdateSettingAsync.");
             throw new NotImplementedException();

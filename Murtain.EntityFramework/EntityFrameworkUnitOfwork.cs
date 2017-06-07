@@ -123,7 +123,7 @@ namespace Murtain.EntityFramework
             DbContext dbContext;
             if (!ActiveDbContexts.TryGetValue(typeof(TDbContext), out dbContext))
             {
-                dbContext = (TDbContext)IocManager.Instance.Resolve(typeof(TDbContext));
+                dbContext = (TDbContext)IocManager.Container.Resolve(typeof(TDbContext));
 
                 foreach (var filter in Filters)
                 {

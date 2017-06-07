@@ -14,11 +14,11 @@ namespace Murtain.Dependency
     public class IocManager : IIocManager
     {
         private List<IConventionalDependencyRegistrar> _conventionalRegistrars;
-        public static IocManager Instance { get; private set; }
+        public static IocManager Container { get; private set; }
 
         static IocManager()
         {
-            Instance = new IocManager();
+            Container = new IocManager();
         }
         public IocManager()
         {
@@ -41,7 +41,7 @@ namespace Murtain.Dependency
         }
         public void RegisterAssemblyByConvention(Assembly[] assembly, params IModule[] modules)
         {
-            var context = new ConventionalRegistrationContext(assembly, IocManager.Instance);
+            var context = new ConventionalRegistrationContext(assembly, IocManager.Container);
             var builder = new ContainerBuilder();
 
             _conventionalRegistrars.ForEach(x => { x.RegisterAssembly(context); });

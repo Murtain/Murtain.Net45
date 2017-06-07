@@ -65,39 +65,39 @@ namespace Murtain.Configuration.Startup
         public StartupConfiguration()
         {
 
-            IocManager.Instance.AddConventionalRegistrar(new BasicConventionalRegistrar());
-            IocManager.Instance.AddConventionalRegistrar(new EventBusConventionalRegistras());
-            IocManager.Instance.AddConventionalRegistrar(new UnitOfWorkConventionalRegistrar());
+            IocManager.Container.AddConventionalRegistrar(new BasicConventionalRegistrar());
+            IocManager.Container.AddConventionalRegistrar(new EventBusConventionalRegistras());
+            IocManager.Container.AddConventionalRegistrar(new UnitOfWorkConventionalRegistrar());
 
-            IocManager.Instance.RegisterIfNot<IEventBus, EventBus>();
-            IocManager.Instance.RegisterIfNot<IEmailSender, EmailSender>();
-            IocManager.Instance.RegisterIfNot<IAppSession, AppClaimsSession>();
-            IocManager.Instance.RegisterIfNot<ICacheManager, NetCacheManager>();
+            IocManager.Container.RegisterIfNot<IEventBus, EventBus>();
+            IocManager.Container.RegisterIfNot<IEmailSender, EmailSender>();
+            IocManager.Container.RegisterIfNot<IAppSession, AppClaimsSession>();
+            IocManager.Container.RegisterIfNot<ICacheManager, NetCacheManager>();
 
-            IocManager.Instance.RegisterIfNot<ICurrentUnitOfWorkProvider, CallContextCurrentUnitOfWorkProvider>();
-            IocManager.Instance.RegisterIfNot<IUnitOfWorkManager, UnitOfWorkManager>();
-            IocManager.Instance.RegisterIfNot<IUnitOfWorkDefaultOptionsConfiguration, UnitOfWorkDefaultOptionsConfiguration>();
+            IocManager.Container.RegisterIfNot<ICurrentUnitOfWorkProvider, CallContextCurrentUnitOfWorkProvider>();
+            IocManager.Container.RegisterIfNot<IUnitOfWorkManager, UnitOfWorkManager>();
+            IocManager.Container.RegisterIfNot<IUnitOfWorkDefaultOptionsConfiguration, UnitOfWorkDefaultOptionsConfiguration>();
 
-            IocManager.Instance.RegisterIfNot<ILanguageProvider, LanguageProvider>();
-            IocManager.Instance.RegisterIfNot<ILanguageManager, LanguageManager>();
+            IocManager.Container.RegisterIfNot<ILanguageProvider, LanguageProvider>();
+            IocManager.Container.RegisterIfNot<ILanguageManager, LanguageManager>();
 
-            IocManager.Instance.RegisterIfNot<IGlobalSettingStore, SimpleGlobalSettingStore>(DependencyLifeStyle.Transient);
-            IocManager.Instance.RegisterIfNot<IGlobalSettingManager, GlobalSettingManager>();
+            IocManager.Container.RegisterIfNot<IGlobalSettingStore, SimpleGlobalSettingStore>(DependencyLifeStyle.Transient);
+            IocManager.Container.RegisterIfNot<IGlobalSettingManager, GlobalSettingManager>();
 
-            IocManager.Instance.RegisterIfNot<ILocalizationManager, LocalizationManager>();
-            IocManager.Instance.RegisterIfNot<ILocalizationConfiguration, LocalizationConfiguration>();
-            IocManager.Instance.RegisterIfNot<IEmailSettingConfiguration, EmailSettingConfiguration>();
-            IocManager.Instance.RegisterIfNot<IGlobalSettingsConfiguration, GlobalSettingsConfiguration>();
+            IocManager.Container.RegisterIfNot<ILocalizationManager, LocalizationManager>();
+            IocManager.Container.RegisterIfNot<ILocalizationConfiguration, LocalizationConfiguration>();
+            IocManager.Container.RegisterIfNot<IEmailSettingConfiguration, EmailSettingConfiguration>();
+            IocManager.Container.RegisterIfNot<IGlobalSettingsConfiguration, GlobalSettingsConfiguration>();
 
 
-            UnitOfWorkDefaultOptionsConfiguration = IocManager.Instance.Resolve<IUnitOfWorkDefaultOptionsConfiguration>();
-            GlobalSettingsConfiguration = IocManager.Instance.Resolve<IGlobalSettingsConfiguration>();
-            LocalizationConfiguration = IocManager.Instance.Resolve<ILocalizationConfiguration>();
+            UnitOfWorkDefaultOptionsConfiguration = IocManager.Container.Resolve<IUnitOfWorkDefaultOptionsConfiguration>();
+            GlobalSettingsConfiguration = IocManager.Container.Resolve<IGlobalSettingsConfiguration>();
+            LocalizationConfiguration = IocManager.Container.Resolve<ILocalizationConfiguration>();
 
-            IocManager.Instance.RegisterModule(new LocalizationManagerModule());
-            IocManager.Instance.RegisterModule(new EventBusModule());
-            IocManager.Instance.RegisterModule(new GlobalSettingsManagerModule());
-            IocManager.Instance.RegisterModule(new AppSessionModule());
+            IocManager.Container.RegisterModule(new LocalizationManagerModule());
+            IocManager.Container.RegisterModule(new EventBusModule());
+            IocManager.Container.RegisterModule(new GlobalSettingsManagerModule());
+            IocManager.Container.RegisterModule(new AppSessionModule());
 
 
         }
@@ -109,14 +109,14 @@ namespace Murtain.Configuration.Startup
 
         public static StartupConfiguration UseLoggingLog4net(this StartupConfiguration bootstrap, string configFile = "log4net.config")
         {
-            IocManager.Instance.RegisterWithParameter<ILoggerFactory, Log4netFactory>("configFile", configFile);
-            IocManager.Instance.RegisterModule(new LoggingModule());
+            IocManager.Container.RegisterWithParameter<ILoggerFactory, Log4netFactory>("configFile", configFile);
+            IocManager.Container.RegisterModule(new LoggingModule());
             return bootstrap;
         }
 
         public static StartupConfiguration RegisterConsoleApplication(this StartupConfiguration bootstrap, params IModule[] modules)
         {
-            IocManager.Instance.RegisterAssemblyByConvention(AssemblyLoader.GetAssemblies(), modules);
+            IocManager.Container.RegisterAssemblyByConvention(AssemblyLoader.GetAssemblies(), modules);
 
             return bootstrap;
         }

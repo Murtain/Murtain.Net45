@@ -18,8 +18,8 @@ namespace Murtain.Configuration.Startup
     {
         public static StartupConfiguration UseRedisCache(this StartupConfiguration bootstrap, Action<IRedisCacheConfiguartion> invoke)
         {
-            IocManager.Instance.RegisterIfNot<IRedisCacheConfiguartion, RedisCacheConfiguartion>();
-            IRedisCacheConfiguartion _redisCacheConfiguration = IocManager.Instance.Resolve<IRedisCacheConfiguartion>();
+            IocManager.Container.RegisterIfNot<IRedisCacheConfiguartion, RedisCacheConfiguartion>();
+            IRedisCacheConfiguartion _redisCacheConfiguration = IocManager.Container.Resolve<IRedisCacheConfiguartion>();
 
 
             invoke(_redisCacheConfiguration);
@@ -44,9 +44,9 @@ namespace Murtain.Configuration.Startup
                    .WithParameter("configuration", _redisCacheConfiguration.RedisLockNameOrConnectionString)
                    .SingleInstance();
 
-            builder.Update(IocManager.Instance.IocContainer);
+            builder.Update(IocManager.Container.IocContainer);
 
-            IocManager.Instance.AddConventionalRegistrar(new RedisLockRegistrar());
+            IocManager.Container.AddConventionalRegistrar(new RedisLockRegistrar());
 
             return bootstrap;
         }

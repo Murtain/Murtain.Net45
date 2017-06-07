@@ -93,14 +93,14 @@ namespace Murtain.GlobalSettings
             return await Task.FromResult<IReadOnlyList<GlobalSetting>>(_settings.Values.ToImmutableList());
         }
 
-        public async Task<GlobalSetting> AddOrUpdateSettingAsync(GlobalSetting data)
+        public async Task AddOrUpdateSettingAsync(GlobalSetting data)
         {
-            return await _settingStore.AddOrUpdateSettingAsync(data);
+            await _settingStore.AddOrUpdateSettingAsync(data);
         }
 
-        public async Task<GlobalSetting> DeleteSettingAsync(string name)
+        public async Task DeleteSettingAsync(string name)
         {
-            return await _settingStore.DeleteSettingAsync(name);
+            await _settingStore.DeleteSettingAsync(name);
         }
 
         public async Task ClearGlobalSettingCacheAsync()
@@ -111,25 +111,25 @@ namespace Murtain.GlobalSettings
 
         private GlobalSettingsProvider CreateProvider(Type providerType)
         {
-            IocManager.Instance.RegisterIfNot(providerType);
-            return (GlobalSettingsProvider)(IocManager.Instance.Resolve(providerType));
+            IocManager.Container.RegisterIfNot(providerType);
+            return (GlobalSettingsProvider)(IocManager.Container.Resolve(providerType));
         }
 
         private async Task<Dictionary<string, GlobalSetting>> GetApplicationSettingsAsync()
         {
-            var settings = _settingCacheProvider.Retrive(settingCacheName,() =>
-            {
-                var dictionary = new Dictionary<string, GlobalSetting>();
-                var allSetting = AsyncHelper.RunSync(()=> _settingStore.GetAllSettingsAsync());
-                foreach (var setting in allSetting)
-                {
-                    if (_settings.Keys.Contains(setting.Name))
-                    {
-                        dictionary[setting.Name] = setting;
-                    }
-                }
-                return dictionary;
-            });
+            var settings = _settingCacheProvider.Retrive(settingCacheName, () =>
+             {
+                 var dictionary = new Dictionary<string, GlobalSetting>();
+                 var allSetting = AsyncHelper.RunSync(() => _settingStore.GetAllSettingsAsync());
+                 foreach (var setting in allSetting)
+                 {
+                     if (_settings.Keys.Contains(setting.Name))
+                     {
+                         dictionary[setting.Name] = setting;
+                     }
+                 }
+                 return dictionary;
+             });
             return await Task.FromResult(settings);
         }
     }

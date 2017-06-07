@@ -19,8 +19,8 @@ namespace Murtain.Configuration.Startup
     {
         public static StartupConfiguration UseSignalR(this StartupConfiguration bootstrap)
         {
-            IocManager.Instance.RegisterIfNot<IOnlineClientManager, OnlineClientManager>();
-            IocManager.Instance.RegisterIfNot<IRealTimeNotifier, SignalRRealTimeNotifier>(DependencyLifeStyle.Transient);
+            IocManager.Container.RegisterIfNot<IOnlineClientManager, OnlineClientManager>();
+            IocManager.Container.RegisterIfNot<IRealTimeNotifier, SignalRRealTimeNotifier>(DependencyLifeStyle.Transient);
 
             var builder = new ContainerBuilder();
 
@@ -29,9 +29,9 @@ namespace Murtain.Configuration.Startup
                 .AsImplementedInterfaces()
                 .AsSelf();
 
-            builder.Update(IocManager.Instance.IocContainer);
+            builder.Update(IocManager.Container.IocContainer);
 
-            GlobalHost.DependencyResolver = new AutofacDependencyResolver(IocManager.Instance.IocContainer);
+            GlobalHost.DependencyResolver = new AutofacDependencyResolver(IocManager.Container.IocContainer);
             return bootstrap;
         }
     }

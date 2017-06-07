@@ -113,17 +113,12 @@ namespace Murtain.EntityFramework
             return dbContext.Set<TEntity>().AddRange(models);
         }
 
-        public Task<TEntity> InsertAsync(TEntity model)
+        public virtual void Update(TEntity model)
         {
-            return Task.FromResult(dbContext.Set<TEntity>().Add(model));
-        }
-        public virtual TEntity Update(TEntity model)
-        {
-            //AttachIfNot(model);
+            AttachIfNot(model);
             dbContext.Entry(model).State = EntityState.Modified;
-            return model;
         }
-        public virtual TEntity UpdateProperty(TEntity model, Expression<Func<TEntity, object>> lambda)
+        public virtual void UpdateProperty(TEntity model, Expression<Func<TEntity, object>> lambda)
         {
             ReadOnlyCollection<MemberInfo> memberInfos = ((dynamic)lambda.Body).Members;
             AttachIfNot(model);
@@ -131,12 +126,10 @@ namespace Murtain.EntityFramework
             {
                 dbContext.Entry(model).Property(memberInfo.Name).IsModified = true;
             }
-            return model;
         }
-        public TEntity UpdateCompare(TEntity model, TEntity source)
+        public virtual void UpdateCompare(TEntity model, TEntity source)
         {
             dbContext.Entry(source).CurrentValues.SetValues(model);
-            return model;
         }
 
         public virtual TEntity Remove(TEntity model)
@@ -203,6 +196,83 @@ namespace Murtain.EntityFramework
             {
                 dbContext.Set<TEntity>().Attach(model);
             }
+        }
+
+        public virtual Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> lambda, Expression<Func<TEntity, object>> includes = null)
+        {
+            return Task.FromResult(Get(lambda, includes));
+        }
+        public virtual Task<IQueryable<TEntity>> GetAsync(IQuery<TEntity> query, Expression<Func<TEntity, object>> includes = null)
+        {
+            return Task.FromResult(Get(query, includes));
+        }
+        public virtual Task<TEntity> AddAsync(TEntity model)
+        {
+            return Task.FromResult(Add(model));
+        }
+        public virtual Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> models)
+        {
+            return Task.FromResult(AddRange(models));
+        }
+
+        public virtual Task UpdateAsync(TEntity model)
+        {
+            Update(model);
+            return Task.FromResult(0);
+        }
+        public virtual Task UpdatePropertyAsync(TEntity model, Expression<Func<TEntity, object>> lambda)
+        {
+            UpdateProperty(model, lambda);
+            return Task.FromResult(0);
+        }
+        public virtual Task UpdateCompareAsync(TEntity model, TEntity source)
+        {
+            UpdateCompare(model, source);
+            return Task.FromResult(0);
+        }
+
+        public virtual Task<TEntity> RemoveAsync(TEntity model)
+        {
+            return Task.FromResult(Remove(model));
+        }
+        public virtual Task<IEnumerable<TEntity>> RemoveRangeAsync(IEnumerable<TEntity> models)
+        {
+            return Task.FromResult(RemoveRange(models));
+        }
+        public virtual Task<TEntity> RemoveAsync(TPrimaryKey key)
+        {
+            return Task.FromResult(Remove(key));
+        }
+        public virtual Task<IEnumerable<TEntity>> RemoveRangeAsync(IEnumerable<TPrimaryKey> keys)
+        {
+            return Task.FromResult(RemoveRange(keys));
+        }
+
+        public virtual Task<bool> AnyAsync(Expression<Func<TEntity, bool>> lambda)
+        {
+            return Task.FromResult(Any(lambda));
+        }
+
+        public virtual Task<int> CountAsync()
+        {
+            return Task.FromResult(Count());
+        }
+        public virtual Task<int> CountAsync(Expression<Func<TEntity, bool>> lambda)
+        {
+            return Task.FromResult(Count(lambda));
+        }
+
+        public virtual Task<TEntity> FindAsync(TPrimaryKey key)
+        {
+            return Task.FromResult(Find(key));
+        }
+        public virtual Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> lambda)
+        {
+            return Task.FromResult(FirstOrDefault(lambda));
+        }
+        public virtual Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> lambda, Expression<Func<TEntity, object>> includes)
+        {
+            return Task.FromResult(FirstOrDefault(lambda, includes));
         }
     }
 

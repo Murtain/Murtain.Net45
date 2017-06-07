@@ -12,9 +12,9 @@ namespace Murtain.Web.SignalR
     {
         public override object GetService(Type serviceType)
         {
-            if (IocManager.Instance.IsRegistered(serviceType))
+            if (IocManager.Container.IsRegistered(serviceType))
             {
-                return IocManager.Instance.Resolve(serviceType);
+                return IocManager.Container.Resolve(serviceType);
             }
             return base.GetService(serviceType);
         }
