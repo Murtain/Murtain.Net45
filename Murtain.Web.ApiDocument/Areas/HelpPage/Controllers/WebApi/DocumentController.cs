@@ -1,9 +1,11 @@
-﻿using Murtain.SDK.Attributes;
+﻿using Murtain.SDK;
+using Murtain.SDK.Attributes;
 using Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions;
 using Murtain.Web.ApiDocument.Areas.HelpPage.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -107,14 +109,12 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers.WebApi
         [Route("api/documents/{controller_name}/api-description/{id}")]
         public HelpPageApiModel GetHelpApiModel(string controller_name, string id)
         {
-
             HelpPageApiModel apiModel = Configuration.GetHelpPageApiModel(id);
 
             if (apiModel == null)
             {
                 throw new Exception($"ApiDescription id {id} not found.");
             }
-
 
             ModelDescription modelDescription = null;
 
@@ -150,13 +150,50 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers.WebApi
             {
                 returnModel.UriParameters.Add(item);
             }
-            foreach (var item in apiModel.SampleRequests)
+            //foreach (var item in apiModel.SampleRequests)
+            //{
+            //    returnModel.SampleRequests.Add(item);
+            //}
+            //foreach (var item in apiModel.SampleResponses)
+            //{
+            //    returnModel.SampleResponses.Add(item);
+            //}
+
+
+            var jsonSampleAttribute = ((System.Web.Http.Controllers.ReflectedHttpActionDescriptor)apiModel.ApiDescription.ActionDescriptor).MethodInfo.GetCustomAttributes(false).FirstOrDefault(x => x is JsonSampleAttribute) as JsonSampleAttribute;
+            if (jsonSampleAttribute != null)
             {
-                returnModel.SampleRequests.Add(item);
-            }
-            foreach (var item in apiModel.SampleResponses)
-            {
-                returnModel.SampleResponses.Add(item);
+                IJsonSampleModel sample = Activator.CreateInstance(jsonSampleAttribute.SampleType) as IJsonSampleModel;
+
+                var mediaType = new MediaTypeHeaderValue("application/json");
+
+                var request = sample.GetRequestSampleModel();
+                if (request != null)
+                {
+                    if (!returnModel.SampleRequests.Keys.Any(x => x.Equals(mediaType)))
+                    {
+                        returnModel.SampleRequests.Add(mediaType, request);
+                    }
+                }
+
+                var response = sample.GetResponseSampleModel();
+                if (response != null)
+                {
+                    if (!returnModel.SampleResponses.Keys.Any(x => x.Equals(mediaType)))
+                    {
+                        returnModel.SampleResponses.Add(mediaType, response);
+                    }
+                }
+
+                var error = sample.GetErrorSampleModel();
+                if (error != null)
+                {
+                    var errorMediaType = new MediaTypeHeaderValue("application/x-error");
+                    if (!returnModel.SampleResponses.Keys.Any(x => x.Equals(errorMediaType)))
+                    {
+                        returnModel.SampleResponses.Add(errorMediaType, error);
+                    }
+                }
             }
 
             return returnModel;

@@ -317,7 +317,7 @@ namespace Murtain.Extensions
         /// Converts given object to JSON string.
         /// </summary>
         /// <returns></returns>
-        public static string ToJsonString(this object obj, bool camelCase = false, bool indented = false)
+        public static string TryJson(this object obj, bool camelCase = false, bool indented = false)
         {
             var options = new JsonSerializerSettings();
 

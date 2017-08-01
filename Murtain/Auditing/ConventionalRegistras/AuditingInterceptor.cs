@@ -90,7 +90,7 @@ namespace Murtain.Auditing.ConventionalRegistras
             {
                 stopwatch.Stop();
 
-                auditInfo.Output = invocation.ReturnValue.ToJsonString();
+                auditInfo.Output = invocation.ReturnValue.TryJson();
                 auditInfo.Duration = Convert.ToInt32(stopwatch.Elapsed.TotalMilliseconds);
                 AuditingStore.Save(auditInfo);
             }
@@ -121,7 +121,7 @@ namespace Murtain.Auditing.ConventionalRegistras
 
             if (auditInfo.Exception == null)
             {
-                auditInfo.Output = invocation.ReturnValue.ToJsonString();
+                auditInfo.Output = invocation.ReturnValue.TryJson();
             }
             auditInfo.Duration = Convert.ToInt32(stopwatch.Elapsed.TotalMilliseconds);
             AuditingStore.Save(auditInfo);
@@ -146,7 +146,7 @@ namespace Murtain.Auditing.ConventionalRegistras
                     dictionary[parameter.Name] = argument;
                 }
 
-                return dictionary.ToJsonString();
+                return dictionary.TryJson();
             }
             catch (Exception ex)
             {

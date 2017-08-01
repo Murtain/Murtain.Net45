@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\HttpCorrespondingAttribute.cs" />
+    <Compile Include="Attributes\JsonSampleAttribute.cs" />
     <Compile Include="Attributes\ReturnCodeAttribute.cs" />
+    <Compile Include="IJsonSampleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemReturnCode.cs" />
   </ItemGroup>

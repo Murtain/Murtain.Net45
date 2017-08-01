@@ -2,7 +2,7 @@
 
 require.config({
 
-    baseUrl: "http://localhost:62370/Areas/HelpPage/content/js",
+    baseUrl: "/Areas/HelpPage/content/js",
 
     paths: {
         "jquery": "https://cdn.bootcss.com/jquery/3.1.1/jquery.min",

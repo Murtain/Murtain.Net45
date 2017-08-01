@@ -45,35 +45,49 @@
             <td>{{parameter.documentation}}</td>
         </tr>
     </table>
-    <div class="hr-line-dashed"></div>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>返回数据属性</th>
-                <th>类型</th>
-                <th>描述</th>
-            </tr>
-        </thead>
-        <tr ng-repeat="parameter in model.api_description.resource_properties">
-            <td>{{parameter.name}}</td>
-            <td>
-                <a ng-if="parameter.type_description.values != undefined || parameter.type_description.properties != undefined || parameter.type_description.element_description != undefined" href="#/model/{{parameter.type_description.properties != undefined || parameter.type_description.values != undefined ? parameter.type_description.name : parameter.type_description.element_description != undefined ? parameter.type_description.element_description.name:'' }}">
-                    {{parameter.type_description.name.split('Of').length > 1 ? parameter.type_description.name.split('Of')[0]+'<' + parameter.type_description.name.split('Of')[1] + '>' :parameter.type_description.name }}
-                </a>
-                <span ng-if="parameter.type_description.values == undefined && parameter.type_description.properties == undefined && parameter.type_description.element_description == undefined">{{parameter.type_description.name}}</span>
-            </td>
-            <td>{{parameter.documentation}}</td>
-        </tr>
-    </table>
-    <div class="hr-line-dashed"></div>
-    <div class="pre-code">
-        <span>返回结果</span>
-        <pre>{{model.api_description.sample1}}</pre>
+    <div class="sample-request" ng-if="model.api_description.sample_request">
+        <div class="hr-line-dashed"></div>
+        <div class="pre-code">
+            <span>请求示例</span>
+            <pre>{{model.api_description.sample_request}}</pre>
+        </div>
     </div>
-    <div class="hr-line-dashed"></div>
-    <div class="pre-code">
-        <span>异常示例</span>
-        <pre>{{model.api_description.sample2}}</pre>
+    <div class="resource_properties" ng-if="model.api_description.resource_properties">
+        <div class="hr-line-dashed"></div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>返回数据属性</th>
+                    <th>类型</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="parameter in model.api_description.resource_properties">
+                <td>{{parameter.name}}</td>
+                <td>
+                    <a ng-if="parameter.type_description.values != undefined || parameter.type_description.properties != undefined || parameter.type_description.element_description != undefined" href="#/model/{{parameter.type_description.properties != undefined || parameter.type_description.values != undefined ? parameter.type_description.name : parameter.type_description.element_description != undefined ? parameter.type_description.element_description.name:'' }}">
+                        {{parameter.type_description.name.split('Of').length > 1 ? parameter.type_description.name.split('Of')[0]+'<' + parameter.type_description.name.split('Of')[1] + '>' :parameter.type_description.name }}
+                    </a>
+                    <span ng-if="parameter.type_description.values == undefined && parameter.type_description.properties == undefined && parameter.type_description.element_description == undefined">{{parameter.type_description.name}}</span>
+                </td>
+                <td>{{parameter.documentation}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="sample-response" ng-if="model.api_description.sample_response">
+        <div class="hr-line-dashed"></div>
+        <div class="pre-code">
+            <span>返回结果</span>
+            <pre>{{model.api_description.sample_response}}</pre>
+        </div>
+    </div>
+
+    <div class="sample-response-error" ng-if="model.api_description.sample_response_error">
+        <div class="hr-line-dashed"></div>
+        <div class="pre-code">
+            <span>异常示例</span>
+            <pre>{{model.api_description.sample_response_error}}</pre>
+        </div>
     </div>
     <div class="hr-line-dashed"></div>
     <table class="table table-bordered">

@@ -97,6 +97,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Start\WebApiConfig.cs" />
     <Content Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Content Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Content Include="Areas\HelpPage\Controllers\DocumentController.cs" />
@@ -167,6 +168,7 @@
     <Content Include="Areas\HelpPage\Content\js\main.js" />
     <Content Include="Areas\HelpPage\Content\js\services\document-service.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\HelpPage\Content\fonts\" />

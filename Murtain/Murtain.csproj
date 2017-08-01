@@ -116,7 +116,16 @@
     <Compile Include="Auditing\Startup\StartupConfigurationExtensions.cs" />
     <Compile Include="Auditing\Store\IAuditingStore.cs" />
     <Compile Include="Auditing\Store\LoggingAuditingStore.cs" />
+    <Compile Include="Caching\CacheSetting.cs" />
+    <Compile Include="Caching\CacheSettingManager.cs" />
+    <Compile Include="Caching\CacheSettingProvider.cs" />
+    <Compile Include="Caching\Configuration\CacheSettingsConfiguration.cs" />
+    <Compile Include="Caching\Configuration\ICacheSettingsConfiguration.cs" />
+    <Compile Include="Caching\Extensions\CacheManagerExtensions.cs" />
+    <Compile Include="Caching\Extensions\CacheSettingManagerExtensions.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\ICacheSettingManager.cs" />
+    <Compile Include="Caching\ICacheSettingProvider.cs" />
     <Compile Include="Caching\NetCacheManager.cs" />
     <Compile Include="Collections\AssemblyLoader.cs" />
     <Compile Include="Collections\ITypeList.cs" />
@@ -224,6 +233,7 @@
     <Compile Include="GlobalSettings\Models\GlobalSetting.cs" />
     <Compile Include="GlobalSettings\Models\GlobalSettingScope.cs" />
     <Compile Include="GlobalSettings\Modules\GlobalSettingsManagerModule.cs" />
+    <Compile Include="GlobalSettings\Provider\GlobalSettingCacheProvider.cs" />
     <Compile Include="GlobalSettings\Provider\GlobalSettingProviderContext.cs" />
     <Compile Include="GlobalSettings\Provider\GlobalSettingsProvider.cs" />
     <Compile Include="GlobalSettings\Store\IGlobalSettingStore.cs" />

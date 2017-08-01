@@ -36,6 +36,8 @@ using Murtain.Localization.Language;
 using Murtain.Events;
 using Murtain.Domain.UnitOfWork.ConventionalRegistras;
 using Murtain.Collections;
+using Murtain.Caching.Configuration;
+using Murtain.GlobalSettings.Provider;
 
 namespace Murtain.Configuration.Startup
 {
@@ -61,6 +63,10 @@ namespace Murtain.Configuration.Startup
         /// 本地化配置
         /// </summary>
         public ILocalizationConfiguration LocalizationConfiguration { get; set; }
+        /// <summary>
+        /// 缓存管理配置
+        /// </summary>
+        public ICacheSettingsConfiguration CacheSettingsConfiguration { get; set; }
 
         public StartupConfiguration()
         {
@@ -84,15 +90,27 @@ namespace Murtain.Configuration.Startup
             IocManager.Container.RegisterIfNot<IGlobalSettingStore, SimpleGlobalSettingStore>(DependencyLifeStyle.Transient);
             IocManager.Container.RegisterIfNot<IGlobalSettingManager, GlobalSettingManager>();
 
+            IocManager.Container.RegisterIfNot<ICacheSettingManager, CacheSettingManager>(); 
+
             IocManager.Container.RegisterIfNot<ILocalizationManager, LocalizationManager>();
+
             IocManager.Container.RegisterIfNot<ILocalizationConfiguration, LocalizationConfiguration>();
             IocManager.Container.RegisterIfNot<IEmailSettingConfiguration, EmailSettingConfiguration>();
+
+            IocManager.Container.RegisterIfNot<ICacheSettingsConfiguration, CacheSettingsConfiguration>();
             IocManager.Container.RegisterIfNot<IGlobalSettingsConfiguration, GlobalSettingsConfiguration>();
 
 
             UnitOfWorkDefaultOptionsConfiguration = IocManager.Container.Resolve<IUnitOfWorkDefaultOptionsConfiguration>();
-            GlobalSettingsConfiguration = IocManager.Container.Resolve<IGlobalSettingsConfiguration>();
             LocalizationConfiguration = IocManager.Container.Resolve<ILocalizationConfiguration>();
+            CacheSettingsConfiguration = IocManager.Container.Resolve<ICacheSettingsConfiguration>();
+            GlobalSettingsConfiguration = IocManager.Container.Resolve<IGlobalSettingsConfiguration>();
+
+
+            CacheSettingsConfiguration.Providers.Add<GlobalSettingCacheProvider>();
+
+            GlobalSettingsConfiguration.Providers.Add<EmailSettingProvider>();
+
 
             IocManager.Container.RegisterModule(new LocalizationManagerModule());
             IocManager.Container.RegisterModule(new EventBusModule());
@@ -121,7 +139,7 @@ namespace Murtain.Configuration.Startup
             return bootstrap;
         }
 
-    
+
 
     }
 }

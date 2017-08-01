@@ -16,7 +16,7 @@ namespace Murtain.EntityFramework
 {
     /// <summary>
     /// Base class for all DbContext classes in the application.
-    /// </summary>
+    /// </summary>   
     public abstract class EntityFrameworkDbContext : DbContext
     {
         public IAppSession AppSession { get; set; }

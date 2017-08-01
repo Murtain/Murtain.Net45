@@ -8,8 +8,6 @@ define(['app.module', 'app.constants', 'services/document-service'], function (a
 
     function fnDocumentModelController($scope, $timeout, document_service, constants, $stateParams) {
 
-        console.log("document model controller running ...");
-
         var that = {
             description: {},
         };
