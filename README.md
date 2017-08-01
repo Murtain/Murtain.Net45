@@ -1,5 +1,6 @@
 # Murtain
-Murtain is a rapid development framework for.net web applications.
+
+[x-dva](http://www.x-dva.com/)
 
 ## Murtain.Web.ApiDocument
 Murtain.Web.ApiDocument is a most friendly WebApi2 help documentation.
@@ -111,6 +112,7 @@ If you want to display a sample in your document, just need add an `JsonSampleAt
 Note: The sample class must inherit the `IJsonSampleModel` interface
 
 5. Namespace
+
 If you want to use multiple versions of WebApi2 , you just need add an forld named v1 to your `Controllers` forld and add configuration to your `WebApiConfig.cs`
 
         config.Routes.MapHttpRoute(
@@ -122,6 +124,11 @@ If you want to use multiple versions of WebApi2 , you just need add an forld nam
         config.Services.Replace(typeof(IHttpControllerSelector), new NamespaceHttpControllerSelector(config));
 
 It is important to note that namespace contrller must be add `RouteAttribute` on the action.
+
+6. Build xml file
+
+Open your project property -> build -> Xml file path checked and save it in the App_Data dictionary.
+
 
 ## License
 
