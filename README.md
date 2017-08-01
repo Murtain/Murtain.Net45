@@ -7,7 +7,7 @@ Murtain.Web.ApiDocument is a most friendly WebApi2 help documentation.
 
 |Package Name           | Status                |
 |-----------------------|-----------------------|
-|Murtain.Web.ApiDocument|[![NuGet version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=nu&type=6&v=1.0.0.21&x2=0)](https://www.nuget.org/packages/Murtain.Web.ApiDocument)|
+|Murtain.Web.ApiDocument|[![NuGet version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=nu&type=6&v=1.0.0.22&x2=0)](https://www.nuget.org/packages/Murtain.Web.ApiDocument)|
 
 ### How to use
 
