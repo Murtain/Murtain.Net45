@@ -16,7 +16,7 @@ Murtain.Web.ApiDocument is a most friendly WebApi2 help documentation.
     Install-Package Murtain.Web
     Install-Package Murtain.Web.ApiDocument
 
-2.Change your WebApiConfig.cs 
+2.Change your `WebApiConfig.cs `
 
     config.Filters.Add(new WebApiExceptionFilterAttribute());
     config.Filters.Add(new ValidateModelAttribute());
@@ -47,7 +47,7 @@ You just need to add Controller document annotations.
         await userAccountService.ValidateMessageCaptchaAsync(input);
     }
 
-Like this just need add an ReturnCodeAttribute. Here is the enumeration of the return code .
+Like this just need add an `ReturnCodeAttribute`. Here is the enumeration of the return code .
 
 `HttpCorresponding` defines the return type http status.
 
@@ -70,7 +70,7 @@ Like this just need add an ReturnCodeAttribute. Here is the enumeration of the r
         EXPIRED_CAPTCHA,
     }
 
-If you want to display a sample in your document, just need add an JsonSampleAttribute. Here is the sample.
+If you want to display a sample in your document, just need add an `JsonSampleAttribute`. Here is the sample model.
 
     /// <summary>
     /// Validate message captcha  samples
@@ -108,10 +108,10 @@ If you want to display a sample in your document, just need add an JsonSampleAtt
         }
     }
 
-Note: The sample class must inherit the IJsonSampleModel interface
+Note: The sample class must inherit the `IJsonSampleModel` interface
 
 5. Namespace
-If you want to use multiple versions of WebApi2 , you just need add an forld named v1 to your `Controllers` forld and add configuration to your WebApiConfig.cs
+If you want to use multiple versions of WebApi2 , you just need add an forld named v1 to your `Controllers` forld and add configuration to your `WebApiConfig.cs`
 
         config.Routes.MapHttpRoute(
             name: "DefaultApi",
