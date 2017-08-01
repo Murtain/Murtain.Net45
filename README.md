@@ -11,13 +11,13 @@ Murtain.Web.ApiDocument is a most friendly WebApi2 help documentation.
 
 ### How to use
 
-1. Install packages.
+1.Install packages.
 
     Install-Package Murtain.SDK
     Install-Package Murtain.Web
     Install-Package Murtain.Web.ApiDocument
 
-2. Change your `WebApiConfig.cs `
+2.Change your `WebApiConfig.cs `
 
     config.Filters.Add(new WebApiExceptionFilterAttribute());
     config.Filters.Add(new ValidateModelAttribute());
@@ -28,11 +28,11 @@ Murtain.Web.ApiDocument is a most friendly WebApi2 help documentation.
 
 This will allow WebApi to use only the Json mode and change the output and input styles for little snakecase.
 
-3. Documentation
+3.Documentation
 
 You just need to add Controller document annotations.
 
-4. Return code and sample
+4.Return code and sample
 
     /// <summary>
     /// 验证短信验证码
@@ -111,7 +111,7 @@ If you want to display a sample in your document, just need add an `JsonSampleAt
 
 Note: The sample class must inherit the `IJsonSampleModel` interface
 
-5. Namespace
+5.Namespace
 
 If you want to use multiple versions of WebApi2 , you just need add an forld named v1 to your `Controllers` forld and add configuration to your `WebApiConfig.cs`
 
@@ -125,7 +125,7 @@ If you want to use multiple versions of WebApi2 , you just need add an forld nam
 
 It is important to note that namespace contrller must be add `RouteAttribute` on the action.
 
-6. Build xml file
+6.Build xml file
 
 Open your project property -> build -> Xml file path checked and save it in the App_Data dictionary.
 
