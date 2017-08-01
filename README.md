@@ -11,13 +11,13 @@ Murtain.Web.ApiDocument is a most friendly WebApi2 help documentation.
 
 ### How to use
 
-1.Install packages.
+1. Install packages.
 
     Install-Package Murtain.SDK
     Install-Package Murtain.Web
     Install-Package Murtain.Web.ApiDocument
 
-2.Change your `WebApiConfig.cs `
+2. Change your `WebApiConfig.cs `
 
     config.Filters.Add(new WebApiExceptionFilterAttribute());
     config.Filters.Add(new ValidateModelAttribute());
@@ -28,11 +28,11 @@ Murtain.Web.ApiDocument is a most friendly WebApi2 help documentation.
 
 This will allow WebApi to use only the Json mode and change the output and input styles for little snakecase.
 
-3.Documentation
+3. Documentation
 
 You just need to add Controller document annotations.
 
-4.Return code and sample
+4. Return code and sample
 
     /// <summary>
     /// 验证短信验证码
