@@ -116,10 +116,11 @@ Note: The sample class must inherit the `IJsonSampleModel` interface
 If you want to use multiple versions of WebApi2 , you just need add an forld named v1 to your `Controllers` forld and add configuration to your `WebApiConfig.cs`
 
         config.Routes.MapHttpRoute(
-            name: "DefaultApi",
-            routeTemplate: "api/{controller}/{id}",
-            defaults: new { id = RouteParameter.Optional }
-        );
+                  name: "namespace",
+                  routeTemplate: "api/{namespace}/{controller}/{id}",
+                  constraints: new { @namespace = @"v1|v2|v3" },
+                  defaults: new { id = RouteParameter.Optional }
+              );
 
         config.Services.Replace(typeof(IHttpControllerSelector), new NamespaceHttpControllerSelector(config));
 
