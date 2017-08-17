@@ -30,7 +30,7 @@ namespace Murtain.GlobalSettings.Modules
             // Set the properties located.
             foreach (var propToSet in properties)
             {
-                propToSet.SetValue(instance, IocManager.Container.Resolve<IGlobalSettingManager>(), null);
+                propToSet.SetValue(instance, IocManager.Instance.Resolve<IGlobalSettingManager>(), null);
             }
         }
 

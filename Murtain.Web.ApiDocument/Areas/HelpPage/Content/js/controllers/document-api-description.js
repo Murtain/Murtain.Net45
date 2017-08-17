@@ -51,6 +51,9 @@ define(['app.module', 'app.constants', 'services/document-service'], function (a
                         code.http_status_code = http_status_code;
                     }
                 }
+
+                data.relative_path = window.location.protocol + '//' + window.location.host + '/' + data.relative_path;
+
                 that.api_description = data;
             });
         }

@@ -18,7 +18,7 @@ namespace Murtain.Configuration.Startup
         {
             if (invoke != null)
             {
-                invoke(IocManager.Container.Resolve<IRedis4netConfiguration>());
+                invoke(IocManager.Instance.Resolve<IRedis4netConfiguration>());
             }
 
             return bootstrap;

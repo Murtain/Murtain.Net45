@@ -16,8 +16,8 @@ namespace Murtain.Localization
 
         static LocalizationHelper()
         {
-            LocalizationManager = IocManager.Container.IsRegistered<ILocalizationManager>()
-                    ? IocManager.Container.Resolve<ILocalizationManager>()
+            LocalizationManager = IocManager.Instance.IsRegistered<ILocalizationManager>()
+                    ? IocManager.Instance.Resolve<ILocalizationManager>()
                     : NullLocalizationManager.Instance;
         }
         /// <summary>

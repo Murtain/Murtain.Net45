@@ -33,7 +33,7 @@ namespace Murtain.Modules.Logging
             // Set the properties located.
             foreach (var propToSet in properties)
             {
-                propToSet.SetValue(instance, IocManager.Container.Resolve<ILoggerFactory>().Create(instanceType), null);
+                propToSet.SetValue(instance, IocManager.Instance.Resolve<ILoggerFactory>().Create(instanceType), null);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Murtain.Modules.Logging
                               {
                                 new ResolvedParameter(
                                     (p, i) => p.ParameterType == typeof(ILogger),
-                                    (p, i) => IocManager.Container.Resolve<ILoggerFactory>().Create(p.Member.DeclaringType)
+                                    (p, i) => IocManager.Instance.Resolve<ILoggerFactory>().Create(p.Member.DeclaringType)
                                 ),
                               });
         }

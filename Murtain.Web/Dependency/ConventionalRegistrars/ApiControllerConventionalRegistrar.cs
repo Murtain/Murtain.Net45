@@ -19,7 +19,7 @@ namespace Murtain.Dependency.ConventionalRegistrars
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(context.Assembly);
 
-            builder.Update(context.IocManager.IocContainer);
+            builder.Update(context.IocManager.Container);
         }
     }
 }

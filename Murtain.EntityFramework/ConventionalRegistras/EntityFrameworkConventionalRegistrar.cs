@@ -30,7 +30,7 @@ namespace Murtain.EntityFramework.ConventionalRegistras
                     .As(typeof(IEntityFrameworkDbContextProvider<>))
                     .InstancePerDependency();
 
-            builder.Update(context.IocManager.IocContainer);
+            builder.Update(context.IocManager.Container);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Murtain.Events
         public EventBus()
         {
             _handlers = new Dictionary<Type, List<IEventHandler>>();
-            _iocManager = IocManager.Container;
+            _iocManager = IocManager.Instance;
             Logger = NullLogger.Instance;
         }
 

@@ -69,8 +69,8 @@ namespace Murtain.Caching
 
         private CacheSettingProvider CreateProvider(Type providerType)
         {
-            IocManager.Container.RegisterIfNot(providerType);
-            return (CacheSettingProvider)(IocManager.Container.Resolve(providerType));
+            IocManager.Instance.RegisterIfNot(providerType);
+            return (CacheSettingProvider)(IocManager.Instance.Resolve(providerType));
         }
     }
 }

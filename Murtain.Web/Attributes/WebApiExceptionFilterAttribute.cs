@@ -11,6 +11,9 @@ using Murtain.Logging;
 using Murtain.Web.Models;
 using Murtain.Web.Exceptions;
 using Murtain.SDK;
+using Murtain.SDK.Models;
+using System.ComponentModel;
+using Murtain.SDK.Attributes;
 
 namespace Murtain.Web.Attributes
 {
@@ -22,26 +25,46 @@ namespace Murtain.Web.Attributes
         {
             var request = context.Request.RequestUri.AbsolutePath;
 
-            var response = new ResponseContentModel(SystemReturnCode.INTERNAL_SERVER_ERROR, request);
+            var response = new ResponseContentModel(WebApiExceptionReturnCode.INTERNAL_SERVER_ERROR, request);
 
             if (context.Exception is NotImplementedException)
             {
-                response = new ResponseContentModel(SystemReturnCode.NOT_IMPLEMENTED, request);
+                response = new ResponseContentModel(WebApiExceptionReturnCode.NOT_IMPLEMENTED, request);
             }
             if (context.Exception is WebException)
             {
-                response = new ResponseContentModel(SystemReturnCode.GATEWAY_TIMEOUT, request);
+                response = new ResponseContentModel(WebApiExceptionReturnCode.GATEWAY_TIMEOUT, request);
             }
-            if (context.Exception is UserFriendlyExceprion)
+            if (context.Exception is UserFriendlyException)
             {
-                var exception = context.Exception as UserFriendlyExceprion;
+                var exception = context.Exception as UserFriendlyException;
                 response = new ResponseContentModel(exception.Code, exception.Message, request);
             }
 
             context.Response = new HttpResponseMessage(response.HttpStatusCode)
             {
-                Content = new StringContent(response.ToString(),Encoding.UTF8,"application/json")
+                Content = new StringContent(response.ToString(), Encoding.UTF8, "application/json")
             };
         }
+    }
+
+    public enum WebApiExceptionReturnCode
+    {
+
+        /// <summary>
+        /// 服务器上发生一般性错误
+        /// </summary>
+        [HttpCorresponding(HttpStatusCode.InternalServerError)]
+        INTERNAL_SERVER_ERROR,
+        /// <summary>
+        /// 服务器不支持所请求的功能
+        /// </summary>
+        [HttpCorresponding(HttpStatusCode.NotImplemented)]
+        NOT_IMPLEMENTED,
+        /// <summary>
+        /// 中间代理服务器在等待来自另一个代理或原始服务器的响应时已超时
+        /// </summary>
+        [HttpCorresponding(HttpStatusCode.BadGateway)]
+        GATEWAY_TIMEOUT
     }
 }

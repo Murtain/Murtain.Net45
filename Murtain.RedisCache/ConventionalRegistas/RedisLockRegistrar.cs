@@ -25,7 +25,7 @@ namespace Murtain.RedisCache.ConventionalRegistas
 
             builder.RegisterType<RedisLockInterceptor>();
 
-            builder.Update(context.IocManager.IocContainer);
+            builder.Update(context.IocManager.Container);
         }
     }
 }

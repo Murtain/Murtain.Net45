@@ -65,7 +65,7 @@ namespace Murtain.Web.Mvc
         protected AbstractWebViewPage()
         {
             LocalizationSource = NullLocalizationSource.Instance;
-            GlobalSettingManager = IocManager.Container.Resolve<IGlobalSettingManager>();
+            GlobalSettingManager = IocManager.Instance.Resolve<IGlobalSettingManager>();
         }
 
         /// <summary>

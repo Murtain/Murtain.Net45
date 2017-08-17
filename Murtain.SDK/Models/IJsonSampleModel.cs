@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Murtain.SDK
+namespace Murtain.SDK.Models
 {
     public interface IJsonSampleModel
     {

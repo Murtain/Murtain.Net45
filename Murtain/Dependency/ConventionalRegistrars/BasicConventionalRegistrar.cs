@@ -27,7 +27,7 @@ namespace Murtain.Dependency.ConventionalRegistrars
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
-            builder.Update(context.IocManager.IocContainer);
+            builder.Update(context.IocManager.Container);
 
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Murtain.Web.Models
+namespace Murtain.SDK.Models
 {
 
     public class ModelStateResponseContentModel

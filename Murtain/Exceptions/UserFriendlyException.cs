@@ -11,16 +11,16 @@ using Murtain.Extensions;
 namespace Murtain.Web.Exceptions
 {
 
-    public class UserFriendlyExceprion : Exception
+    public class UserFriendlyException : Exception
     {
         public Enum Code { get; set; }
 
-        public UserFriendlyExceprion(Enum code) :
+        public UserFriendlyException(Enum code) :
             base(code.TryDescription())
         {
             this.Code = code;
         }
-        public UserFriendlyExceprion(Enum code, string message)
+        public UserFriendlyException(Enum code, string message)
             : base(message)
         {
             this.Code = code;

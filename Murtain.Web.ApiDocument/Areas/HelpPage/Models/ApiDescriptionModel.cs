@@ -36,6 +36,10 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Models
         /// Gets or sets the description.
         /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// Gets or sets the namespace.
+        /// </summary>
+        public string Namespace { get; set; }
 
     }
 }

@@ -6,6 +6,8 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
 using Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Murtain.Web.ApiDocument.Areas.HelpPage
 {
@@ -14,7 +16,9 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
     /// </summary>
     public class XmlDocumentationProvider : IDocumentationProvider, IModelDocumentationProvider
     {
-        private XPathNavigator _documentNavigator;
+
+        private List<XPathNavigator> _documentNavigators = new List<XPathNavigator>();
+
         private const string TypeExpression = "/doc/members/member[@name='T:{0}']";
         private const string MethodExpression = "/doc/members/member[@name='M:{0}']";
         private const string PropertyExpression = "/doc/members/member[@name='P:{0}']";
@@ -31,8 +35,40 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
             {
                 throw new ArgumentNullException("documentPath");
             }
-            XPathDocument xpath = new XPathDocument(documentPath);
-            _documentNavigator = xpath.CreateNavigator();
+
+            var files = Directory.GetFiles(documentPath, "*.xml");
+            foreach (var file in files)
+            {
+                XPathDocument xpath = new XPathDocument(Path.Combine(documentPath, file));
+                _documentNavigators.Add(xpath.CreateNavigator());
+            }
+        }
+        //
+        // 摘要:
+        //     使用指定的 XPath 查询在 System.Xml.XPath.XPathNavigator 中选择单个节点。
+        //
+        // 参数:
+        //   xpath:
+        //     表示 XPath 表达式的 System.String。
+        //
+        // 返回结果:
+        //     System.Xml.XPath.XPathNavigator 对象，其中包含指定的 XPath 查询的第一个匹配节点；如果没有查询结果，则为 null。
+        //
+        // 异常:
+        //   T:System.ArgumentException:
+        //     在 XPath 查询中遇到了错误或 XPath 表达式的返回类型不是一个节点。
+        //
+        //   T:System.Xml.XPath.XPathException:
+        //     XPath 查询无效。
+        private XPathNavigator SelectSingleNode(string selectExpression)
+        {
+            foreach (var navigator in _documentNavigators)
+            {
+                var propertyNode = navigator.SelectSingleNode(selectExpression);
+                if (propertyNode != null)
+                    return propertyNode;
+            }
+            return null;
         }
 
         public string GetDocumentation(HttpControllerDescriptor controllerDescriptor)
@@ -78,7 +114,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
             string memberName = String.Format(CultureInfo.InvariantCulture, "{0}.{1}", GetTypeName(member.DeclaringType), member.Name);
             string expression = member.MemberType == MemberTypes.Field ? FieldExpression : PropertyExpression;
             string selectExpression = String.Format(CultureInfo.InvariantCulture, expression, memberName);
-            XPathNavigator propertyNode = _documentNavigator.SelectSingleNode(selectExpression);
+            XPathNavigator propertyNode = this.SelectSingleNode(selectExpression);
             return GetTagValue(propertyNode, "summary");
         }
 
@@ -94,7 +130,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
             if (reflectedActionDescriptor != null)
             {
                 string selectExpression = String.Format(CultureInfo.InvariantCulture, MethodExpression, GetMemberName(reflectedActionDescriptor.MethodInfo));
-                return _documentNavigator.SelectSingleNode(selectExpression);
+                return this.SelectSingleNode(selectExpression);
             }
 
             return null;
@@ -131,7 +167,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage
         {
             string controllerTypeName = GetTypeName(type);
             string selectExpression = String.Format(CultureInfo.InvariantCulture, TypeExpression, controllerTypeName);
-            return _documentNavigator.SelectSingleNode(selectExpression);
+            return this.SelectSingleNode(selectExpression);
         }
 
         private static string GetTypeName(Type type)

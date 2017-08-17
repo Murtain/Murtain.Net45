@@ -46,7 +46,7 @@ namespace Murtain.Auditing.ConventionalRegistras
 
                 builder.RegisterType<AuditingInterceptor>();
 
-                builder.Update(context.IocManager.IocContainer);
+                builder.Update(context.IocManager.Container);
             }
         }
     }

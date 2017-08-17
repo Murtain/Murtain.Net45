@@ -15,6 +15,6 @@ namespace Murtain.Dependency
         /// <summary>
         /// Reference to the Autofac Container.
         /// </summary>
-        IContainer IocContainer { get;}
+        IContainer Container { get;}
     }
 }

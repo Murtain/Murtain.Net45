@@ -124,21 +124,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\ValidateModelAttribute.cs" />
+    <Compile Include="Attributes\ModelValidateAttribute.cs" />
     <Compile Include="Attributes\WebApiExceptionFilterAttribute.cs" />
     <Compile Include="ContractResolver\SnakeCaseContractResolver.cs" />
     <Compile Include="Dependency\ConventionalRegistrars\ApiControllerConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrars\ControllerConventionalRegistrar.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="HttpControllerSelectors\NamespaceHttpControllerSelector.cs" />
     <Compile Include="MessageHandlers\DefaultHandler.cs" />
-    <Compile Include="Models\DataTablesParam.cs" />
-    <Compile Include="Models\ModelStateResponseContentModel.cs" />
     <Compile Include="Models\NewtonJsonResult.cs" />
-    <Compile Include="Models\PaginationResponseModel.cs" />
-    <Compile Include="Models\ResponseContentModel.cs" />
-    <Compile Include="Models\UserFriendlyErrorModel.cs" />
-    <Compile Include="Models\ValidateModelResponseContentModel.cs" />
     <Compile Include="Mvc\AbstractWebViewPage.cs" />
     <Compile Include="Mvc\LocalizationWebViewPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

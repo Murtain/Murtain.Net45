@@ -111,8 +111,8 @@ namespace Murtain.GlobalSettings
 
         private GlobalSettingsProvider CreateProvider(Type providerType)
         {
-            IocManager.Container.RegisterIfNot(providerType);
-            return (GlobalSettingsProvider)(IocManager.Container.Resolve(providerType));
+            IocManager.Instance.RegisterIfNot(providerType);
+            return (GlobalSettingsProvider)(IocManager.Instance.Resolve(providerType));
         }
 
         private async Task<Dictionary<string, GlobalSetting>> GetApplicationSettingsAsync()

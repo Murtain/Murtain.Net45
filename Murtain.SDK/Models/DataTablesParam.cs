@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Murtain.Web.Models
+namespace Murtain.SDK.Models
 {
     public class DataTablesParam<TEntity> where TEntity : class, new()
     {

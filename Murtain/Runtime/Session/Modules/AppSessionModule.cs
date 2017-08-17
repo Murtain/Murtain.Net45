@@ -31,7 +31,7 @@ namespace Murtain.Runtime.Session.Modules
             // Set the properties located.
             foreach (var propToSet in properties)
             {
-                propToSet.SetValue(instance, IocManager.Container.Resolve<IAppSession>(), null);
+                propToSet.SetValue(instance, IocManager.Instance.Resolve<IAppSession>(), null);
             }
         }
         private static void OnComponentPreparing(object sender, PreparingEventArgs e)

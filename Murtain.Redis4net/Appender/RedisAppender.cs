@@ -29,7 +29,7 @@ namespace Murtain.Redis4net.Appender
         {
             try
             {
-                this.redisCacheManager = IocManager.Container.Resolve<RedisCacheManager>();
+                this.redisCacheManager = IocManager.Instance.Resolve<RedisCacheManager>();
                 var message = RenderLoggingEvent(loggingEvent);
                 redisCacheManager.Database.ListRightPushAsync(ListName, new StackExchange.Redis.RedisValue[] { message });
             }

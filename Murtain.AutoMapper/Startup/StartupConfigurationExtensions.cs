@@ -25,14 +25,14 @@ namespace Murtain.Configuration.Startup
 
         public static StartupConfiguration UseAutoMapper(this StartupConfiguration bootstrap, Action<IAutoMapperConfiguration> invoke = null)
         {
-            IocManager.Container.RegisterIfNot<IAutoMapperConfiguration, AutoMapperConfiguration>();
+            IocManager.Instance.RegisterIfNot<IAutoMapperConfiguration, AutoMapperConfiguration>();
 
             if (invoke != null)
             {
-                invoke(IocManager.Container.Resolve<IAutoMapperConfiguration>());
+                invoke(IocManager.Instance.Resolve<IAutoMapperConfiguration>());
             }
 
-            var autoMapperConfigration = IocManager.Container.Resolve<IAutoMapperConfiguration>();
+            var autoMapperConfigration = IocManager.Instance.Resolve<IAutoMapperConfiguration>();
 
             lock (_syncObj)
             {

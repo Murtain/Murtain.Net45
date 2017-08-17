@@ -1,4 +1,4 @@
-﻿using Murtain.SDK;
+﻿using Murtain.SDK.Models;
 using Murtain.SDK.Attributes;
 using Murtain.Web.ApiDocument.Areas.HelpPage.ModelDescriptions;
 using Murtain.Web.ApiDocument.Areas.HelpPage.Models;
@@ -71,7 +71,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers.WebApi
             var group = Configuration.Services.GetApiExplorer()
                                                          .ApiDescriptions
                                                          .ToLookup(api => api.ActionDescriptor.ControllerDescriptor)
-                                                         .FirstOrDefault(x => x.Key.ControllerName.Remove(x.Key.ControllerName.Length - DefaultHttpControllerSelector.ControllerSuffix.Length).Equals(controller_name, StringComparison.OrdinalIgnoreCase));
+                                                         .FirstOrDefault(x => (x.Key.ControllerName.Contains(DefaultHttpControllerSelector.ControllerSuffix) ? x.Key.ControllerName.Remove(x.Key.ControllerName.Length - DefaultHttpControllerSelector.ControllerSuffix.Length) : x.Key.ControllerName).Equals(controller_name, StringComparison.OrdinalIgnoreCase));
             if (group == null)
             {
                 throw new Exception($"controller {controller_name} not found.");
@@ -91,7 +91,7 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers.WebApi
             var groups = Configuration.Services.GetApiExplorer()
                                                          .ApiDescriptions
                                                          .ToLookup(api => api.ActionDescriptor.ControllerDescriptor)
-                                                         .Where(x => x.Key.ControllerName.Remove(x.Key.ControllerName.Length - DefaultHttpControllerSelector.ControllerSuffix.Length).Equals(controller_name, StringComparison.OrdinalIgnoreCase));
+                                                         .Where(x => (x.Key.ControllerName.Contains(DefaultHttpControllerSelector.ControllerSuffix) ? x.Key.ControllerName.Remove(x.Key.ControllerName.Length - DefaultHttpControllerSelector.ControllerSuffix.Length) : x.Key.ControllerName).Equals(controller_name, StringComparison.OrdinalIgnoreCase));
             if (groups == null)
             {
                 throw new Exception($"controller {controller_name} not found.");
@@ -150,15 +150,6 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers.WebApi
             {
                 returnModel.UriParameters.Add(item);
             }
-            //foreach (var item in apiModel.SampleRequests)
-            //{
-            //    returnModel.SampleRequests.Add(item);
-            //}
-            //foreach (var item in apiModel.SampleResponses)
-            //{
-            //    returnModel.SampleResponses.Add(item);
-            //}
-
 
             var jsonSampleAttribute = ((System.Web.Http.Controllers.ReflectedHttpActionDescriptor)apiModel.ApiDescription.ActionDescriptor).MethodInfo.GetCustomAttributes(false).FirstOrDefault(x => x is JsonSampleAttribute) as JsonSampleAttribute;
             if (jsonSampleAttribute != null)
@@ -219,13 +210,22 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers.WebApi
         private DocumentModel GetDocument(IGrouping<System.Web.Http.Controllers.HttpControllerDescriptor, System.Web.Http.Description.ApiDescription> group)
         {
 
+            var controllerName = group.Key.ControllerName.IndexOf(DefaultHttpControllerSelector.ControllerSuffix) > 0
+                                    ? group.Key.ControllerName.Remove(group.Key.ControllerName.Length - DefaultHttpControllerSelector.ControllerSuffix.Length)
+                                    : group.Key.ControllerName;
+            ;
+
             var document = new DocumentModel();
 
             document.Description = documentationProvider?.GetDocumentation(group.Key);
+            if (string.IsNullOrEmpty(document.Description))
+            {
+                document.Description = controllerName;
+            }
 
-            var controllerName = group.Key.ControllerName;
-            document.ControllerName = controllerName.Remove(controllerName.Length - DefaultHttpControllerSelector.ControllerSuffix.Length).ToLower();
+            document.ControllerName = controllerName;
             document.ApiDescriptions = GetApiDescriptions(document.ControllerName);
+
             var segments = group.Key.ControllerType.Namespace.Split(Type.Delimiter);
             document.Namespace = segments[segments.Length - 1] == "Controllers" ? null : segments[segments.Length - 1];
 
@@ -236,20 +236,36 @@ namespace Murtain.Web.ApiDocument.Areas.HelpPage.Controllers.WebApi
         {
 
             List<ApiDescriptionModel> models = new List<ApiDescriptionModel>();
+            var keys = groups.Select(x => x.Key);
+            var versions = keys.Select(x => x.ControllerType.Namespace.Split(Type.Delimiter)[x.ControllerType.Namespace.Split(Type.Delimiter).Length - 1] == "Controllers"
+                                            ? null
+                                            : "api/" + x.ControllerType.Namespace.Split(Type.Delimiter)[(x.ControllerType.Namespace.Split(Type.Delimiter)).Length - 1] + "/")
+                               .Where(x => x != null);
+
             foreach (var group in groups)
             {
-                foreach (var api in group.Where(x => !x.Route.RouteTemplate.Contains("api/{namespace}/")))
+                var segments = group.Key.ControllerType.Namespace.Split(Type.Delimiter);
+                var version = segments[segments.Length - 1] == "Controllers" ? null : segments[segments.Length - 1];
+
+                var apis = group.Where(x => version == null ? !versions.Contains(x.Route.RouteTemplate) : x.Route.RouteTemplate.Contains("api/" + version + "/"))
+                                .Where(x => !x.Route.RouteTemplate.Contains("api/{namespace}/"));
+
+                foreach (var api in apis)
                 {
-                    models.Add(new ApiDescriptionModel
+                    if (!models.Any(x => x.Id == api.GetFriendlyId()))
                     {
-                        Id = api.GetFriendlyId(),
-                        HttpMethod = api.HttpMethod.Method,
-                        Description = api.Documentation,
-                        RelativePath = api.RelativePath?.ToLower()
-                    });
+                        models.Add(new ApiDescriptionModel
+                        {
+                            Id = api.GetFriendlyId(),
+                            HttpMethod = api.HttpMethod.Method,
+                            Namespace = version,
+                            Description = !string.IsNullOrEmpty(api.Documentation) ? api.Documentation : api.ActionDescriptor.ActionName,
+                            RelativePath = api.RelativePath?.ToLower()
+                        });
+
+                    }
                 }
             }
-
 
             return models;
         }

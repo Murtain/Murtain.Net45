@@ -14,26 +14,26 @@ namespace Murtain.Dependency
     public class IocManager : IIocManager
     {
         private List<IConventionalDependencyRegistrar> _conventionalRegistrars;
-        public static IocManager Container { get; private set; }
+        public static IocManager Instance { get; private set; }
 
         static IocManager()
         {
-            Container = new IocManager();
+            Instance = new IocManager();
         }
         public IocManager()
         {
             var builder = new ContainerBuilder();
-            IocContainer = builder.Build();
+            Container = builder.Build();
             _conventionalRegistrars = new List<IConventionalDependencyRegistrar>();
         }
-        public IContainer IocContainer { get; private set; }
+        public IContainer Container { get; private set; }
         public bool IsRegistered(Type type)
         {
-            return IocContainer.IsRegistered(type);
+            return Container.IsRegistered(type);
         }
         public bool IsRegistered<TType>()
         {
-            return IocContainer.IsRegistered<TType>();
+            return Container.IsRegistered<TType>();
         }
         public void AddConventionalRegistrar(IConventionalDependencyRegistrar registrar)
         {
@@ -41,7 +41,7 @@ namespace Murtain.Dependency
         }
         public void RegisterAssemblyByConvention(Assembly[] assembly, params IModule[] modules)
         {
-            var context = new ConventionalRegistrationContext(assembly, IocManager.Container);
+            var context = new ConventionalRegistrationContext(assembly, IocManager.Instance);
             var builder = new ContainerBuilder();
 
             _conventionalRegistrars.ForEach(x => { x.RegisterAssembly(context); });
@@ -51,7 +51,7 @@ namespace Murtain.Dependency
                 builder.RegisterModule(module);
             }
 
-            builder.Update(IocContainer);
+            builder.Update(Container);
             _conventionalRegistrars = new List<IConventionalDependencyRegistrar>();
         }
         public void Register(Type type, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
@@ -68,7 +68,7 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void Register<TType>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class
         {
@@ -84,7 +84,7 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void RegisterPropertiesAutowired<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
              where TType : class
@@ -102,7 +102,7 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void Register(Type iType, Type iImpl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
@@ -118,7 +118,7 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void Register<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
             where TType : class
@@ -136,7 +136,7 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void RegisterWithParameter<TType>(string parameterName, object parameterValue, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class
         {
@@ -152,7 +152,7 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void RegisterWithParameter<TType, TImpl>(string parameterName, object parameterValue, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
             where TType : class
@@ -170,7 +170,7 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void RegisterWithParameters<TType>(IEnumerable<Parameter> parameters, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class
         {
@@ -186,7 +186,7 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void RegisterWithParameters<TType, TImpl>(IEnumerable<Parameter> parameters, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
             where TType : class
@@ -204,41 +204,41 @@ namespace Murtain.Dependency
                 default:
                     break;
             }
-            builder.Update(IocContainer);
+            builder.Update(Container);
         }
         public void RegisterInstance<TInstance>(TInstance instance)
              where TInstance : class
         {
             var _builder = new ContainerBuilder();
             _builder.RegisterInstance<TInstance>(instance);
-            _builder.Update(IocContainer);
+            _builder.Update(Container);
         }
         public void RegisterModule(IModule module)
         {
             var _builder = new ContainerBuilder();
             _builder.RegisterModule(module);
-            _builder.Update(IocContainer);
+            _builder.Update(Container);
         }
         public object Resolve(Type type, params Parameter[] parameters)
         {
-            return IocContainer.Resolve(type, parameters);
+            return Container.Resolve(type, parameters);
         }
         public T Resolve<T>(params Parameter[] parameters)
         {
-            return IocContainer.Resolve<T>(parameters);
+            return Container.Resolve<T>(parameters);
         }
         public object ResolveOptional(Type serviceType, params Parameter[] parameters)
         {
-            return IocContainer.ResolveOptional(serviceType, parameters);
+            return Container.ResolveOptional(serviceType, parameters);
         }
 
         public TService ResolveOptional<TService>(params Parameter[] parameters) where TService : class
         {
-            return IocContainer.ResolveOptional<TService>(parameters);
+            return Container.ResolveOptional<TService>(parameters);
         }
         public void Dispose()
         {
-            IocContainer.Dispose();
+            Container.Dispose();
         }
     }
 }

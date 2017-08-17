@@ -15,7 +15,7 @@ namespace Murtain.Events.ConventionalRegistras
     {
         public void RegisterAssembly(IConventionalRegistrationContext context)
         {
-            IEventBus eventBus = IocManager.Container.Resolve<IEventBus>();
+            IEventBus eventBus = IocManager.Instance.Resolve<IEventBus>();
 
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(context.Assembly)
@@ -24,7 +24,7 @@ namespace Murtain.Events.ConventionalRegistras
                     .AsImplementedInterfaces()
                     .InstancePerDependency();
 
-            builder.Update(IocManager.Container.IocContainer);
+            builder.Update(IocManager.Instance.Container);
 
             foreach (var assembly in context.Assembly)
             {
@@ -41,7 +41,7 @@ namespace Murtain.Events.ConventionalRegistras
                         var genericArgs = inter.GetGenericArguments();
                         if (genericArgs.Length == 1)
                         {
-                            eventBus.Register(genericArgs[0], (IEventHandler)IocManager.Container.Resolve(type));
+                            eventBus.Register(genericArgs[0], (IEventHandler)IocManager.Instance.Resolve(type));
                         }
                     }
 

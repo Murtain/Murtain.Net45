@@ -56,7 +56,7 @@ namespace Murtain.Localization.Dictionaries.Db
         public void Initialize(string sourceName)
         {
             _sourceName = sourceName;
-            _languageDbManager = IocManager.Container.Resolve<ILanguageDbManager>();
+            _languageDbManager = IocManager.Instance.Resolve<ILanguageDbManager>();
             _internalProvider.Initialize(_sourceName);
         }
 
@@ -89,7 +89,7 @@ namespace Murtain.Localization.Dictionaries.Db
                 _internalProvider.Dictionaries.GetOrDefault(language.Name) ??
                 new EmptyInternalDictionary(CultureInfo.GetCultureInfo(language.Name));
 
-            var dictionary = IocManager.Container.Resolve<ILocalizationDictionary>(
+            var dictionary = IocManager.Instance.Resolve<ILocalizationDictionary>(
                     new NamedParameter("sourceName", _sourceName),
                     new NamedParameter("internalDictionary", internalDictionary)
                 );

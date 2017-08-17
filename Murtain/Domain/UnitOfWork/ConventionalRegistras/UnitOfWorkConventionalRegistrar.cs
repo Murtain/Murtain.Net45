@@ -37,7 +37,7 @@ namespace Murtain.Domain.UnitOfWork.ConventionalRegistras
 
             builder.RegisterType<UnitOfWorkInterceptor>();
 
-            builder.Update(context.IocManager.IocContainer);
+            builder.Update(context.IocManager.Container);
         }
 
     }

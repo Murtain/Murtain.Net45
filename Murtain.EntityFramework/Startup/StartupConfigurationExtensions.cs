@@ -15,12 +15,12 @@ namespace Murtain.Configuration.Startup
     {
         public static StartupConfiguration UseDataAccessEntityFramework(this StartupConfiguration bootstrap, Action<IEntityFrameworkConfiguration> invoke = null)
         {
-            IocManager.Container.RegisterIfNot<IEntityFrameworkConfiguration, EntityFrameworkConfiguration>();
-            IocManager.Container.AddConventionalRegistrar(new EntityFrameworkConventionalRegistrar());
+            IocManager.Instance.RegisterIfNot<IEntityFrameworkConfiguration, EntityFrameworkConfiguration>();
+            IocManager.Instance.AddConventionalRegistrar(new EntityFrameworkConventionalRegistrar());
 
             if (invoke != null)
             {
-                invoke(IocManager.Container.Resolve<IEntityFrameworkConfiguration>());
+                invoke(IocManager.Instance.Resolve<IEntityFrameworkConfiguration>());
             }
 
             return bootstrap;

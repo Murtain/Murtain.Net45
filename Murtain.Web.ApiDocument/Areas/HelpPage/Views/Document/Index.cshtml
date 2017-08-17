@@ -35,7 +35,7 @@
                 <i>{{app.brand}}</i>
             </span>
         </div>
-        <nav class="navbar-default navbar-static-side" role="navigation">
+        <nav class="navbar-default navbar-static-side" role="navigation" ng-cloak>
             <ul class="nav" id="menu">
                 <li>
                     <a class="menu-item" href="#/readme"><i class="fa fa-tv"></i> <span class="nav-label">API简介</span></a>
@@ -59,13 +59,13 @@
                 <li ng-repeat="document in app.documents">
                     <a class="menu-item" href="#/document/{{document.controller_name}}">
                         <i class="fa fa-caret-right"></i>
-                        <span class="pull-right">{{document.namespace}}</span>
-                        <span class="fa arrow"></span>
                         <span class="nav-label">{{document.description}}</span>
+                        <span class="fa arrow"></span>
+                        <label class="label pull-right m-r">{{document.namespace}}</label>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="menu-item" ng-repeat="api in document.api_descriptions" href="#/document-description/{{document.controller_name}}/{{api.id}}">{{api.description}}</a>
+                            <a class="menu-item" ng-repeat="api in document.api_descriptions" href="#/document-description/{{document.controller_name}}/{{api.id}}" ng-if="api.namespace == document.namespace">{{api.description}}</a>
                         </li>
                     </ul>
                 </li>

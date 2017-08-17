@@ -26,7 +26,7 @@ namespace Murtain.Runtime.Validation.Interception
 
             builder.RegisterType<ValidationInterceptor>();
 
-            builder.Update(context.IocManager.IocContainer);
+            builder.Update(context.IocManager.Container);
         }
     }
 }

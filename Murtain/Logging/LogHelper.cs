@@ -22,7 +22,7 @@ namespace Murtain.Logging
 
         static LogHelper()
         {
-            Logger = IocManager.Container.IsRegistered(typeof(ILoggerFactory)) ? IocManager.Container.Resolve<ILoggerFactory>().Create(typeof(LogHelper)) : NullLogger.Instance;
+            Logger = IocManager.Instance.IsRegistered(typeof(ILoggerFactory)) ? IocManager.Instance.Resolve<ILoggerFactory>().Create(typeof(LogHelper)) : NullLogger.Instance;
         }
     }
 }

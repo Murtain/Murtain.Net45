@@ -30,7 +30,7 @@ namespace Murtain.Localization.Modules
             // Set the properties located.
             foreach (var propToSet in properties)
             {
-                propToSet.SetValue(instance, IocManager.Container.Resolve<ILocalizationManager>(), null);
+                propToSet.SetValue(instance, IocManager.Instance.Resolve<ILocalizationManager>(), null);
             }
         }
 

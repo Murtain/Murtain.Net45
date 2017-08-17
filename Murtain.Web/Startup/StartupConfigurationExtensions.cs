@@ -25,10 +25,10 @@ namespace Murtain.Configuration.Startup
         {
             var assemblies = AssemblyLoader.FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
 
-            IocManager.Container.AddConventionalRegistrar(new ControllerConventionalRegistrar());
-            IocManager.Container.RegisterAssemblyByConvention(assemblies, modules);
+            IocManager.Instance.AddConventionalRegistrar(new ControllerConventionalRegistrar());
+            IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
 
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(IocManager.Container.IocContainer));
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(IocManager.Instance.Container));
 
             return bootstrap;
         }
@@ -37,10 +37,10 @@ namespace Murtain.Configuration.Startup
             var assemblies = AssemblyLoader.FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
 
             HttpConfiguration configuration = GlobalConfiguration.Configuration;
-            IocManager.Container.AddConventionalRegistrar(new ApiControllerConventionalRegistrar());
-            IocManager.Container.RegisterAssemblyByConvention(assemblies, modules);
+            IocManager.Instance.AddConventionalRegistrar(new ApiControllerConventionalRegistrar());
+            IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
 
-            configuration.DependencyResolver = new AutofacWebApiDependencyResolver(IocManager.Container.IocContainer);
+            configuration.DependencyResolver = new AutofacWebApiDependencyResolver(IocManager.Instance.Container);
 
             return bootstrap;
         }

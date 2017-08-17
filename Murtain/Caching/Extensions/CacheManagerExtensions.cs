@@ -19,7 +19,7 @@ namespace Murtain.Caching.Extensions
         /// <returns></returns>
         public static T TryRetrive<T>(this ICacheManager cacheManager, string name, Func<T> invoker, params string[] format)
         {
-            var cacheSettingManager = IocManager.Container.Resolve<ICacheSettingManager>();
+            var cacheSettingManager = IocManager.Instance.Resolve<ICacheSettingManager>();
 
             var key = cacheSettingManager.GetSettingValue(name);
 
@@ -49,7 +49,7 @@ namespace Murtain.Caching.Extensions
         /// <returns></returns>
         public static T TryGet<T>(this ICacheManager cacheManager, string name, params string[] format)
         {
-            var cacheSettingManager = IocManager.Container.Resolve<ICacheSettingManager>();
+            var cacheSettingManager = IocManager.Instance.Resolve<ICacheSettingManager>();
 
             var key = cacheSettingManager.GetSettingValue(name);
 
@@ -70,7 +70,7 @@ namespace Murtain.Caching.Extensions
         /// <returns></returns>
         public static void TrySet(this ICacheManager cacheManager, string name, string value, params string[] format)
         {
-            var cacheSettingManager = IocManager.Container.Resolve<ICacheSettingManager>();
+            var cacheSettingManager = IocManager.Instance.Resolve<ICacheSettingManager>();
 
             var key = cacheSettingManager.GetSettingValue(name);
 
