@@ -10,25 +10,35 @@ using System.Web;
 
 namespace Murtain.Collections
 {
-    public static class AssemblyLoader
+    public class AssemblyLoader : IAssemblyLoader
     {
-        public const string AssemblySkipLoadingPattern = "^System|^vshost32|^Nito.AsyncEx|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^NSubstitute|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Telerik|^Iesi|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease|^IdentityServer3";
+        private string assemblySkipLoaderParttern = "^System|^vshost32|^Nito.AsyncEx|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^NSubstitute|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Telerik|^Iesi|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease|^IdentityServer3";
+        private string assemblyLoaderParttern;
+        public AssemblyLoader()
+        {
 
-        public static Assembly[] GetAssemblies()
+        }
+
+        public AssemblyLoader(string assemblyLoaderParttern)
+        {
+            this.assemblyLoaderParttern = assemblyLoaderParttern;
+        }
+
+        public Assembly[] GetAssemblies()
         {
             var path = GetPhysicalPath(AppDomain.CurrentDomain.BaseDirectory);
             return FilterSystemAssembly(GetAssemblies(path)).ToArray();
         }
-        public static List<string> GetAllFiles(string directoryPath)
+        public List<string> GetAllFiles(string directoryPath)
         {
             return Directory.GetFiles(directoryPath, "*.*", SearchOption.TopDirectoryOnly).ToList();
         }
-        public static List<Assembly> GetAssemblies(string directoryPath)
+        public List<Assembly> GetAssemblies(string directoryPath)
         {
             var filePaths = GetAllFiles(directoryPath).Where(t => t.EndsWith(".exe") || t.EndsWith(".dll"));
-            return filePaths.Select(Assembly.LoadFile).ToList();
+            return filePaths.Select(Assembly.LoadFrom).ToList();
         }
-        public static string GetPhysicalPath(string relativePath)
+        public string GetPhysicalPath(string relativePath)
         {
             if (HttpContext.Current == null)
             {
@@ -53,19 +63,48 @@ namespace Murtain.Collections
             }
             return HttpContext.Current.Server.MapPath("~/" + relativePath);
         }
-        public static Assembly[] FilterSystemAssembly(IEnumerable<Assembly> assemblies)
+        public Assembly[] FilterSystemAssembly(IEnumerable<Assembly> assemblies)
         {
             return assemblies
-                .Where(assembly => !Regex.IsMatch(assembly.FullName, AssemblySkipLoadingPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled))
+                .Where(assembly => string.IsNullOrEmpty(assemblyLoaderParttern)
+                                ? !Regex.IsMatch(assembly.FullName, assemblySkipLoaderParttern, RegexOptions.IgnoreCase | RegexOptions.Compiled)
+                                : Regex.IsMatch(assembly.FullName, assemblyLoaderParttern, RegexOptions.IgnoreCase | RegexOptions.Compiled)
+                        )
                 .ToArray();
         }
-        public static Type[] GetAllTypes(Func<Type, bool> predicate)
+        public Type[] GetAllTypes(Func<Type, bool> predicate)
         {
             var allTypes = new List<Type>();
 
             foreach (var assembly in GetAssemblies())
             {
-                allTypes.AddRange(assembly.GetTypes().Where(type => type != null));
+                try
+                {
+                    allTypes.AddRange(assembly.GetTypes().Where(type => type != null));
+                }
+                catch (ReflectionTypeLoadException e)
+                {
+                    throw e;
+                }
+            }
+
+            return allTypes.Where(predicate).ToArray();
+        }
+
+        public Type[] GetAllTypes(List<Assembly> assemblies, Func<Type, bool> predicate)
+        {
+            var allTypes = new List<Type>();
+
+            foreach (var assembly in assemblies)
+            {
+                try
+                {
+                    allTypes.AddRange(assembly.GetTypes().Where(type => type != null));
+                }
+                catch (ReflectionTypeLoadException e)
+                {
+                    throw e;
+                }
             }
 
             return allTypes.Where(predicate).ToArray();

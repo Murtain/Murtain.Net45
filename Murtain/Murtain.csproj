@@ -128,6 +128,7 @@
     <Compile Include="Caching\ICacheSettingProvider.cs" />
     <Compile Include="Caching\NetCacheManager.cs" />
     <Compile Include="Collections\AssemblyLoader.cs" />
+    <Compile Include="Collections\IAssemblyLoader.cs" />
     <Compile Include="Collections\ITypeList.cs" />
     <Compile Include="Collections\TypeList.cs" />
     <Compile Include="Configuration\StartupConfiguration.cs" />

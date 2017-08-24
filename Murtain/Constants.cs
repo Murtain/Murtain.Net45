@@ -8,6 +8,7 @@ namespace Murtain
 {
     internal class Constants
     {
+
         public static class Localization
         {
             public const string DefaultLanguageName = "Localization.DefaultLanguageName";

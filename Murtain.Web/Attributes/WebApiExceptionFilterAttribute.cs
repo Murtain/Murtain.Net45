@@ -14,12 +14,17 @@ using Murtain.SDK;
 using Murtain.SDK.Models;
 using System.ComponentModel;
 using Murtain.SDK.Attributes;
+using Newtonsoft.Json;
+using Murtain.Web.ContractResolver;
 
 namespace Murtain.Web.Attributes
 {
-
     public class WebApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
+        private static JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
+        {
+            ContractResolver = new SnakeCaseContractResolver()
+        };
 
         public override void OnException(HttpActionExecutedContext context)
         {
@@ -43,7 +48,7 @@ namespace Murtain.Web.Attributes
 
             context.Response = new HttpResponseMessage(response.HttpStatusCode)
             {
-                Content = new StringContent(response.ToString(), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonConvert.SerializeObject(response, serializerSettings), Encoding.UTF8, "application/json")
             };
         }
     }
@@ -54,16 +59,19 @@ namespace Murtain.Web.Attributes
         /// <summary>
         /// 服务器上发生一般性错误
         /// </summary>
+        [Description("服务器上发生一般性错误")]
         [HttpCorresponding(HttpStatusCode.InternalServerError)]
         INTERNAL_SERVER_ERROR,
         /// <summary>
         /// 服务器不支持所请求的功能
         /// </summary>
+        [Description("服务器不支持所请求的功能")]
         [HttpCorresponding(HttpStatusCode.NotImplemented)]
         NOT_IMPLEMENTED,
         /// <summary>
         /// 中间代理服务器在等待来自另一个代理或原始服务器的响应时已超时
         /// </summary>
+        [Description("中间代理服务器在等待来自另一个代理或原始服务器的响应时已超时")]
         [HttpCorresponding(HttpStatusCode.BadGateway)]
         GATEWAY_TIMEOUT
     }

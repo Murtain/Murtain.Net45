@@ -21,9 +21,11 @@ namespace Murtain.Configuration.Startup
 {
     public static class StartupConfigurationExtensions
     {
-        public static StartupConfiguration RegisterWebMvcApplication(this StartupConfiguration bootstrap, params IModule[] modules)
+        private const string assemblyLoaderPartner = "";
+
+        public static StartupConfiguration RegisterWebMvcApplication(this StartupConfiguration bootstrap, string assemblyLoaderPartner = assemblyLoaderPartner, params IModule[] modules)
         {
-            var assemblies = AssemblyLoader.FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
+            var assemblies = new AssemblyLoader(assemblyLoaderPartner).FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
 
             IocManager.Instance.AddConventionalRegistrar(new ControllerConventionalRegistrar());
             IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
@@ -32,14 +34,18 @@ namespace Murtain.Configuration.Startup
 
             return bootstrap;
         }
-        public static StartupConfiguration RegisterWebApiApplication(this StartupConfiguration bootstrap, params Autofac.Module[] modules)
+        public static StartupConfiguration RegisterWebApiApplication(this StartupConfiguration bootstrap, string assemblyLoaderPartner = assemblyLoaderPartner, params Autofac.Module[] modules)
         {
-            var assemblies = AssemblyLoader.FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
+            var assemblies = new AssemblyLoader(assemblyLoaderPartner).FilterSystemAssembly(BuildManager.GetReferencedAssemblies().Cast<Assembly>());
 
-            HttpConfiguration configuration = GlobalConfiguration.Configuration;
+            IocManager.Instance.AddConventionalRegistrar(new ControllerConventionalRegistrar());
             IocManager.Instance.AddConventionalRegistrar(new ApiControllerConventionalRegistrar());
+
             IocManager.Instance.RegisterAssemblyByConvention(assemblies, modules);
 
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(IocManager.Instance.Container));
+
+            HttpConfiguration configuration = GlobalConfiguration.Configuration;
             configuration.DependencyResolver = new AutofacWebApiDependencyResolver(IocManager.Instance.Container);
 
             return bootstrap;

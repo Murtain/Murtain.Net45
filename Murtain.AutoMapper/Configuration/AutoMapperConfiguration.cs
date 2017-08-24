@@ -12,6 +12,8 @@ namespace Murtain.AutoMapper.Configuration
     {
         public List<Action<IMapperConfigurationExpression>> Configurators { get; }
 
+        public string AssemblyLoadingPattern { get; set; }
+
         public AutoMapperConfiguration()
         {
             Configurators = new List<Action<IMapperConfigurationExpression>>();

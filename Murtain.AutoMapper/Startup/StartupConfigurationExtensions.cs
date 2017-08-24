@@ -20,8 +20,9 @@ namespace Murtain.Configuration.Startup
 {
     public static class StartupConfigurationExtensions
     {
-        private static bool _createdMappingsBefore;
-        private static readonly object _syncObj = new object();
+        private static bool createdMappingsBefore;
+        private static readonly object syncObj = new object();
+        private static AssemblyLoader assemblyLoader;
 
         public static StartupConfiguration UseAutoMapper(this StartupConfiguration bootstrap, Action<IAutoMapperConfiguration> invoke = null)
         {
@@ -33,45 +34,47 @@ namespace Murtain.Configuration.Startup
             }
 
             var autoMapperConfigration = IocManager.Instance.Resolve<IAutoMapperConfiguration>();
+            assemblyLoader = new AssemblyLoader(autoMapperConfigration.AssemblyLoadingPattern);
 
-            lock (_syncObj)
+            lock (syncObj)
             {
                 //We should prevent duplicate mapping in an application, since AutoMapper is static.
-                if (!_createdMappingsBefore)
+                if (!createdMappingsBefore)
                 {
                     Mapper.Initialize(configuration =>
                     {
-                        MapAutoAttributes(configuration);
-                        MapOtherMappings(configuration);
+                        var autoAttributesClassTypes = assemblyLoader.GetAllTypes(type => type.IsDefined(typeof(AutoMapAttribute)) || type.IsDefined(typeof(AutoMapFromAttribute)) || type.IsDefined(typeof(AutoMapToAttribute))).ToList();
+                        var otherMappingsCalssTypes = assemblyLoader.GetAllTypes(type => typeof(IAutoMaping).IsAssignableFrom(type) && type != typeof(IAutoMaping) && !type.IsAbstract).ToList();
+
+                        MapAutoAttributes(configuration, autoAttributesClassTypes);
+                        MapOtherMappings(configuration, otherMappingsCalssTypes);
+
                         foreach (var configurator in autoMapperConfigration.Configurators)
                         {
                             configurator(configuration);
                         }
                     });
-                    _createdMappingsBefore = true;
+                    createdMappingsBefore = true;
                 }
             }
 
             return bootstrap;
         }
 
-        private static void MapAutoAttributes(IMapperConfigurationExpression configuration)
+        private static void MapAutoAttributes(IMapperConfigurationExpression configuration, List<Type> types)
         {
-            var types = AssemblyLoader.GetAllTypes(type => type.IsDefined(typeof(AutoMapAttribute)) || type.IsDefined(typeof(AutoMapFromAttribute)) || type.IsDefined(typeof(AutoMapToAttribute)));
             foreach (var type in types)
             {
                 configuration.CreateAttributeMaps(type);
             }
         }
 
-        private static void MapOtherMappings(IMapperConfigurationExpression configuration)
+        private static void MapOtherMappings(IMapperConfigurationExpression configuration, List<Type> types)
         {
-            var types = AssemblyLoader.GetAllTypes(type => typeof(IAutoMaping).IsAssignableFrom(type) && type != typeof(IAutoMaping) && !type.IsAbstract).ToList();
             types.ForEach(x =>
             {
-                x.GetMethod("CreateMappings").Invoke(Activator.CreateInstance(x), new object[] { configuration });
+                x.GetMethod(nameof(IAutoMaping.CreateMappings)).Invoke(Activator.CreateInstance(x), new object[] { configuration });
             });
         }
-
     }
 }

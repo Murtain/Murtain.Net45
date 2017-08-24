@@ -68,6 +68,7 @@ namespace Murtain.Configuration.Startup
         /// </summary>
         public ICacheSettingsConfiguration CacheSettingsConfiguration { get; set; }
 
+
         public StartupConfiguration()
         {
 
@@ -90,7 +91,7 @@ namespace Murtain.Configuration.Startup
             IocManager.Instance.RegisterIfNot<IGlobalSettingStore, SimpleGlobalSettingStore>(DependencyLifeStyle.Transient);
             IocManager.Instance.RegisterIfNot<IGlobalSettingManager, GlobalSettingManager>();
 
-            IocManager.Instance.RegisterIfNot<ICacheSettingManager, CacheSettingManager>(); 
+            IocManager.Instance.RegisterIfNot<ICacheSettingManager, CacheSettingManager>();
 
             IocManager.Instance.RegisterIfNot<ILocalizationManager, LocalizationManager>();
 
@@ -132,14 +133,10 @@ namespace Murtain.Configuration.Startup
             return bootstrap;
         }
 
-        public static StartupConfiguration RegisterConsoleApplication(this StartupConfiguration bootstrap, params IModule[] modules)
+        public static StartupConfiguration RegisterConsoleApplication(this StartupConfiguration bootstrap, string assemblyLoaderPartner, params IModule[] modules)
         {
-            IocManager.Instance.RegisterAssemblyByConvention(AssemblyLoader.GetAssemblies(), modules);
-
+            IocManager.Instance.RegisterAssemblyByConvention(new AssemblyLoader(assemblyLoaderPartner).GetAssemblies(), modules);
             return bootstrap;
         }
-
-
-
     }
 }

@@ -74,7 +74,7 @@ namespace Murtain.EntityFramework
                         if (entry.Entity is IAudited)
                         {
                             entry.Cast<IAudited>().Entity.CreateUser = AppSession.UserId;
-                            entry.Cast<IAudited>().Entity.ChangeTime = DateTime.Now;
+                            entry.Cast<IAudited>().Entity.CreateTime = DateTime.Now;
                         }
                         if (entry.Entity is ISoftDelete)
                         {

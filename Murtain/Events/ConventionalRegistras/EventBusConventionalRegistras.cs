@@ -28,25 +28,31 @@ namespace Murtain.Events.ConventionalRegistras
 
             foreach (var assembly in context.Assembly)
             {
-                var types = assembly.GetTypes().Where(t => typeof(IEventHandler).IsAssignableFrom(t) && t != typeof(IEventHandler));
-                foreach (var type in types)
+                try
                 {
-                    if (!typeof(IEventHandler).IsAssignableFrom(type) || type.IsNotPublic)
+                    var types = assembly.GetTypes().Where(t => typeof(IEventHandler).IsAssignableFrom(t) && t != typeof(IEventHandler));
+                    foreach (var type in types)
                     {
-                        continue;
-                    }
-                    var interfaces = type.GetInterfaces();
-                    foreach (var inter in interfaces)
-                    {
-                        var genericArgs = inter.GetGenericArguments();
-                        if (genericArgs.Length == 1)
+                        if (!typeof(IEventHandler).IsAssignableFrom(type) || type.IsNotPublic)
                         {
-                            eventBus.Register(genericArgs[0], (IEventHandler)IocManager.Instance.Resolve(type));
+                            continue;
+                        }
+                        var interfaces = type.GetInterfaces();
+                        foreach (var inter in interfaces)
+                        {
+                            var genericArgs = inter.GetGenericArguments();
+                            if (genericArgs.Length == 1)
+                            {
+                                eventBus.Register(genericArgs[0], (IEventHandler)IocManager.Instance.Resolve(type));
+                            }
                         }
                     }
-
-
                 }
+                catch (ReflectionTypeLoadException)
+                {
+                    continue;
+                }
+                
             }
         }
     }
