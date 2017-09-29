@@ -20,7 +20,7 @@ Murtain.Web.ApiDocument is a most friendly WebApi2 help documentation.
 2.Change your `WebApiConfig.cs `
 
     config.Filters.Add(new WebApiExceptionFilterAttribute());
-    config.Filters.Add(new ValidateModelAttribute());
+    config.Filters.Add(new ModelValidateAttribute());
             
     config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
     config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new SnakeCaseContractResolver();
